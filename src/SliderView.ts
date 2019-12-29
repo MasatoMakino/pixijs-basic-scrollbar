@@ -29,7 +29,7 @@ export class SliderView extends Container {
    * MIN 0.0 ~ SliderView.MAX_RATE。
    */
   private _rate: number;
-  public static readonly MAX_RATE: number = 100.0;
+  public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
 
   /**

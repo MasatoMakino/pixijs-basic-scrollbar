@@ -1,22 +1,20 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
-import { SliderView, SliderEventType } from "../bin";
+import { SliderEventType, SliderView } from "../bin";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });
   document.body.appendChild(app.view);
 
   initSlider(app.stage);
-  // initScrollBar(stage);
+  initNonMaskSlider(app.stage);
 };
-
+const SLIDER_W = 200;
+const SLIDER_H = 64;
 /**
  * スライダーの実装サンプル
  * @param stage
  */
 const initSlider = stage => {
-  const SLIDER_W = 200;
-  const SLIDER_H = 64;
-
   const slider = new SliderView({
     base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
     bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
@@ -33,6 +31,24 @@ const initSlider = stage => {
   stage.addChild(slider);
   slider.x = 200;
   slider.y = 200;
+};
+
+const initNonMaskSlider = stage => {
+  const slider = new SliderView({
+    base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
+    bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
+    button: getSliderButton(SLIDER_W, SLIDER_H, 0xffff00),
+    minPosition: 0,
+    maxPosition: SLIDER_W,
+    rate: 25.0
+  });
+
+  slider.on(SliderEventType.CHANGE, e => {
+    console.log(e.rate);
+  });
+  stage.addChild(slider);
+  slider.x = 200;
+  slider.y = 400;
 };
 
 const getSliderBase = (w, h, color) => {

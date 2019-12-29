@@ -1,7 +1,8 @@
 /**
  * スライダーを初期化する際のオプション
  */
-import { DisplayObject, Container, Graphics, Point } from "pixi.js";
+import { DisplayObject, Graphics } from "pixi.js";
+import { SliderView } from "./SliderView";
 
 export class SliderViewOption {
   minPosition: number; //スライダーボタンの座標の最小値
@@ -14,12 +15,12 @@ export class SliderViewOption {
   isHorizontal?: boolean; //水平スクロールか否か 既定値 true
 
   public static init(option: SliderViewOption): SliderViewOption {
-    if (option.rate == null) {
-      option.rate = 0.0;
+    if (option.rate != null) {
+      option.rate = Math.max(0, option.rate);
+      option.rate = Math.min(SliderView.MAX_RATE, option.rate);
     }
-    if (option.isHorizontal == null) {
-      option.isHorizontal = true;
-    }
+    option.rate = option.rate ?? 0.0;
+    option.isHorizontal = option.isHorizontal ?? true;
 
     this.check(option);
     return option;
