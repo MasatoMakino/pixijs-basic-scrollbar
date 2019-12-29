@@ -1,0 +1,42 @@
+{
+  "name": "pixijs-basic-scrollbar",
+  "version": "0.1.0",
+  "description": "Scrollbar modules for pixi.js",
+  "main": "./bin/index.js",
+  "repository": "https://MasatoMakino@github.com/MasatoMakino/pixijs-basic-scrollbar.git",
+  "author": "MasatoMakino <unagiinu.g@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.1.0",
+    "dat.gui": "^0.7.6",
+    "gulp": "^4.0.2",
+    "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
+    "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
+    "gulptask-tsc": "https://github.com/MasatoMakino/gulptask-tsc.git",
+    "gulptask-tsdoc": "https://github.com/MasatoMakino/gulptask-tsdoc.git",
+    "husky": "^3.1.0",
+    "pixi.js": "^5.2.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  },
+  "peerDependencies": {
+    "pixi.js": "^5.2.0"
+  },
+  "scripts": {
+    "start:dev": "gulp start_dev",
+    "build": "gulp build && npm run doc:card",
+    "build:clean": "gulp build_clean && npm run doc:card",
+    "checkout:docs": "git checkout HEAD ./docs/",
+    "doc:card": "repoimg -n MasatoMakino/pixijs-basic-scrollbar -o ./docs/card.png"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "pixijs-basic-button": "https://github.com/MasatoMakino/pixijs-basic-button.git"
+  }
+}
