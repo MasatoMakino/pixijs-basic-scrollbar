@@ -7,7 +7,7 @@ import { SliderViewUtil } from "./SliderView";
 export class MouseWheelScrollManager {
   protected scrollBarView: ScrollBarView;
   private updateSliderPositionFunc: Function;
-  public delta = 10;
+  public delta = 16;
 
   constructor(
     scrollBarView: ScrollBarView,
@@ -16,12 +16,13 @@ export class MouseWheelScrollManager {
     this.scrollBarView = scrollBarView;
     this.updateSliderPositionFunc = updateSliderPositionFunc;
 
-    //TODO support deltaX / deltaY
-    //TODO limit on mouseOver
-    document.addEventListener("wheel", (e: WheelEvent) => {
-      const isDown = e.deltaY > 0;
-      const delta = isDown ? -this.delta : this.delta;
-      this.scroll(delta);
+    this.scrollBarView.targetContents.interactive = true;
+    this.scrollBarView.targetContents["interactiveMousewheel"] = true;
+
+    //TODO add support deltaX / deltaY
+    this.scrollBarView.targetContents.on("mousewheel", (delta, event) => {
+      const shift = delta > 0 ? this.delta : -this.delta;
+      this.scroll(shift);
     });
   }
 
