@@ -122,9 +122,7 @@ export class SliderView extends Container {
    */
   protected limitSliderButtonPosition(evt: InteractionEvent): number {
     let mousePos: number = this.getMousePosition(this, evt);
-    mousePos = Math.min(this._maxPosition, mousePos);
-    mousePos = Math.max(this._minPosition, mousePos);
-    return mousePos;
+    return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
 
   /**
@@ -208,11 +206,8 @@ export class SliderView extends Container {
   }
 
   /**
-   * スクロール方向のマウス座標を取得する
-   * limitSliderButtonPosition内の処理
-   * @param displayObj
-   * @param evt
-   * @return
+   * ドラッグ中のマウス座標を取得する。
+   * limitSliderButtonPosition内の処理。
    */
   protected getMousePosition(
     displayObj: DisplayObject,

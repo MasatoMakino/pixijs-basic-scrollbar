@@ -50,11 +50,8 @@ export class ScrollBarView extends SliderView {
    */
   protected limitSliderButtonPosition(evt: InteractionEvent): number {
     let mousePos: number = this.getMousePosition(this, evt);
-    const sliderSize: number = this.slideButtonSize;
-
-    mousePos = Math.min(this._maxPosition - sliderSize / 2, mousePos);
-    mousePos = Math.max(this._minPosition + sliderSize / 2, mousePos);
-    return mousePos;
+    const range = this.getRangeOfSliderButtonPosition();
+    return SliderViewUtil.clamp(mousePos, range.max, range.min);
   }
 
   /**
@@ -63,11 +60,8 @@ export class ScrollBarView extends SliderView {
    * @return
    */
   protected convertRateToPixel(rate: number): number {
-    const buttonSize: number = this.slideButtonSize;
-    const max: number = this._maxPosition - buttonSize / 2;
-    const min: number = this._minPosition + buttonSize / 2;
-
-    return SliderViewUtil.convertRateToPixel(rate, max, min);
+    const range = this.getRangeOfSliderButtonPosition();
+    return SliderViewUtil.convertRateToPixel(rate, range.max, range.min);
   }
 
   /**
@@ -76,11 +70,18 @@ export class ScrollBarView extends SliderView {
    * @return
    */
   protected convertPixelToRate(pixel: number): number {
+    const range = this.getRangeOfSliderButtonPosition();
+    return SliderViewUtil.convertPixelToRate(pixel, range.max, range.min);
+  }
+
+  /**
+   * スライダーボタンの可動範囲を取得する。単位ピクセル
+   */
+  private getRangeOfSliderButtonPosition(): { max: number; min: number } {
     const buttonSize: number = this.slideButtonSize;
     const max: number = this._maxPosition - buttonSize / 2;
     const min: number = this._minPosition + buttonSize / 2;
-
-    return SliderViewUtil.convertPixelToRate(pixel, max, min);
+    return { max, min };
   }
 
   /**
