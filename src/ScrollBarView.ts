@@ -3,6 +3,7 @@ import { SliderView } from "./SliderView";
 import { SliderViewOption } from "./SliderViewOption";
 import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
+import { SliderViewUtil } from "./SliderView";
 
 /**
  * スクロールバーを表すクラスです。
@@ -40,7 +41,7 @@ export class ScrollBarView extends SliderView {
    */
   protected init(option: SliderViewOption): void {
     super.init(option);
-    this.initSliderButtonSize();
+    this.initSliderButton();
   }
 
   /**
@@ -61,16 +62,12 @@ export class ScrollBarView extends SliderView {
    * @param	rate
    * @return
    */
-  protected changeRateToPixel(rate: number): number {
+  protected convertRateToPixel(rate: number): number {
     const buttonSize: number = this.slideButtonSize;
-    const currentMax: number = this._maxPosition - buttonSize / 2;
-    const currentMin: number = this._minPosition + buttonSize / 2;
+    const max: number = this._maxPosition - buttonSize / 2;
+    const min: number = this._minPosition + buttonSize / 2;
 
-    let currentPix: number =
-      ((currentMax - currentMin) * rate) / SliderView.MAX_RATE + currentMin;
-    currentPix = Math.max(currentPix, currentMin);
-    currentPix = Math.min(currentPix, currentMax);
-    return currentPix;
+    return SliderViewUtil.convertRateToPixel(rate, max, min);
   }
 
   /**
@@ -78,16 +75,12 @@ export class ScrollBarView extends SliderView {
    * @param	pixel
    * @return
    */
-  protected changePixelToRate(pixel: number): number {
+  protected convertPixelToRate(pixel: number): number {
     const buttonSize: number = this.slideButtonSize;
-    const currentMax: number = this._maxPosition - buttonSize / 2;
-    const currentMin: number = this._minPosition + buttonSize / 2;
+    const max: number = this._maxPosition - buttonSize / 2;
+    const min: number = this._minPosition + buttonSize / 2;
 
-    let currentRate: number =
-      ((pixel - currentMin) / (currentMax - currentMin)) * SliderView.MAX_RATE;
-    currentRate = Math.max(currentRate, 0.0);
-    currentRate = Math.min(currentRate, SliderView.MAX_RATE);
-    return currentRate;
+    return SliderViewUtil.convertPixelToRate(pixel, max, min);
   }
 
   /**
@@ -96,14 +89,14 @@ export class ScrollBarView extends SliderView {
    */
   get slideButtonSize(): number {
     this.updateSlideButtonSize();
-    return this.getSize(this._slideButton);
+    return SliderViewUtil.getSize(this._slideButton, this.isHorizontal);
   }
 
   /**
    * スクロールバーのボタンサイズ及び位置を更新する。
    * コンテンツサイズが変更された場合の更新にも利用する。
    */
-  public initSliderButtonSize(): void {
+  public initSliderButton(): void {
     if (!this._slideButton || !this._targetContents || !this._contentsMask) {
       return;
     }
@@ -117,12 +110,19 @@ export class ScrollBarView extends SliderView {
   }
 
   protected initSliderPosition(): void {
-    const zeroPos: number = this.getPosition(this._contentsMask);
-    const contentsPos: number = this.getPosition(this._targetContents);
+    const zeroPos: number = SliderViewUtil.getPosition(
+      this._contentsMask,
+      this.isHorizontal
+    );
+    const contentsPos: number = SliderViewUtil.getPosition(
+      this._targetContents,
+      this.isHorizontal
+    );
 
     const posDif: number = zeroPos - contentsPos;
     const sizeDif: number =
-      this.getSize(this._targetContents) - this.getSize(this._contentsMask);
+      SliderViewUtil.getSize(this._targetContents, this.isHorizontal) -
+      SliderViewUtil.getSize(this._contentsMask, this.isHorizontal);
 
     this.changeRate((posDif / sizeDif) * SliderView.MAX_RATE);
   }
@@ -137,15 +137,21 @@ export class ScrollBarView extends SliderView {
 
     const fullSize: number = this._maxPosition - this._minPosition;
 
-    const contentsSize: number = this.getSize(this._targetContents);
-    const maskSize: number = this.getSize(this._contentsMask);
+    const contentsSize: number = SliderViewUtil.getSize(
+      this._targetContents,
+      this.isHorizontal
+    );
+    const maskSize: number = SliderViewUtil.getSize(
+      this._contentsMask,
+      this.isHorizontal
+    );
 
     let sliderSize: number = (fullSize * maskSize) / contentsSize;
     if (sliderSize > fullSize) {
       sliderSize = fullSize;
     }
 
-    this.setSize(this._slideButton, sliderSize);
+    SliderViewUtil.setSize(this._slideButton, this.isHorizontal, sliderSize);
 
     //autoHideの条件に一致するかを判定し、表示を切り替える。
     this._slideButton.visible = this._slideButton.interactive = !this.isHide;
@@ -159,8 +165,14 @@ export class ScrollBarView extends SliderView {
     if (!this.autoHide) return false;
 
     const fullSize: number = this._maxPosition - this._minPosition;
-    const contentsSize: number = this.getSize(this._targetContents);
-    const maskSize: number = this.getSize(this._contentsMask);
+    const contentsSize: number = SliderViewUtil.getSize(
+      this._targetContents,
+      this.isHorizontal
+    );
+    const maskSize: number = SliderViewUtil.getSize(
+      this._contentsMask,
+      this.isHorizontal
+    );
 
     //マスク、コンテンツ、スクロール幅のいずれかが0以下の場合スライダーを隠す
     if (contentsSize < 0 || maskSize < 0 || fullSize < 0) {
@@ -168,7 +180,9 @@ export class ScrollBarView extends SliderView {
     }
 
     //マスクサイズとコンテンツサイズが同一の場合スライダーを隠す
-    return this.getSize(this._slideButton) == fullSize;
+    return (
+      SliderViewUtil.getSize(this._slideButton, this.isHorizontal) == fullSize
+    );
   }
 
   /**
@@ -185,12 +199,20 @@ export class ScrollBarView extends SliderView {
    * @param {number} rate
    */
   protected updateContentsPositionWithRate(rate: number): void {
-    const zeroPos: number = this.getPosition(this._contentsMask);
+    const zeroPos: number = SliderViewUtil.getPosition(
+      this._contentsMask,
+      this.isHorizontal
+    );
     const nextPos: number =
       zeroPos -
       (rate / SliderView.MAX_RATE) *
-        (this.getSize(this._targetContents) - this.getSize(this._contentsMask));
-    this.setPosition(this._targetContents, nextPos);
+        (SliderViewUtil.getSize(this._targetContents, this.isHorizontal) -
+          SliderViewUtil.getSize(this._contentsMask, this.isHorizontal));
+    SliderViewUtil.setPosition(
+      this._targetContents,
+      this.isHorizontal,
+      nextPos
+    );
   }
 
   protected onPressBase(evt: InteractionEvent): void {
@@ -204,7 +226,7 @@ export class ScrollBarView extends SliderView {
 
   protected setTargetContents(value: DisplayObject) {
     this._targetContents = value;
-    this.initSliderButtonSize();
+    this.initSliderButton();
   }
 
   public get contentsMask(): DisplayObject {
@@ -213,7 +235,7 @@ export class ScrollBarView extends SliderView {
 
   protected setContentsMask(value: DisplayObject) {
     this._contentsMask = value;
-    this.initSliderButtonSize();
+    this.initSliderButton();
   }
 
   protected onDisposeFunction(e?: Event): void {

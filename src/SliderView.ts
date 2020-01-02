@@ -62,7 +62,7 @@ export class SliderView extends Container {
     this.changeRate(this._rate);
   }
 
-  private addChildMe(obj: DisplayObject): void {
+  private addChildParts(obj: DisplayObject): void {
     if (!obj) return;
     if (obj.parent) obj.parent.removeChild(obj);
     this.addChild(obj);
@@ -77,7 +77,7 @@ export class SliderView extends Container {
     if (this.isDragging) return;
 
     this._rate = rate;
-    const pos: number = this.changeRateToPixel(this._rate);
+    const pos: number = this.convertRateToPixel(this._rate);
     this.updateParts(pos);
 
     this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
@@ -111,8 +111,7 @@ export class SliderView extends Container {
     const mousePos: number = this.limitSliderButtonPosition(evt);
 
     this.updateParts(mousePos);
-
-    this._rate = this.changePixelToRate(mousePos);
+    this._rate = this.convertPixelToRate(mousePos);
 
     this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
   };
@@ -136,15 +135,27 @@ export class SliderView extends Container {
   private updateParts(mousePos: number): void {
     //バーマスクがなければ、バー自体を伸縮する
     if (this._bar && !this._barMask) {
-      this.setSize(this._bar, Math.max(2.0, mousePos - this._minPosition));
+      SliderViewUtil.setSize(
+        this._bar,
+        this.isHorizontal,
+        Math.max(1.0, mousePos - this._minPosition)
+      );
     }
     //バーマスクがあれば、マスクを伸縮する。
     if (this._barMask) {
-      this.setSize(this._barMask, mousePos - this.getPosition(this._barMask));
+      SliderViewUtil.setSize(
+        this._barMask,
+        this.isHorizontal,
+        mousePos - SliderViewUtil.getPosition(this._barMask, this.isHorizontal)
+      );
     }
     //ボタンの位置を更新する。
     if (this._slideButton) {
-      this.setPosition(this._slideButton, mousePos);
+      SliderViewUtil.setPosition(
+        this._slideButton,
+        this.isHorizontal,
+        mousePos
+      );
     }
   }
 
@@ -156,7 +167,6 @@ export class SliderView extends Container {
     this.isDragging = false;
     this.removeListener("mousemove", this.moveSlider);
     this.removeListener("mouseup", this.moveSliderFinish);
-
     this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
   };
 
@@ -168,7 +178,6 @@ export class SliderView extends Container {
   protected onPressBase(evt: InteractionEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
-
     this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
   }
 
@@ -177,13 +186,12 @@ export class SliderView extends Container {
    * @param	rate
    * @return
    */
-  protected changeRateToPixel(rate: number): number {
-    let pix: number =
-      ((this._maxPosition - this._minPosition) * rate) / SliderView.MAX_RATE +
-      this._minPosition;
-    pix = Math.max(pix, this._minPosition);
-    pix = Math.min(pix, this._maxPosition);
-    return pix;
+  protected convertRateToPixel(rate: number): number {
+    return SliderViewUtil.convertRateToPixel(
+      rate,
+      this._maxPosition,
+      this._minPosition
+    );
   }
 
   /**
@@ -191,42 +199,12 @@ export class SliderView extends Container {
    * @param	pixel
    * @return
    */
-  protected changePixelToRate(pixel: number): number {
-    const min = this._minPosition;
-    const max = this._maxPosition;
-    let rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
-
-    rate = Math.max(rate, 0.0);
-    rate = Math.min(rate, SliderView.MAX_RATE);
-    return rate;
-  }
-
-  /**
-   * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
-   * @param	displayObj
-   * @return
-   */
-  protected getPosition(displayObj: DisplayObject): number {
-    if (this.isHorizontal) {
-      return displayObj.x;
-    } else {
-      return displayObj.y;
-    }
-  }
-
-  /**
-   * ディスプレイオブジェクトにスクロール方向の座標地を設定する
-   * @param	displayObj
-   * @param	position
-   */
-  protected setPosition(displayObj: DisplayObject, position: number): void {
-    if (!displayObj) return;
-
-    if (this.isHorizontal) {
-      displayObj.x = position;
-    } else {
-      displayObj.y = position;
-    }
+  protected convertPixelToRate(pixel: number): number {
+    return SliderViewUtil.convertPixelToRate(
+      pixel,
+      this._maxPosition,
+      this._minPosition
+    );
   }
 
   /**
@@ -250,35 +228,6 @@ export class SliderView extends Container {
     }
   }
 
-  /**
-   * スクロール方向の高さ、もしくは幅を取得する
-   * @param	displayObj
-   * @return
-   */
-  protected getSize(displayObj: DisplayObject): number {
-    const size = displayObj.getLocalBounds();
-    if (this.isHorizontal) {
-      return size.width * displayObj.scale.x;
-    } else {
-      return size.height * displayObj.scale.y;
-    }
-  }
-
-  /**
-   * スクロール方向の高さ、もしくは幅を設定する
-   * @param displayObj
-   * @param {number} amount
-   */
-  protected setSize(displayObj: DisplayObject, amount: number): void {
-    const size = displayObj.getLocalBounds();
-
-    if (this.isHorizontal) {
-      displayObj.scale.x = amount / size.width;
-    } else {
-      displayObj.scale.y = amount / size.height;
-    }
-  }
-
   private set base(value: DisplayObject) {
     if (!value) return;
 
@@ -287,13 +236,13 @@ export class SliderView extends Container {
     this._base.on("click", e => {
       this.onPressBase(e);
     });
-    this.addChildMe(value);
+    this.addChildParts(value);
   }
 
   private initBarAndMask(value: DisplayObject): DisplayObject {
     if (value == null) return;
     value.interactive = false;
-    this.addChildMe(value);
+    this.addChildParts(value);
     return value;
   }
 
@@ -303,7 +252,7 @@ export class SliderView extends Container {
     this._slideButton = value;
     this._slideButton.on("mousedown", this.startMove);
     this._slideButton.interactive = true;
-    this.addChildMe(value);
+    this.addChildParts(value);
   }
 
   get rate() {
@@ -327,5 +276,98 @@ export class SliderView extends Container {
     this._base.removeAllListeners();
     this._slideButton.removeAllListeners();
     this.removeChildren();
+  }
+}
+
+export class SliderViewUtil {
+  /**
+   * スライダーの座標から、スライダーの割合を取得する
+   */
+  public static convertPixelToRate(
+    pixel: number,
+    max: number,
+    min: number
+  ): number {
+    let rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
+    return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
+  }
+
+  public static convertRateToPixel(
+    rate: number,
+    max: number,
+    min: number
+  ): number {
+    let pix: number = ((max - min) * rate) / SliderView.MAX_RATE + min;
+    return SliderViewUtil.clamp(pix, max, min);
+  }
+
+  /**
+   * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
+   * @return displayObjの座標値。単位ピクセル
+   */
+  public static getPosition(
+    displayObj: DisplayObject,
+    isHorizontal: boolean
+  ): number {
+    if (isHorizontal) {
+      return displayObj.x;
+    } else {
+      return displayObj.y;
+    }
+  }
+
+  /**
+   * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+   */
+  public static setPosition(
+    displayObj: DisplayObject,
+    isHorizontal: boolean,
+    position: number
+  ): void {
+    if (!displayObj) return;
+
+    if (isHorizontal) {
+      displayObj.x = position;
+    } else {
+      displayObj.y = position;
+    }
+  }
+
+  /**
+   * スクロール方向の高さ、もしくは幅を取得する。単位ピクセル
+   */
+  public static getSize(
+    displayObj: DisplayObject,
+    isHorizontal: boolean
+  ): number {
+    const size = displayObj.getLocalBounds();
+    if (isHorizontal) {
+      return size.width * displayObj.scale.x;
+    } else {
+      return size.height * displayObj.scale.y;
+    }
+  }
+
+  /**
+   * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+   */
+  public static setSize(
+    displayObj: DisplayObject,
+    isHorizontal: boolean,
+    amount: number
+  ): void {
+    const size = displayObj.getLocalBounds();
+
+    if (isHorizontal) {
+      displayObj.scale.x = amount / size.width;
+    } else {
+      displayObj.scale.y = amount / size.height;
+    }
+  }
+
+  public static clamp(num: number, max: number, min: number): number {
+    num = Math.max(num, min);
+    num = Math.min(num, max);
+    return num;
   }
 }
