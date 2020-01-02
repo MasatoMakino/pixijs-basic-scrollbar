@@ -4,6 +4,7 @@ import { SliderViewOption } from "./SliderViewOption";
 import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
 import { SliderViewUtil } from "./SliderView";
+import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 
 /**
  * スクロールバーを表すクラスです。
@@ -23,15 +24,20 @@ export class ScrollBarView extends SliderView {
   protected _targetContents: DisplayObject;
   protected _contentsMask: DisplayObject;
   public autoHide: boolean = false;
+  public wheelManager: MouseWheelScrollManager;
 
   constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption) {
     super(option);
 
     ScrollBarViewInitOption.check(scrollOption);
-    this.setTargetContents(scrollOption.targetContents);
-    this.setContentsMask(scrollOption.contentsMask);
+    this.targetContents = scrollOption.targetContents;
+    this.contentsMask = scrollOption.contentsMask;
 
     this.changeRate(option.rate);
+
+    this.wheelManager = new MouseWheelScrollManager(this, () => {
+      this.updateSliderPosition();
+    });
   }
 
   /**
@@ -89,7 +95,7 @@ export class ScrollBarView extends SliderView {
    * @returns {number}
    */
   get slideButtonSize(): number {
-    this.updateSlideButtonSize();
+    this.updateSliderSize();
     return SliderViewUtil.getSize(this._slideButton, this.isHorizontal);
   }
 
@@ -102,36 +108,37 @@ export class ScrollBarView extends SliderView {
       return;
     }
 
-    this.updateSlideButtonSize();
-    this.initSliderPosition();
+    this.updateSliderSize();
+    this.updateSliderPosition();
 
     if (this.listeners(SliderEventType.CHANGE).length != 0) return;
 
     this.on(SliderEventType.CHANGE, this.updateContentsPosition);
   }
 
-  protected initSliderPosition(): void {
-    const zeroPos: number = SliderViewUtil.getPosition(
-      this._contentsMask,
-      this.isHorizontal
-    );
-    const contentsPos: number = SliderViewUtil.getPosition(
-      this._targetContents,
-      this.isHorizontal
-    );
+  /**
+   * 現状のコンテンツおよびマスク位置から、スライダーの割合を算出する。
+   * その割合でスライダーの位置を更新する。
+   */
+  protected updateSliderPosition(): void {
+    const getPos = SliderViewUtil.getPosition;
+    const zeroPos = getPos(this._contentsMask, this.isHorizontal);
+    const contentsPos = getPos(this._targetContents, this.isHorizontal);
+    const posDif = zeroPos - contentsPos;
 
-    const posDif: number = zeroPos - contentsPos;
-    const sizeDif: number =
-      SliderViewUtil.getSize(this._targetContents, this.isHorizontal) -
-      SliderViewUtil.getSize(this._contentsMask, this.isHorizontal);
+    const getSize = SliderViewUtil.getSize;
+    const targetSize = getSize(this._targetContents, this.isHorizontal);
+    const maskSize = getSize(this._contentsMask, this.isHorizontal);
+    const sizeDif = targetSize - maskSize;
 
-    this.changeRate((posDif / sizeDif) * SliderView.MAX_RATE);
+    const rate = (posDif / sizeDif) * SliderView.MAX_RATE;
+    this.changeRate(rate);
   }
 
   /**
    * スライダーボタンのサイズの伸縮を行う。
    */
-  protected updateSlideButtonSize(): void {
+  protected updateSliderSize(): void {
     if (!this._targetContents || !this._contentsMask || !this._slideButton) {
       return;
     }
@@ -221,20 +228,20 @@ export class ScrollBarView extends SliderView {
     super.onPressBase(evt);
   }
 
-  public get targetContents(): DisplayObject {
+  get targetContents(): DisplayObject {
     return this._targetContents;
   }
 
-  protected setTargetContents(value: DisplayObject) {
+  set targetContents(value: DisplayObject) {
     this._targetContents = value;
     this.initSliderButton();
   }
 
-  public get contentsMask(): DisplayObject {
+  get contentsMask(): DisplayObject {
     return this._contentsMask;
   }
 
-  protected setContentsMask(value: DisplayObject) {
+  set contentsMask(value: DisplayObject) {
     this._contentsMask = value;
     this.initSliderButton();
   }

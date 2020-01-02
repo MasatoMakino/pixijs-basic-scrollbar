@@ -21,7 +21,10 @@ export class SliderView extends Container {
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
-  protected isHorizontal: boolean = true;
+  private _isHorizontal: boolean = true;
+  get isHorizontal(): boolean {
+    return this._isHorizontal;
+  }
 
   protected dragStartPos: Point = new Point();
   /**
@@ -56,7 +59,7 @@ export class SliderView extends Container {
 
     this._minPosition = option.minPosition;
     this._maxPosition = option.maxPosition;
-    this.isHorizontal = option.isHorizontal;
+    this._isHorizontal = option.isHorizontal;
     this._rate = option.rate;
 
     this.changeRate(this._rate);
@@ -135,7 +138,7 @@ export class SliderView extends Container {
     if (this._bar && !this._barMask) {
       SliderViewUtil.setSize(
         this._bar,
-        this.isHorizontal,
+        this._isHorizontal,
         Math.max(1.0, mousePos - this._minPosition)
       );
     }
@@ -143,15 +146,15 @@ export class SliderView extends Container {
     if (this._barMask) {
       SliderViewUtil.setSize(
         this._barMask,
-        this.isHorizontal,
-        mousePos - SliderViewUtil.getPosition(this._barMask, this.isHorizontal)
+        this._isHorizontal,
+        mousePos - SliderViewUtil.getPosition(this._barMask, this._isHorizontal)
       );
     }
     //ボタンの位置を更新する。
     if (this._slideButton) {
       SliderViewUtil.setPosition(
         this._slideButton,
-        this.isHorizontal,
+        this._isHorizontal,
         mousePos
       );
     }
@@ -216,7 +219,7 @@ export class SliderView extends Container {
     const global = evt.data.global;
     const localPos = displayObj.toLocal(new Point(global.x, global.y));
 
-    if (this.isHorizontal) {
+    if (this._isHorizontal) {
       return localPos.x - this.dragStartPos.x;
     } else {
       return localPos.y - this.dragStartPos.y;
