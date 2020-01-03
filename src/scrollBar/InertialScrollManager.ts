@@ -1,9 +1,12 @@
 import { InteractionEvent } from "@pixi/interaction";
 import { ScrollBarView } from "./ScrollBarView";
-import { SliderViewUtil } from "./SliderView";
+import { SliderViewUtil } from "../SliderView";
 import { Ticker } from "pixi.js";
+
 import TWEEN from "@tweenjs/tween.js";
 import Tween = TWEEN.Tween;
+import Easing = TWEEN.Easing;
+
 import { ScrollBarViewUtil } from "./ScrollBarView";
 
 export class InertialScrollManager {
@@ -117,7 +120,7 @@ export class InertialScrollManager {
       .onUpdate(() => {
         this.updateSliderPositionFunc();
       })
-      .easing(TWEEN.Easing.Cubic.Out)
+      .easing(Easing.Cubic.Out)
       .start();
   };
 

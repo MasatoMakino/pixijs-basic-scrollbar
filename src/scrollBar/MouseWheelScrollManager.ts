@@ -1,6 +1,5 @@
-import { ScrollBarView } from "./ScrollBarView";
-import { SliderViewUtil } from "./SliderView";
-import { ScrollBarViewUtil } from "./ScrollBarView";
+import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
+import { SliderViewUtil } from "../SliderView";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス

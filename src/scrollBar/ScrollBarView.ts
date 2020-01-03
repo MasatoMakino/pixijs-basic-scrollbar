@@ -1,9 +1,9 @@
-import { SliderEventContext, SliderEventType } from "./SliderEvent";
-import { SliderView } from "./SliderView";
-import { SliderViewOption } from "./SliderViewOption";
+import { SliderEventContext, SliderEventType } from "../SliderEvent";
+import { SliderView } from "../SliderView";
+import { SliderViewUtil } from "../SliderView";
+import { SliderViewOption } from "../SliderViewOption";
 import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
-import { SliderViewUtil } from "./SliderView";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { InertialScrollManager } from "./InertialScrollManager";
 
