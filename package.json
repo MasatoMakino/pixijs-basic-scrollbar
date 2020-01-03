@@ -7,7 +7,9 @@
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@tweenjs/tween.js": "^18.5.0",
     "@types/node": "^13.1.0",
+    "@types/tween.js": "^17.2.0",
     "dat.gui": "^0.7.6",
     "gulp": "^4.0.2",
     "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
@@ -22,6 +24,7 @@
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
+    "@tweenjs/tween.js": "^18.5.0",
     "pixi.js": "^5.2.0"
   },
   "scripts": {

@@ -3,6 +3,7 @@ import { InteractionEvent } from "@pixi/interaction";
 
 import { SliderEventContext, SliderEventType } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
+import IPoint = PIXI.IPoint;
 
 /**
  * スライダー用クラスです
@@ -304,7 +305,7 @@ export class SliderViewUtil {
    * @return displayObjの座標値。単位ピクセル
    */
   public static getPosition(
-    displayObj: DisplayObject,
+    displayObj: DisplayObject | IPoint,
     isHorizontal: boolean
   ): number {
     if (isHorizontal) {

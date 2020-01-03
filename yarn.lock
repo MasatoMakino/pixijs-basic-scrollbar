@@ -983,6 +983,11 @@
     eventemitter3 "^3.1.0"
     url "^0.11.0"
 
+"@tweenjs/tween.js@^18.5.0":
+  version "18.5.0"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-18.5.0.tgz#f2aa9e6052c6a314d85c9a8034146f9ae6d4e339"
+  integrity sha512-/qyhdvbc6vWsFuiK7Wq74ZMu1F/9sFRlBv2qnjeu70XI0HRC8zOfUqbXT2irVLCSVuCI/fI7HphGdbsbyQ/Q5w==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -1011,6 +1016,11 @@
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
+
+"@types/tween.js@^17.2.0":
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/@types/tween.js/-/tween.js-17.2.0.tgz#25f98311daecb165ab91ee2cd7f17a9b1e6cc30c"
+  integrity sha512-mOsqurEtFEzwgkVc/jDVE2XrjZBYTbrmDUyCr9GXmnfc6q5otokxFtKvSY/B21zgz9LVRIvRTawKczjKi57wrA==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"

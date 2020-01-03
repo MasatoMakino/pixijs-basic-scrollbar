@@ -17,11 +17,12 @@ export class MouseWheelScrollManager {
     this.scrollBarView = scrollBarView;
     this.updateSliderPositionFunc = updateSliderPositionFunc;
 
-    this.scrollBarView.targetContents.interactive = true;
-    this.scrollBarView.targetContents["interactiveMousewheel"] = true;
+    const target = this.scrollBarView.targetContents;
+    target.interactive = true;
+    target["interactiveMousewheel"] = true;
 
     //TODO add support deltaX / deltaY
-    this.scrollBarView.targetContents.on("mousewheel", (delta, event) => {
+    target.on("mousewheel", (delta, event) => {
       const shift = delta > 0 ? this.delta : -this.delta;
       this.scroll(shift);
     });
