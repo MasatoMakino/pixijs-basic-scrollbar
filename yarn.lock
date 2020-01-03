@@ -3356,7 +3356,7 @@ gulplog@^1.0.0:
 
 "gulptask-tsdoc@https://github.com/MasatoMakino/gulptask-tsdoc.git":
   version "0.2.0"
-  resolved "https://github.com/MasatoMakino/gulptask-tsdoc.git#f6e15cbc8d73964e273799d1597a62612197ff48"
+  resolved "https://github.com/MasatoMakino/gulptask-tsdoc.git#5dead2411f48eda53bc5222691b1e88dccd5b1b4"
   dependencies:
     gulp "^4.0.2"
     gulp-replace "^1.0.0"
