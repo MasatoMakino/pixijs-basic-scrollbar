@@ -1,20 +1,22 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { ScrollBarView } from "./ScrollBarView";
 import { SliderViewUtil } from "../SliderView";
-import { Ticker } from "pixi.js";
+import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
+import { ScrollBarEventType } from "./ScrollBarEvent";
 
+import * as PIXI from "pixi.js";
+import { Ticker } from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
 import Tween = TWEEN.Tween;
 import Easing = TWEEN.Easing;
 
-import { ScrollBarViewUtil } from "./ScrollBarView";
-import * as PIXI from "pixi.js";
-import { ScrollBarEventType } from "./ScrollBarEvent";
-
+/**
+ * スクロールバーエリアの慣性スクロールを処理するクラス。
+ */
 export class InertialScrollManager extends PIXI.utils.EventEmitter {
   private scrollBarView: ScrollBarView;
 
   public decelerationRate: number = 0.975;
+  public overflowScrollRange: number = 180;
   protected speed: number = 0.0;
   protected isDragging: boolean = false;
   protected dragPos: number;
@@ -67,10 +69,8 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   private onMouseMoveHandler(e: InteractionEvent): void {
     const delta = this.getDragPos(e) - this.dragPos;
 
-    //TODO decrease delta on out range
-
     this.speed = delta;
-    this.addTargetPosition(delta);
+    this.addTargetPosition(delta * this.getOverflowDeceleration());
 
     this.updateDragPos(e);
   }
@@ -92,20 +92,19 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     target.removeListener("mousemove", this.onMouseMove);
     target.removeListener("mouseup", this.onMouseUp);
     target.removeListener("mouseupoutside", this.onMouseUp);
-
     this.isDragging = false;
+    this.onTick();
   }
 
   private onTick = () => {
     if (this.isDragging) return;
-    if (this.speed == 0.0) return;
+    if (this.speed === 0.0 && this.getLeaveRangeFromMask() === 0.0) return;
+    if (this.tween?.isPlaying()) return;
 
     //位置による減速率増加。マスクエリアから離れているなら減速率が大きくなる。
-    const difPos = this.getLeaveRangeFromMask();
-    let positionDeceleration = (180 - difPos) / 180;
-    if (positionDeceleration < 0.0) positionDeceleration = 0.0;
+    const overflowDeceleration = this.getOverflowDeceleration();
 
-    this.speed *= this.decelerationRate * positionDeceleration;
+    this.speed *= this.decelerationRate * overflowDeceleration;
     this.addTargetPosition(this.speed);
 
     if (Math.abs(this.speed) > 0.1) return;
@@ -129,6 +128,19 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   };
 
   /**
+   * スクロールのオーバーフロー量から、減退率を割り出す。
+   * overflowScrollRange以上に離れている場合は0.0
+   * スクロールエリア内にコンテンツがある場合は1.0を返す。
+   */
+  private getOverflowDeceleration() {
+    const difPos = this.getLeaveRangeFromMask();
+    let overflowDeceleration =
+      (this.overflowScrollRange - difPos) / this.overflowScrollRange;
+    if (overflowDeceleration < 0.0) overflowDeceleration = 0.0;
+
+    return overflowDeceleration;
+  }
+  /**
    * ターゲットコンテンツがマスク領域からどれだけ離れているか。
    */
   private getLeaveRangeFromMask() {
@@ -149,6 +161,4 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
       isHorizontal
     );
   }
-
-  //TODO targetContentsが別の要素から位置更新された場合、tweenを停止する。
 }
