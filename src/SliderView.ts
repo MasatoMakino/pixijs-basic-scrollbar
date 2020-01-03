@@ -92,19 +92,21 @@ export class SliderView extends Container {
    * @param {Object} e
    */
   private startMove = (e: any) => {
-    const evt = e as InteractionEvent;
+    this.onPressedSliderButton(e as InteractionEvent);
+  };
 
+  protected onPressedSliderButton(e: InteractionEvent): void {
     this.isDragging = true;
-    const target: DisplayObject = evt.currentTarget as DisplayObject;
+    const target: DisplayObject = e.currentTarget as DisplayObject;
 
-    const global = evt.data.global;
+    const global = e.data.global;
     const localPos = this.toLocal(new Point(global.x, global.y));
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
     this.on("mousemove", this.moveSlider);
     this.on("mouseup", this.moveSliderFinish);
     this.on("mouseupoutside", this.moveSliderFinish);
-  };
+  }
 
   /**
    * スライダーのドラッグ中の処理

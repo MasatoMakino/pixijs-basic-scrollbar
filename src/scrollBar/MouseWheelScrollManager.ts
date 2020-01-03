@@ -1,20 +1,19 @@
 import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
 import { SliderViewUtil } from "../SliderView";
 
+import * as PIXI from "pixi.js";
+import { ScrollBarEventType } from "./ScrollBarEvent";
+
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */
-export class MouseWheelScrollManager {
+export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
   protected scrollBarView: ScrollBarView;
-  private updateSliderPositionFunc: Function;
   public delta = 16;
 
-  constructor(
-    scrollBarView: ScrollBarView,
-    updateSliderPositionFunc: Function
-  ) {
+  constructor(scrollBarView: ScrollBarView) {
+    super();
     this.scrollBarView = scrollBarView;
-    this.updateSliderPositionFunc = updateSliderPositionFunc;
 
     const target = this.scrollBarView.targetContents;
     target.interactive = true;
@@ -35,6 +34,7 @@ export class MouseWheelScrollManager {
     const pos = SliderViewUtil.getPosition(target, isHorizontal) + delta;
     ScrollBarViewUtil.clampTargetPosition(target, mask, pos, isHorizontal);
 
-    this.updateSliderPositionFunc();
+    this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
+    this.scrollBarView.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
 }

@@ -8,10 +8,11 @@ import Tween = TWEEN.Tween;
 import Easing = TWEEN.Easing;
 
 import { ScrollBarViewUtil } from "./ScrollBarView";
+import * as PIXI from "pixi.js";
+import { ScrollBarEventType } from "./ScrollBarEvent";
 
-export class InertialScrollManager {
+export class InertialScrollManager extends PIXI.utils.EventEmitter {
   private scrollBarView: ScrollBarView;
-  private updateSliderPositionFunc: Function;
 
   public decelerationRate: number = 0.975;
   protected speed: number = 0.0;
@@ -20,12 +21,10 @@ export class InertialScrollManager {
 
   private tween: Tween;
 
-  constructor(
-    scrollBarView: ScrollBarView,
-    updateSliderPositionFunc: Function
-  ) {
+  constructor(scrollBarView: ScrollBarView) {
+    super();
     this.scrollBarView = scrollBarView;
-    this.updateSliderPositionFunc = updateSliderPositionFunc;
+    scrollBarView.on(ScrollBarEventType.STOP_INERTIAL_TWEEN, this.stopInertial);
 
     const target = this.scrollBarView.targetContents;
     target.interactive = true;
@@ -82,7 +81,7 @@ export class InertialScrollManager {
     const currentPos = SliderViewUtil.getPosition(target, isHorizontal);
     SliderViewUtil.setPosition(target, isHorizontal, currentPos + delta);
 
-    this.updateSliderPositionFunc();
+    this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
   }
 
   private onMouseUp = (e: InteractionEvent) => {
@@ -118,10 +117,15 @@ export class InertialScrollManager {
     this.tween = new Tween(this.scrollBarView.targetContents)
       .to(toObj, 666)
       .onUpdate(() => {
-        this.updateSliderPositionFunc();
+        this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
       })
       .easing(Easing.Cubic.Out)
       .start();
+  };
+
+  private stopInertial = () => {
+    this.speed = 0.0;
+    if (this.tween) this.tween.stop();
   };
 
   /**

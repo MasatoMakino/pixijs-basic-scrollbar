@@ -6,6 +6,7 @@ import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { InertialScrollManager } from "./InertialScrollManager";
+import { ScrollBarEventType } from "./ScrollBarEvent";
 
 /**
  * スクロールバーを表すクラスです。
@@ -36,11 +37,13 @@ export class ScrollBarView extends SliderView {
 
     this.changeRate(option.rate);
 
-    this.wheelManager = new MouseWheelScrollManager(this, () => {
+    this.wheelManager = new MouseWheelScrollManager(this);
+    this.wheelManager.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
       this.updateSliderPosition();
     });
 
-    const inertial = new InertialScrollManager(this, () => {
+    const inertial = new InertialScrollManager(this);
+    inertial.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
       this.updateSliderPosition();
     });
   }
@@ -228,9 +231,15 @@ export class ScrollBarView extends SliderView {
     );
   }
 
+  protected onPressedSliderButton(e): void {
+    super.onPressedSliderButton(e);
+    this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+  }
+
   protected onPressBase(evt: InteractionEvent): void {
     if (this.isHide) return;
     super.onPressBase(evt);
+    this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
 
   get targetContents(): DisplayObject {
