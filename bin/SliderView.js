@@ -15,7 +15,7 @@ export class SliderView extends Container {
      */
     constructor(option) {
         super();
-        this.isHorizontal = true;
+        this._isHorizontal = true;
         this.dragStartPos = new Point();
         this.isDragging = false; // 現在スライド中か否か
         /**
@@ -23,15 +23,7 @@ export class SliderView extends Container {
          * @param {Object} e
          */
         this.startMove = (e) => {
-            const evt = e;
-            this.isDragging = true;
-            const target = evt.currentTarget;
-            const global = evt.data.global;
-            const localPos = this.toLocal(new Point(global.x, global.y));
-            this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
-            this.on("mousemove", this.moveSlider);
-            this.on("mouseup", this.moveSliderFinish);
-            this.on("mouseupoutside", this.moveSliderFinish);
+            this.onPressedSliderButton(e);
         };
         /**
          * スライダーのドラッグ中の処理
@@ -41,7 +33,7 @@ export class SliderView extends Container {
             const evt = e;
             const mousePos = this.limitSliderButtonPosition(evt);
             this.updateParts(mousePos);
-            this._rate = this.changePixelToRate(mousePos);
+            this._rate = this.convertPixelToRate(mousePos);
             this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
         };
         /**
@@ -64,6 +56,9 @@ export class SliderView extends Container {
         this.init(option);
         this.interactive = true;
     }
+    get isHorizontal() {
+        return this._isHorizontal;
+    }
     /**
      * 初期化処理
      * @param {SliderViewOption} option
@@ -78,11 +73,11 @@ export class SliderView extends Container {
             this._bar.mask = this._barMask;
         this._minPosition = option.minPosition;
         this._maxPosition = option.maxPosition;
-        this.isHorizontal = option.isHorizontal;
+        this._isHorizontal = option.isHorizontal;
         this._rate = option.rate;
         this.changeRate(this._rate);
     }
-    addChildMe(obj) {
+    addChildParts(obj) {
         if (!obj)
             return;
         if (obj.parent)
@@ -98,9 +93,19 @@ export class SliderView extends Container {
         if (this.isDragging)
             return;
         this._rate = rate;
-        const pos = this.changeRateToPixel(this._rate);
+        const pos = this.convertRateToPixel(this._rate);
         this.updateParts(pos);
         this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+    }
+    onPressedSliderButton(e) {
+        this.isDragging = true;
+        const target = e.currentTarget;
+        const global = e.data.global;
+        const localPos = this.toLocal(new Point(global.x, global.y));
+        this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
+        this.on("mousemove", this.moveSlider);
+        this.on("mouseup", this.moveSliderFinish);
+        this.on("mouseupoutside", this.moveSliderFinish);
     }
     /**
      * スライダーボタンの位置を制限する関数
@@ -108,9 +113,7 @@ export class SliderView extends Container {
      */
     limitSliderButtonPosition(evt) {
         let mousePos = this.getMousePosition(this, evt);
-        mousePos = Math.min(this._maxPosition, mousePos);
-        mousePos = Math.max(this._minPosition, mousePos);
-        return mousePos;
+        return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
     }
     /**
      * 各MCの位置、サイズをマウスポインタの位置に合わせて更新する
@@ -120,15 +123,15 @@ export class SliderView extends Container {
     updateParts(mousePos) {
         //バーマスクがなければ、バー自体を伸縮する
         if (this._bar && !this._barMask) {
-            this.setSize(this._bar, Math.max(2.0, mousePos - this._minPosition));
+            SliderViewUtil.setSize(this._bar, this._isHorizontal, Math.max(1.0, mousePos - this._minPosition));
         }
         //バーマスクがあれば、マスクを伸縮する。
         if (this._barMask) {
-            this.setSize(this._barMask, mousePos - this.getPosition(this._barMask));
+            SliderViewUtil.setSize(this._barMask, this._isHorizontal, mousePos - SliderViewUtil.getPosition(this._barMask, this._isHorizontal));
         }
         //ボタンの位置を更新する。
         if (this._slideButton) {
-            this.setPosition(this._slideButton, mousePos);
+            SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
         }
     }
     /**
@@ -146,97 +149,29 @@ export class SliderView extends Container {
      * @param	rate
      * @return
      */
-    changeRateToPixel(rate) {
-        let pix = ((this._maxPosition - this._minPosition) * rate) / SliderView.MAX_RATE +
-            this._minPosition;
-        pix = Math.max(pix, this._minPosition);
-        pix = Math.min(pix, this._maxPosition);
-        return pix;
+    convertRateToPixel(rate) {
+        return SliderViewUtil.convertRateToPixel(rate, this._maxPosition, this._minPosition);
     }
     /**
      * スライダーの座標から、スライダーの割合を取得する
      * @param	pixel
      * @return
      */
-    changePixelToRate(pixel) {
-        const min = this._minPosition;
-        const max = this._maxPosition;
-        let rate = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
-        rate = Math.max(rate, 0.0);
-        rate = Math.min(rate, SliderView.MAX_RATE);
-        return rate;
+    convertPixelToRate(pixel) {
+        return SliderViewUtil.convertPixelToRate(pixel, this._maxPosition, this._minPosition);
     }
     /**
-     * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
-     * @param	displayObj
-     * @return
-     */
-    getPosition(displayObj) {
-        if (this.isHorizontal) {
-            return displayObj.x;
-        }
-        else {
-            return displayObj.y;
-        }
-    }
-    /**
-     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
-     * @param	displayObj
-     * @param	position
-     */
-    setPosition(displayObj, position) {
-        if (!displayObj)
-            return;
-        if (this.isHorizontal) {
-            displayObj.x = position;
-        }
-        else {
-            displayObj.y = position;
-        }
-    }
-    /**
-     * スクロール方向のマウス座標を取得する
-     * limitSliderButtonPosition内の処理
-     * @param displayObj
-     * @param evt
-     * @return
+     * ドラッグ中のマウス座標を取得する。
+     * limitSliderButtonPosition内の処理。
      */
     getMousePosition(displayObj, evt) {
         const global = evt.data.global;
         const localPos = displayObj.toLocal(new Point(global.x, global.y));
-        if (this.isHorizontal) {
+        if (this._isHorizontal) {
             return localPos.x - this.dragStartPos.x;
         }
         else {
             return localPos.y - this.dragStartPos.y;
-        }
-    }
-    /**
-     * スクロール方向の高さ、もしくは幅を取得する
-     * @param	displayObj
-     * @return
-     */
-    getSize(displayObj) {
-        const size = displayObj.getLocalBounds();
-        if (this.isHorizontal) {
-            return size.width * displayObj.scale.x;
-        }
-        else {
-            return size.height * displayObj.scale.y;
-        }
-    }
-    /**
-     * スクロール方向の高さ、もしくは幅を設定する
-     * @param displayObj
-     * @param {number} amount
-     */
-    setSize(displayObj, amount) {
-        const size = displayObj.getLocalBounds();
-        if (this.isHorizontal) {
-            displayObj.scale.x = amount / size.width;
-        }
-        else {
-            displayObj.scale.y = amount / size.height;
         }
     }
     set base(value) {
@@ -247,13 +182,13 @@ export class SliderView extends Container {
         this._base.on("click", e => {
             this.onPressBase(e);
         });
-        this.addChildMe(value);
+        this.addChildParts(value);
     }
     initBarAndMask(value) {
         if (value == null)
             return;
         value.interactive = false;
-        this.addChildMe(value);
+        this.addChildParts(value);
         return value;
     }
     set slideButton(value) {
@@ -262,7 +197,7 @@ export class SliderView extends Container {
         this._slideButton = value;
         this._slideButton.on("mousedown", this.startMove);
         this._slideButton.interactive = true;
-        this.addChildMe(value);
+        this.addChildParts(value);
     }
     get rate() {
         return this._rate;
@@ -279,3 +214,70 @@ export class SliderView extends Container {
     }
 }
 SliderView.MAX_RATE = 1.0;
+export class SliderViewUtil {
+    /**
+     * スライダーの座標から、スライダーの割合を取得する
+     */
+    static convertPixelToRate(pixel, max, min) {
+        let rate = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
+        return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
+    }
+    static convertRateToPixel(rate, max, min) {
+        let pix = ((max - min) * rate) / SliderView.MAX_RATE + min;
+        return SliderViewUtil.clamp(pix, max, min);
+    }
+    /**
+     * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
+     * @return displayObjの座標値。単位ピクセル
+     */
+    static getPosition(displayObj, isHorizontal) {
+        if (isHorizontal) {
+            return displayObj.x;
+        }
+        else {
+            return displayObj.y;
+        }
+    }
+    /**
+     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+     */
+    static setPosition(displayObj, isHorizontal, position) {
+        if (!displayObj)
+            return;
+        if (isHorizontal) {
+            displayObj.x = position;
+        }
+        else {
+            displayObj.y = position;
+        }
+    }
+    /**
+     * スクロール方向の高さ、もしくは幅を取得する。単位ピクセル
+     */
+    static getSize(displayObj, isHorizontal) {
+        const size = displayObj.getLocalBounds();
+        if (isHorizontal) {
+            return size.width * displayObj.scale.x;
+        }
+        else {
+            return size.height * displayObj.scale.y;
+        }
+    }
+    /**
+     * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+     */
+    static setSize(displayObj, isHorizontal, amount) {
+        const size = displayObj.getLocalBounds();
+        if (isHorizontal) {
+            displayObj.scale.x = amount / size.width;
+        }
+        else {
+            displayObj.scale.y = amount / size.height;
+        }
+    }
+    static clamp(num, max, min) {
+        num = Math.max(num, min);
+        num = Math.min(num, max);
+        return num;
+    }
+}

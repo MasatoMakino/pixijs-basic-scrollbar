@@ -1,6 +1,7 @@
 import { DisplayObject, Container, Graphics, Point } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
 import { SliderViewOption } from "./SliderViewOption";
+import IPoint = PIXI.IPoint;
 /**
  * スライダー用クラスです
  *
@@ -16,7 +17,8 @@ export declare class SliderView extends Container {
     protected _slideButton: DisplayObject;
     protected _minPosition: number;
     protected _maxPosition: number;
-    protected isHorizontal: boolean;
+    private _isHorizontal;
+    get isHorizontal(): boolean;
     protected dragStartPos: Point;
     /**
      * 現在のスライダーの位置の割合。
@@ -34,7 +36,7 @@ export declare class SliderView extends Container {
      * @param {SliderViewOption} option
      */
     protected init(option: SliderViewOption): void;
-    private addChildMe;
+    private addChildParts;
     /**
      * スライダーの位置を変更する
      * @param	rate	スライダーの位置 MIN 0.0 ~ MAX 100.0
@@ -45,6 +47,7 @@ export declare class SliderView extends Container {
      * @param {Object} e
      */
     private startMove;
+    protected onPressedSliderButton(e: InteractionEvent): void;
     /**
      * スライダーのドラッグ中の処理
      * @param e
@@ -77,45 +80,18 @@ export declare class SliderView extends Container {
      * @param	rate
      * @return
      */
-    protected changeRateToPixel(rate: number): number;
+    protected convertRateToPixel(rate: number): number;
     /**
      * スライダーの座標から、スライダーの割合を取得する
      * @param	pixel
      * @return
      */
-    protected changePixelToRate(pixel: number): number;
+    protected convertPixelToRate(pixel: number): number;
     /**
-     * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
-     * @param	displayObj
-     * @return
-     */
-    protected getPosition(displayObj: DisplayObject): number;
-    /**
-     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
-     * @param	displayObj
-     * @param	position
-     */
-    protected setPosition(displayObj: DisplayObject, position: number): void;
-    /**
-     * スクロール方向のマウス座標を取得する
-     * limitSliderButtonPosition内の処理
-     * @param displayObj
-     * @param evt
-     * @return
+     * ドラッグ中のマウス座標を取得する。
+     * limitSliderButtonPosition内の処理。
      */
     protected getMousePosition(displayObj: DisplayObject, evt: InteractionEvent): number;
-    /**
-     * スクロール方向の高さ、もしくは幅を取得する
-     * @param	displayObj
-     * @return
-     */
-    protected getSize(displayObj: DisplayObject): number;
-    /**
-     * スクロール方向の高さ、もしくは幅を設定する
-     * @param displayObj
-     * @param {number} amount
-     */
-    protected setSize(displayObj: DisplayObject, amount: number): void;
     private set base(value);
     private initBarAndMask;
     private set slideButton(value);
@@ -130,5 +106,30 @@ export declare class SliderView extends Container {
      * @param {Event} e
      */
     protected onDisposeFunction(e?: Event): void;
+}
+export declare class SliderViewUtil {
+    /**
+     * スライダーの座標から、スライダーの割合を取得する
+     */
+    static convertPixelToRate(pixel: number, max: number, min: number): number;
+    static convertRateToPixel(rate: number, max: number, min: number): number;
+    /**
+     * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
+     * @return displayObjの座標値。単位ピクセル
+     */
+    static getPosition(displayObj: DisplayObject | IPoint, isHorizontal: boolean): number;
+    /**
+     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+     */
+    static setPosition(displayObj: DisplayObject, isHorizontal: boolean, position: number): void;
+    /**
+     * スクロール方向の高さ、もしくは幅を取得する。単位ピクセル
+     */
+    static getSize(displayObj: DisplayObject, isHorizontal: boolean): number;
+    /**
+     * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+     */
+    static setSize(displayObj: DisplayObject, isHorizontal: boolean, amount: number): void;
+    static clamp(num: number, max: number, min: number): number;
 }
 //# sourceMappingURL=SliderView.d.ts.map

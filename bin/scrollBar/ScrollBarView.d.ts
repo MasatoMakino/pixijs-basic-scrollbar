@@ -1,7 +1,8 @@
-import { SliderView } from "./SliderView";
-import { SliderViewOption } from "./SliderViewOption";
+import { SliderView } from "../SliderView";
+import { SliderViewOption } from "../SliderViewOption";
 import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
+import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 /**
  * スクロールバーを表すクラスです。
  *
@@ -19,6 +20,7 @@ export declare class ScrollBarView extends SliderView {
     protected _targetContents: DisplayObject;
     protected _contentsMask: DisplayObject;
     autoHide: boolean;
+    wheelManager: MouseWheelScrollManager;
     constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption);
     /**
      * 初期化処理
@@ -36,13 +38,17 @@ export declare class ScrollBarView extends SliderView {
      * @param	rate
      * @return
      */
-    protected changeRateToPixel(rate: number): number;
+    protected convertRateToPixel(rate: number): number;
     /**
      * スライダーの座標から、スライダーの割合を取得する
      * @param	pixel
      * @return
      */
-    protected changePixelToRate(pixel: number): number;
+    protected convertPixelToRate(pixel: number): number;
+    /**
+     * スライダーボタンの可動範囲を取得する。単位ピクセル
+     */
+    private getRangeOfSliderButtonPosition;
     /**
      * スライダーボタンのサイズ。
      * @returns {number}
@@ -52,12 +58,16 @@ export declare class ScrollBarView extends SliderView {
      * スクロールバーのボタンサイズ及び位置を更新する。
      * コンテンツサイズが変更された場合の更新にも利用する。
      */
-    initSliderButtonSize(): void;
-    protected initSliderPosition(): void;
+    initSliderButton(): void;
+    /**
+     * 現状のコンテンツおよびマスク位置から、スライダーの割合を算出する。
+     * その割合でスライダーの位置を更新する。
+     */
+    protected updateSliderPosition(): void;
     /**
      * スライダーボタンのサイズの伸縮を行う。
      */
-    protected updateSlideButtonSize(): void;
+    protected updateSliderSize(): void;
     /**
      * autoHideの条件に一致するかを判定する
      */
@@ -72,11 +82,12 @@ export declare class ScrollBarView extends SliderView {
      * @param {number} rate
      */
     protected updateContentsPositionWithRate(rate: number): void;
+    protected onPressedSliderButton(e: any): void;
     protected onPressBase(evt: InteractionEvent): void;
     get targetContents(): DisplayObject;
-    protected setTargetContents(value: DisplayObject): void;
+    set targetContents(value: DisplayObject);
     get contentsMask(): DisplayObject;
-    protected setContentsMask(value: DisplayObject): void;
+    set contentsMask(value: DisplayObject);
     protected onDisposeFunction(e?: Event): void;
 }
 /**
@@ -87,5 +98,22 @@ export declare class ScrollBarViewInitOption {
     targetContents: DisplayObject;
     contentsMask: DisplayObject;
     static check(option: ScrollBarViewInitOption): void;
+}
+export declare class ScrollBarViewUtil {
+    /**
+     * ターゲットコンテンツが、マスク領域内に収まる座標値を取得する。
+     * @param target
+     * @param mask
+     * @param isHorizontal
+     */
+    static getClampedTargetPosition(target: DisplayObject, mask: DisplayObject, isHorizontal: boolean): number;
+    /**
+     * ターゲットコンテンツの位置を、マスク領域内に丸め込む。
+     * @param target
+     * @param mask
+     * @param position
+     * @param isHorizontal
+     */
+    static clampTargetPosition(target: DisplayObject, mask: DisplayObject, position: number, isHorizontal: boolean): void;
 }
 //# sourceMappingURL=ScrollBarView.d.ts.map

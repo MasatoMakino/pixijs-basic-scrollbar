@@ -1,5 +1,5 @@
 export * from "./SliderEvent";
 export * from "./SliderView";
-export { ScrollBarView, ScrollBarViewInitOption } from "./ScrollBarView";
-export { SliderViewOption } from "./SliderViewOption";
+export * from "./scrollBar/ScrollBarView";
+export * from "./SliderViewOption";
 //# sourceMappingURL=index.d.ts.map
