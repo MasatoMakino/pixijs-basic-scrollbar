@@ -1,8 +1,13 @@
+/**
+ * based on https://github.com/Mwni/pixi-mousewheel
+ */
+
 import { Application, DisplayObject } from "pixi.js";
 
 class MousewheelPlugin {
   private app: Application;
 
+  //TODO イベントをwheelに一本化
   constructor(app) {
     this.app = app;
 
