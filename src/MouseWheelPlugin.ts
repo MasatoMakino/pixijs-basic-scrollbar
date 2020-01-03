@@ -75,6 +75,4 @@ export function initPlugin() {
       this._mousewheelPlugin.destroy();
     }
   });
-
-  console.log("init");
 }

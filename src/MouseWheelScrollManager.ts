@@ -1,5 +1,6 @@
 import { ScrollBarView } from "./ScrollBarView";
 import { SliderViewUtil } from "./SliderView";
+import { ScrollBarViewUtil } from "./ScrollBarView";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
@@ -31,15 +32,8 @@ export class MouseWheelScrollManager {
     const mask = this.scrollBarView.contentsMask;
     const isHorizontal = this.scrollBarView.isHorizontal;
 
-    const getSize = SliderViewUtil.getSize;
-    const targetSize = getSize(target, isHorizontal);
-    const maskSize = getSize(mask, isHorizontal);
-    const minPos = Math.min(-targetSize + maskSize, 0.0);
-
-    let pos = SliderViewUtil.getPosition(target, isHorizontal);
-    pos += delta;
-    pos = SliderViewUtil.clamp(pos, 0, minPos);
-    SliderViewUtil.setPosition(target, isHorizontal, pos);
+    const pos = SliderViewUtil.getPosition(target, isHorizontal) + delta;
+    ScrollBarViewUtil.clampTargetPosition(target, mask, pos, isHorizontal);
 
     this.updateSliderPositionFunc();
   }
