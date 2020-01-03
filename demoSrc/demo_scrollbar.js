@@ -1,9 +1,14 @@
-import { Application, Container, Graphics, Rectangle } from "pixi.js";
+import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
 import { ScrollBarView, SliderEventType } from "../bin";
+import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 800 });
   document.body.appendChild(app.view);
+
+  Ticker.shared.add(e => {
+    TWEEN.update(performance.now());
+  });
 
   initScrollBar(app.stage);
 };
