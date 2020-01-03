@@ -11,6 +11,8 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
   protected scrollBarView: ScrollBarView;
   public delta = 16;
 
+  //TODO スタート、ストップを可能にする。
+
   constructor(scrollBarView: ScrollBarView) {
     super();
     this.scrollBarView = scrollBarView;

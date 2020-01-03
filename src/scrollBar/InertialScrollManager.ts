@@ -23,6 +23,8 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
 
   private tween: Tween;
 
+  //TODO スタート、ストップを可能にする。
+
   constructor(scrollBarView: ScrollBarView) {
     super();
     this.scrollBarView = scrollBarView;
