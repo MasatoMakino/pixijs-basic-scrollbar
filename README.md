@@ -6,3 +6,64 @@ Scrollbar modules for pixi.js
 [![Maintainability](https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/maintainability)](https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/maintainability)
 
 [Github repository](https://github.com/MasatoMakino/pixijs-basic-scrollbar)
+
+## Demo
+
+[Demo Page](https://masatomakino.github.io/pixijs-basic-scrollbar/demo/)
+
+## Getting Started
+
+### Install
+
+pixijs-basic-scrollbar depend on [pixi.js](https://github.com/pixijs/pixi.js) and [@tweenjs/tween.js](https://github.com/tweenjs/tween.js/)
+
+```bash
+npm install pixi.js @tweenjs/tween.js --save-dev
+```
+
+and
+
+```bash
+npm install https://github.com/MasatoMakino/pixijs-basic-scrollbar.git --save-dev
+```
+
+### Import
+
+pixijs-basic-scrollbar is composed of ES6 modules and TypeScript d.ts files.
+
+At first, import classes.
+
+```js
+import { SliderView, SliderEventType } from "pixijs-basic-scrollbar";
+```
+
+### Add to stage
+
+```js
+const slider = new SliderView({
+  base: new Graphics(...),
+  bar: new Graphics(...),
+  button: new Graphics(...),
+  mask: new Graphics(...),
+  minPosition: 0,
+  maxPosition: SLIDER_W,
+  rate: 0.0
+});
+
+slider.on(SliderEventType.CHANGE, e => {
+  console.log(e.rate);
+});
+stage.addChild(slider);
+```
+
+[API documents](https://masatomakino.github.io/pixijs-basic-scrollbar/api/)
+
+### Option : Scroll bar and Tween
+
+Tween.js needs update in rendering loop.
+
+```js
+PIXI.Ticker.shared.add(e => {
+  TWEEN.update(performance.now());
+});
+```
