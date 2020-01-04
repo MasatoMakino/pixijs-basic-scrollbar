@@ -4,17 +4,20 @@
 
 import { Application, DisplayObject } from "pixi.js";
 
+export enum MouseWheelPluginEventType {
+  WHEEL = "wheel"
+}
+
+export interface MouseWheelDisplayObject extends DisplayObject {
+  interactiveMousewheel: boolean;
+}
+
 class MousewheelPlugin {
   private app: Application;
 
-  //TODO イベントをwheelに一本化
   constructor(app) {
     this.app = app;
-
-    this.app.view.addEventListener("mousewheel", this.eventHandler, {
-      passive: false
-    });
-    this.app.view.addEventListener("DOMMouseScroll", this.eventHandler, {
+    this.app.view.addEventListener("wheel", this.eventHandler, {
       passive: false
     });
   }
@@ -24,32 +27,23 @@ class MousewheelPlugin {
   };
 
   onMouseWheel(e) {
-    let target = this.findScrollTarget({ x: e.offsetX, y: e.offsetY });
+    const target = this.findScrollTarget({ x: e.offsetX, y: e.offsetY });
 
-    if (target) {
-      e.preventDefault();
-      target.emit("mousewheel", this.deriveNormalizedWheelDelta(e), e);
+    if (!target) return;
+    e.preventDefault();
+    target.emit(MouseWheelPluginEventType.WHEEL, e);
+  }
+
+  findScrollTarget(pos): MouseWheelDisplayObject {
+    const hit = this.app.renderer.plugins.interaction.hitTest(pos);
+
+    if (hit && hit["interactiveMousewheel"]) {
+      return hit as MouseWheelDisplayObject;
     }
   }
 
-  findScrollTarget(pos) {
-    const hit = this.app.renderer.plugins.interaction.hitTest(pos);
-
-    if (hit && hit["interactiveMousewheel"]) return hit;
-  }
-
-  deriveNormalizedWheelDelta(e) {
-    if (e.detail) {
-      if (e.wheelDelta)
-        return (e.wheelDelta / e.detail / 40) * (e.detail > 0 ? 1 : -1);
-      // Opera
-      else return -e.detail / 3; // Firefox
-    } else return e.wheelDelta / 120; // IE,Safari,Chrome
-  }
-
   destroy() {
-    this.app.view.removeEventListener("mousewheel", this.eventHandler);
-    this.app.view.removeEventListener("DOMMouseScroll", this.eventHandler);
+    this.app.view.removeEventListener("wheel", this.eventHandler);
   }
 }
 

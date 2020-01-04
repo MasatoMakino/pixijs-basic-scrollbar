@@ -3,6 +3,7 @@ import { SliderViewUtil } from "../SliderView";
 
 import * as PIXI from "pixi.js";
 import { ScrollBarEventType } from "./ScrollBarEvent";
+import { MouseWheelPluginEventType } from "../MouseWheelPlugin";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
@@ -10,8 +11,7 @@ import { ScrollBarEventType } from "./ScrollBarEvent";
 export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
   protected scrollBarView: ScrollBarView;
   public delta = 16;
-
-  //TODO スタート、ストップを可能にする。
+  private _isStart: boolean;
 
   constructor(scrollBarView: ScrollBarView) {
     super();
@@ -21,12 +21,27 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     target.interactive = true;
     target["interactiveMousewheel"] = true;
 
-    //TODO add support deltaX / deltaY
-    target.on("mousewheel", (delta, event) => {
-      const shift = delta > 0 ? this.delta : -this.delta;
-      this.scroll(shift);
-    });
+    this.start();
   }
+
+  public start(): void {
+    if (this._isStart) return;
+    const target = this.scrollBarView.targetContents;
+    target.on(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
+    this._isStart = true;
+  }
+
+  public stop(): void {
+    const target = this.scrollBarView.targetContents;
+    target.off(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
+    this._isStart = false;
+  }
+
+  //TODO add support deltaX / deltaY
+  private wheelHandler = (e: WheelEvent) => {
+    const shift = e.deltaY > 0 ? -this.delta : this.delta;
+    this.scroll(shift);
+  };
 
   private scroll(delta: number): void {
     const target = this.scrollBarView.targetContents;
