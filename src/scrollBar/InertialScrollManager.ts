@@ -40,7 +40,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this._isStart = true;
 
     const target = this.scrollBarView.targetContents;
-    target.on("mousedown", this.onMouseDown);
+    target.on("pointerdown", this.onMouseDown);
     Ticker.shared.add(this.onTick);
   }
 
@@ -49,7 +49,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this._isStart = false;
 
     const target = this.scrollBarView.targetContents;
-    target.off("mousedown", this.onMouseDown);
+    target.off("pointerdown", this.onMouseDown);
     this.removeDragListener();
     this.stopInertial();
     Ticker.shared.remove(this.onTick);
@@ -71,16 +71,16 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
 
   private addDragListener(): void {
     const target = this.scrollBarView.targetContents;
-    target.on("mousemove", this.onMouseMove);
-    target.on("mouseup", this.onMouseUp);
-    target.on("mouseupoutside", this.onMouseUp);
+    target.on("pointermove", this.onMouseMove);
+    target.on("pointerup", this.onMouseUp);
+    target.on("pointerupoutside", this.onMouseUp);
   }
 
   private removeDragListener(): void {
     const target = this.scrollBarView.targetContents;
-    target.off("mousemove", this.onMouseMove);
-    target.off("mouseup", this.onMouseUp);
-    target.off("mouseupoutside", this.onMouseUp);
+    target.off("pointermove", this.onMouseMove);
+    target.off("pointerup", this.onMouseUp);
+    target.off("pointerupoutside", this.onMouseUp);
   }
 
   private getDragPos(e: InteractionEvent): number {
