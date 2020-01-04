@@ -72,9 +72,8 @@
 						<p>スライダー用クラスです</p>
 					</div>
 					<p>使用上の注意 :
-						オブジェクトのサイズの計測にgetBounds関数を使用しています。
-						shapeおよびContainerクラスでは、getBoundsの自動計測が効かない場合があります。
-					setBounds関数でサイズをあらかじめ与えてください。</p>
+						オブジェクトのサイズの計測にgetLocalBounds関数を使用しています。
+					hitAreaでサイズをあらかじめ与えてください。</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -248,7 +247,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Container.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L37">src/SliderView.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L36">src/SliderView.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -326,7 +325,7 @@
 					<div class="tsd-signature tsd-kind-icon">_bar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DisplayObject</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L19">src/SliderView.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L18">src/SliderView.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -336,7 +335,7 @@
 					<div class="tsd-signature tsd-kind-icon">_bar<wbr>Mask<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Graphics</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L20">src/SliderView.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L19">src/SliderView.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -346,7 +345,7 @@
 					<div class="tsd-signature tsd-kind-icon">_base<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DisplayObject</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L18">src/SliderView.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L17">src/SliderView.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -400,7 +399,7 @@
 					<div class="tsd-signature tsd-kind-icon">_is<wbr>Horizontal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L25">src/SliderView.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L24">src/SliderView.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -455,7 +454,7 @@
 					<div class="tsd-signature tsd-kind-icon">_max<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L24">src/SliderView.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L23">src/SliderView.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -465,7 +464,7 @@
 					<div class="tsd-signature tsd-kind-icon">_min<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L23">src/SliderView.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L22">src/SliderView.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -475,7 +474,7 @@
 					<div class="tsd-signature tsd-kind-icon">_rate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L35">src/SliderView.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L34">src/SliderView.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -491,7 +490,7 @@
 					<div class="tsd-signature tsd-kind-icon">_slide<wbr>Button<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DisplayObject</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L21">src/SliderView.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L20">src/SliderView.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -870,7 +869,7 @@
 					<div class="tsd-signature tsd-kind-icon">drag<wbr>Start<wbr>Pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Point</span><span class="tsd-signature-symbol"> =&nbsp;new Point()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L30">src/SliderView.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L29">src/SliderView.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1040,7 +1039,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Dragging<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L37">src/SliderView.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L36">src/SliderView.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1606,7 +1605,7 @@
 					<div class="tsd-signature tsd-kind-icon">MAX_<wbr>RATE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L36">src/SliderView.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L35">src/SliderView.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1623,7 +1622,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L232">src/SliderView.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L231">src/SliderView.ts:231</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1646,7 +1645,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L26">src/SliderView.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L25">src/SliderView.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1663,7 +1662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L259">src/SliderView.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L258">src/SliderView.ts:258</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1680,7 +1679,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L250">src/SliderView.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L249">src/SliderView.ts:249</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1872,7 +1871,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L69">src/SliderView.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L68">src/SliderView.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1918,7 +1917,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L79">src/SliderView.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L78">src/SliderView.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1949,7 +1948,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L206">src/SliderView.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L205">src/SliderView.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1977,7 +1976,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L193">src/SliderView.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L192">src/SliderView.ts:192</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2080,7 +2079,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L267">src/SliderView.ts:267</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L266">src/SliderView.ts:266</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2326,7 +2325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L218">src/SliderView.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L217">src/SliderView.ts:217</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2358,7 +2357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L52">src/SliderView.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L51">src/SliderView.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2388,7 +2387,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L243">src/SliderView.ts:243</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L242">src/SliderView.ts:242</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2411,7 +2410,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L129">src/SliderView.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L128">src/SliderView.ts:128</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2440,7 +2439,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L115">src/SliderView.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L114">src/SliderView.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2472,7 +2471,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L170">src/SliderView.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L169">src/SliderView.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2627,7 +2626,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L275">src/SliderView.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L274">src/SliderView.ts:274</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2657,7 +2656,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L182">src/SliderView.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L181">src/SliderView.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2688,7 +2687,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L98">src/SliderView.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L97">src/SliderView.ts:97</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3101,7 +3100,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L94">src/SliderView.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L93">src/SliderView.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3254,7 +3253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/SliderView.ts#L139">src/SliderView.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/86f3795/src/SliderView.ts#L138">src/SliderView.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

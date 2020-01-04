@@ -5,9 +5,8 @@ import { SliderViewOption } from "./SliderViewOption";
  * スライダー用クラスです
  *
  * 使用上の注意 :
- * オブジェクトのサイズの計測にgetBounds関数を使用しています。
- * shapeおよびContainerクラスでは、getBoundsの自動計測が効かない場合があります。
- * setBounds関数でサイズをあらかじめ与えてください。
+ * オブジェクトのサイズの計測にgetLocalBounds関数を使用しています。
+ * hitAreaでサイズをあらかじめ与えてください。
  */
 export class SliderView extends Container {
     /**
@@ -42,8 +41,8 @@ export class SliderView extends Container {
          */
         this.moveSliderFinish = (e) => {
             this.isDragging = false;
-            this.removeListener("mousemove", this.moveSlider);
-            this.removeListener("mouseup", this.moveSliderFinish);
+            this.removeListener("pointermove", this.moveSlider);
+            this.removeListener("pointerup", this.moveSliderFinish);
             this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
         };
         /**
@@ -103,9 +102,9 @@ export class SliderView extends Container {
         const global = e.data.global;
         const localPos = this.toLocal(new Point(global.x, global.y));
         this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
-        this.on("mousemove", this.moveSlider);
-        this.on("mouseup", this.moveSliderFinish);
-        this.on("mouseupoutside", this.moveSliderFinish);
+        this.on("pointermove", this.moveSlider);
+        this.on("pointerup", this.moveSliderFinish);
+        this.on("pointerupoutside", this.moveSliderFinish);
     }
     /**
      * スライダーボタンの位置を制限する関数
@@ -179,7 +178,7 @@ export class SliderView extends Container {
             return;
         this._base = value;
         this._base.interactive = true;
-        this._base.on("click", e => {
+        this._base.on("pointertap", e => {
             this.onPressBase(e);
         });
         this.addChildParts(value);
@@ -195,7 +194,7 @@ export class SliderView extends Container {
         if (!value)
             return;
         this._slideButton = value;
-        this._slideButton.on("mousedown", this.startMove);
+        this._slideButton.on("pointerdown", this.startMove);
         this._slideButton.interactive = true;
         this.addChildParts(value);
     }
