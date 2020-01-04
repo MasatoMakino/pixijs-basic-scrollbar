@@ -11,9 +11,14 @@ export declare class InertialScrollManager extends PIXI.utils.EventEmitter {
     protected isDragging: boolean;
     protected dragPos: number;
     private tween;
+    private _isStart;
     constructor(scrollBarView: ScrollBarView);
+    start(): void;
+    stop(): void;
     private onMouseDown;
     private onMouseDownHandler;
+    private addDragListener;
+    private removeDragListener;
     private getDragPos;
     private updateDragPos;
     private onMouseMove;

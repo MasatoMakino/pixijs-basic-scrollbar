@@ -6,7 +6,11 @@ import * as PIXI from "pixi.js";
 export declare class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     protected scrollBarView: ScrollBarView;
     delta: number;
+    private _isStart;
     constructor(scrollBarView: ScrollBarView);
+    start(): void;
+    stop(): void;
+    private wheelHandler;
     private scroll;
 }
 //# sourceMappingURL=MouseWheelScrollManager.d.ts.map

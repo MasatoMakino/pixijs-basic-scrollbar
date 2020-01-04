@@ -10,7 +10,6 @@ var Easing = TWEEN.Easing;
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
 export class InertialScrollManager extends PIXI.utils.EventEmitter {
-    //TODO スタート、ストップを可能にする。
     constructor(scrollBarView) {
         super();
         this.decelerationRate = 0.975;
@@ -60,8 +59,25 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
         scrollBarView.on(ScrollBarEventType.STOP_INERTIAL_TWEEN, this.stopInertial);
         const target = this.scrollBarView.targetContents;
         target.interactive = true;
+        this.start();
+    }
+    start() {
+        if (this._isStart)
+            return;
+        this._isStart = true;
+        const target = this.scrollBarView.targetContents;
         target.on("mousedown", this.onMouseDown);
         Ticker.shared.add(this.onTick);
+    }
+    stop() {
+        if (!this._isStart)
+            return;
+        this._isStart = false;
+        const target = this.scrollBarView.targetContents;
+        target.off("mousedown", this.onMouseDown);
+        this.removeDragListener();
+        this.stopInertial();
+        Ticker.shared.remove(this.onTick);
     }
     onMouseDownHandler(e) {
         this.updateDragPos(e);
@@ -69,10 +85,19 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
         this.speed = 0.0;
         if (this.tween)
             this.tween.stop();
+        this.addDragListener();
+    }
+    addDragListener() {
         const target = this.scrollBarView.targetContents;
         target.on("mousemove", this.onMouseMove);
         target.on("mouseup", this.onMouseUp);
         target.on("mouseupoutside", this.onMouseUp);
+    }
+    removeDragListener() {
+        const target = this.scrollBarView.targetContents;
+        target.off("mousemove", this.onMouseMove);
+        target.off("mouseup", this.onMouseUp);
+        target.off("mouseupoutside", this.onMouseUp);
     }
     getDragPos(e) {
         return SliderViewUtil.getPosition(e.data.global, this.scrollBarView.isHorizontal);
@@ -94,10 +119,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
         this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
     }
     onMouseUpHandler(e) {
-        const target = this.scrollBarView.targetContents;
-        target.removeListener("mousemove", this.onMouseMove);
-        target.removeListener("mouseup", this.onMouseUp);
-        target.removeListener("mouseupoutside", this.onMouseUp);
+        this.removeDragListener();
         this.isDragging = false;
         this.onTick();
     }

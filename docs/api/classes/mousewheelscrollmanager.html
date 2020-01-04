@@ -99,6 +99,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="mousewheelscrollmanager.html#_isstart" class="tsd-kind-icon">_is<wbr>Start</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="mousewheelscrollmanager.html#delta" class="tsd-kind-icon">delta</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="mousewheelscrollmanager.html#scrollbarview" class="tsd-kind-icon">scroll<wbr>Bar<wbr>View</a></li>
 							</ul>
@@ -117,6 +118,9 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mousewheelscrollmanager.html#removealllisteners" class="tsd-kind-icon">remove<wbr>All<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mousewheelscrollmanager.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="mousewheelscrollmanager.html#scroll" class="tsd-kind-icon">scroll</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mousewheelscrollmanager.html#start" class="tsd-kind-icon">start</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mousewheelscrollmanager.html#stop" class="tsd-kind-icon">stop</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="mousewheelscrollmanager.html#wheelhandler" class="tsd-kind-icon">wheel<wbr>Handler</a></li>
 							</ul>
 						</section>
 					</div>
@@ -134,7 +138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d082c7f/src/scrollBar/MouseWheelScrollManager.ts#L12">src/scrollBar/MouseWheelScrollManager.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L14">src/scrollBar/MouseWheelScrollManager.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -150,13 +154,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_isstart" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _is<wbr>Start</h3>
+					<div class="tsd-signature tsd-kind-icon">_is<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L14">src/scrollBar/MouseWheelScrollManager.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="delta" class="tsd-anchor"></a>
 					<h3>delta</h3>
 					<div class="tsd-signature tsd-kind-icon">delta<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;16</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d082c7f/src/scrollBar/MouseWheelScrollManager.ts#L12">src/scrollBar/MouseWheelScrollManager.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L13">src/scrollBar/MouseWheelScrollManager.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">scroll<wbr>Bar<wbr>View<span class="tsd-signature-symbol">:</span> <a href="scrollbarview.html" class="tsd-signature-type">ScrollBarView</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d082c7f/src/scrollBar/MouseWheelScrollManager.ts#L11">src/scrollBar/MouseWheelScrollManager.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L12">src/scrollBar/MouseWheelScrollManager.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -550,13 +564,70 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d082c7f/src/scrollBar/MouseWheelScrollManager.ts#L31">src/scrollBar/MouseWheelScrollManager.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L46">src/scrollBar/MouseWheelScrollManager.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>delta: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="start" class="tsd-anchor"></a>
+					<h3>start</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L27">src/scrollBar/MouseWheelScrollManager.ts:27</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="stop" class="tsd-anchor"></a>
+					<h3>stop</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L34">src/scrollBar/MouseWheelScrollManager.ts:34</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="wheelhandler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> wheel<wbr>Handler</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">wheel<wbr>Handler<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WheelEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/4813b08/src/scrollBar/MouseWheelScrollManager.ts#L41">src/scrollBar/MouseWheelScrollManager.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <span class="tsd-signature-type">WheelEvent</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -576,6 +647,9 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum">
+						<a href="../enums/mousewheelplugineventtype.html" class="tsd-kind-icon">Mouse<wbr>Wheel<wbr>Plugin<wbr>Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
 						<a href="../enums/scrollbareventtype.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
@@ -591,6 +665,9 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="mousewheelscrollmanager.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="mousewheelscrollmanager.html#_isstart" class="tsd-kind-icon">_is<wbr>Start</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="mousewheelscrollmanager.html#delta" class="tsd-kind-icon">delta</a>
@@ -631,6 +708,15 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="mousewheelscrollmanager.html#scroll" class="tsd-kind-icon">scroll</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mousewheelscrollmanager.html#start" class="tsd-kind-icon">start</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mousewheelscrollmanager.html#stop" class="tsd-kind-icon">stop</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="mousewheelscrollmanager.html#wheelhandler" class="tsd-kind-icon">wheel<wbr>Handler</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -658,6 +744,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="sliderviewutil.html" class="tsd-kind-icon">Slider<wbr>View<wbr>Util</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/mousewheeldisplayobject.html" class="tsd-kind-icon">Mouse<wbr>Wheel<wbr>Display<wbr>Object</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#initplugin" class="tsd-kind-icon">init<wbr>Plugin</a>
