@@ -22,8 +22,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   protected dragPos: number;
 
   private tween: Tween;
-
-  //TODO スタート、ストップを可能にする。
+  private _isStart: boolean;
 
   constructor(scrollBarView: ScrollBarView) {
     super();
@@ -32,9 +31,28 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
 
     const target = this.scrollBarView.targetContents;
     target.interactive = true;
-    target.on("mousedown", this.onMouseDown);
 
+    this.start();
+  }
+
+  public start(): void {
+    if (this._isStart) return;
+    this._isStart = true;
+
+    const target = this.scrollBarView.targetContents;
+    target.on("mousedown", this.onMouseDown);
     Ticker.shared.add(this.onTick);
+  }
+
+  public stop(): void {
+    if (!this._isStart) return;
+    this._isStart = false;
+
+    const target = this.scrollBarView.targetContents;
+    target.off("mousedown", this.onMouseDown);
+    this.removeDragListener();
+    this.stopInertial();
+    Ticker.shared.remove(this.onTick);
   }
 
   private onMouseDown = (e: InteractionEvent) => {
@@ -48,10 +66,21 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.speed = 0.0;
     if (this.tween) this.tween.stop();
 
+    this.addDragListener();
+  }
+
+  private addDragListener(): void {
     const target = this.scrollBarView.targetContents;
     target.on("mousemove", this.onMouseMove);
     target.on("mouseup", this.onMouseUp);
     target.on("mouseupoutside", this.onMouseUp);
+  }
+
+  private removeDragListener(): void {
+    const target = this.scrollBarView.targetContents;
+    target.off("mousemove", this.onMouseMove);
+    target.off("mouseup", this.onMouseUp);
+    target.off("mouseupoutside", this.onMouseUp);
   }
 
   private getDragPos(e: InteractionEvent): number {
@@ -90,10 +119,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.onMouseUpHandler(e);
   };
   private onMouseUpHandler(e: InteractionEvent): void {
-    const target = this.scrollBarView.targetContents;
-    target.removeListener("mousemove", this.onMouseMove);
-    target.removeListener("mouseup", this.onMouseUp);
-    target.removeListener("mouseupoutside", this.onMouseUp);
+    this.removeDragListener();
     this.isDragging = false;
     this.onTick();
   }

@@ -3,7 +3,10 @@ import { SliderViewUtil } from "../SliderView";
 
 import * as PIXI from "pixi.js";
 import { ScrollBarEventType } from "./ScrollBarEvent";
-import { MouseWheelPluginEventType } from "../MouseWheelPlugin";
+import {
+  MouseWheelPluginEventType,
+  MouseWheelDisplayObject
+} from "../MouseWheelPlugin";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
@@ -17,9 +20,9 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     super();
     this.scrollBarView = scrollBarView;
 
-    const target = this.scrollBarView.targetContents;
+    const target = this.scrollBarView.targetContents as MouseWheelDisplayObject;
     target.interactive = true;
-    target["interactiveMousewheel"] = true;
+    target.interactiveMousewheel = true;
 
     this.start();
   }
