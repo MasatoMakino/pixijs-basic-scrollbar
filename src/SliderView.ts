@@ -9,9 +9,8 @@ import IPoint = PIXI.IPoint;
  * スライダー用クラスです
  *
  * 使用上の注意 :
- * オブジェクトのサイズの計測にgetBounds関数を使用しています。
- * shapeおよびContainerクラスでは、getBoundsの自動計測が効かない場合があります。
- * setBounds関数でサイズをあらかじめ与えてください。
+ * オブジェクトのサイズの計測にgetLocalBounds関数を使用しています。
+ * hitAreaでサイズをあらかじめ与えてください。
  */
 
 export class SliderView extends Container {
