@@ -1,4 +1,5 @@
 exclude_patterns:
-  - "bin/**/*.js"
+  - "lib/"
+  - "esm/"
   - "docs/"
   - "tests/"

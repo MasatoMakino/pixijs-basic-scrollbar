@@ -1,5 +1,5 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
-import { ScrollBarView, SliderEventType } from "../bin";
+import { ScrollBarView, SliderEventType } from "../lib";
 import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = () => {

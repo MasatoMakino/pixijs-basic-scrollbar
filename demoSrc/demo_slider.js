@@ -1,5 +1,5 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
-import { SliderEventType, SliderView } from "../bin";
+import { SliderEventType, SliderView } from "../lib";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });
