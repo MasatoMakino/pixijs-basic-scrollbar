@@ -1,4 +1,5 @@
-import { SliderView } from "./SliderView";
+import {SliderView} from "./SliderView";
+
 export class SliderViewOption {
     static init(option) {
         var _a, _b;
@@ -6,8 +7,8 @@ export class SliderViewOption {
             option.rate = Math.max(0, option.rate);
             option.rate = Math.min(SliderView.MAX_RATE, option.rate);
         }
-        option.rate = (_a = option.rate, (_a !== null && _a !== void 0 ? _a : 0.0));
-        option.isHorizontal = (_b = option.isHorizontal, (_b !== null && _b !== void 0 ? _b : true));
+        option.rate = (_a = option.rate) !== null && _a !== void 0 ? _a : 0.0;
+        option.isHorizontal = (_b = option.isHorizontal) !== null && _b !== void 0 ? _b : true;
         this.check(option);
         return option;
     }

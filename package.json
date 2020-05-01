@@ -1,6 +1,6 @@
 {
   "name": "pixijs-basic-scrollbar",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Scrollbar modules for pixi.js",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -14,20 +14,20 @@
   "license": "MIT",
   "devDependencies": {
     "@tweenjs/tween.js": "^18.5.0",
-    "@types/node": "^13.1.6",
-    "@types/tween.js": "^17.2.0",
-    "dat.gui": "^0.7.6",
+    "@types/node": "^13.13.4",
+    "@types/tween.js": "^18.5.0",
+    "dat.gui": "^0.7.7",
     "gulp": "^4.0.2",
     "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
     "gulptask-tsc": "https://github.com/MasatoMakino/gulptask-tsc.git",
     "gulptask-tsdoc": "https://github.com/MasatoMakino/gulptask-tsdoc.git",
-    "husky": "^4.0.7",
-    "pixi.js": "^5.2.0",
-    "prettier": "^1.19.1",
+    "husky": "^4.2.5",
+    "pixi.js": "^5.2.3",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.4"
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "@tweenjs/tween.js": "^18.5.0",
