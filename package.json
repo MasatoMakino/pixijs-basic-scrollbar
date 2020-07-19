@@ -13,9 +13,9 @@
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@tweenjs/tween.js": "^18.5.0",
-    "@types/node": "^13.13.4",
-    "@types/tween.js": "^18.5.0",
+    "@tweenjs/tween.js": "18.5.0",
+    "@types/node": "^14.0.23",
+    "@types/tween.js": "^18.5.1",
     "dat.gui": "^0.7.7",
     "gulp": "^4.0.2",
     "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
@@ -23,14 +23,14 @@
     "gulptask-tsc": "https://github.com/MasatoMakino/gulptask-tsc.git",
     "gulptask-tsdoc": "https://github.com/MasatoMakino/gulptask-tsdoc.git",
     "husky": "^4.2.5",
-    "pixi.js": "^5.2.3",
+    "pixi.js": "^5.3.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "ts-node": "^8.9.1",
-    "typescript": "^3.8.3"
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "@tweenjs/tween.js": "^18.5.0",
+    "@tweenjs/tween.js": "18.5.x",
     "pixi.js": "^5.2.0"
   },
   "scripts": {
