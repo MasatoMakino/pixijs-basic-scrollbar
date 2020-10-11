@@ -1,11 +1,10 @@
-import { SliderEventContext, SliderEventType } from "../SliderEvent";
-import { SliderView } from "../SliderView";
-import { SliderViewUtil } from "../SliderView";
-import { SliderViewOption } from "../SliderViewOption";
-import { DisplayObject } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
-import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
+import { DisplayObject } from "pixi.js";
+import { SliderEventContext, SliderEventType } from "../SliderEvent";
+import { SliderView, SliderViewUtil } from "../SliderView";
+import { SliderViewOption } from "../SliderViewOption";
 import { InertialScrollManager } from "./InertialScrollManager";
+import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarEventType } from "./ScrollBarEvent";
 
 /**
@@ -277,6 +276,13 @@ export class ScrollBarViewInitOption {
   contentsMask: DisplayObject; //スクロールバーが対象とするコンテンツが表示されるエリア
 
   public static check(option: ScrollBarViewInitOption) {
+    this.checkTargetMask(option);
+    this.checkTargetMaskParent(option);
+    this.checkTargetBounds(option);
+    this.checkMaskBounds(option);
+  }
+
+  private static checkTargetMask(option: ScrollBarViewInitOption) {
     if (option.targetContents.mask !== option.contentsMask) {
       console.warn(
         "ScrollBarView : スクロールするコンテンツにマスクが設定されていません。",
@@ -284,7 +290,9 @@ export class ScrollBarViewInitOption {
         option.contentsMask
       );
     }
+  }
 
+  private static checkTargetMaskParent(option: ScrollBarViewInitOption) {
     if (option.contentsMask.parent != option.contentsMask.parent) {
       console.warn(
         "ScrollBarView : スクロールするコンテンツと、そのマスクは表示ツリー上で同一の親Containerを持っている必要があります。",
@@ -292,7 +300,9 @@ export class ScrollBarViewInitOption {
         option.contentsMask
       );
     }
+  }
 
+  private static checkTargetBounds(option: ScrollBarViewInitOption) {
     if (option.targetContents.getLocalBounds() === null) {
       throw new Error(
         "ScrollBarView : 初期化オプションで指定されたtargetContentsにバウンディングボックスが存在しません。" +
@@ -300,7 +310,9 @@ export class ScrollBarViewInitOption {
           "バウンディングボックスを手動で設定してください。"
       );
     }
+  }
 
+  private static checkMaskBounds(option: ScrollBarViewInitOption) {
     if (option.contentsMask.getLocalBounds() === null) {
       throw new Error(
         "ScrollBarView : 初期化オプションで指定されたcontentsMaskにバウンディングボックスが存在しません。" +
