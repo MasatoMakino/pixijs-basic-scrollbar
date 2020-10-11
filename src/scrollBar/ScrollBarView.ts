@@ -278,8 +278,8 @@ export class ScrollBarViewInitOption {
   public static check(option: ScrollBarViewInitOption) {
     this.checkTargetMask(option);
     this.checkTargetMaskParent(option);
-    this.checkTargetBounds(option);
-    this.checkMaskBounds(option);
+    this.checkBounds(option.targetContents, "targetContents");
+    this.checkBounds(option.contentsMask, "contentsMask");
   }
 
   private static checkTargetMask(option: ScrollBarViewInitOption) {
@@ -302,22 +302,11 @@ export class ScrollBarViewInitOption {
     }
   }
 
-  private static checkTargetBounds(option: ScrollBarViewInitOption) {
-    if (option.targetContents.getLocalBounds() === null) {
+  private static checkBounds(target: DisplayObject, targetType: string) {
+    if (target.getLocalBounds() === null) {
       throw new Error(
-        "ScrollBarView : 初期化オプションで指定されたtargetContentsにバウンディングボックスが存在しません。" +
-          "ShapeやContainerを利用する場合はsetBounds関数を利用して" +
-          "バウンディングボックスを手動で設定してください。"
-      );
-    }
-  }
-
-  private static checkMaskBounds(option: ScrollBarViewInitOption) {
-    if (option.contentsMask.getLocalBounds() === null) {
-      throw new Error(
-        "ScrollBarView : 初期化オプションで指定されたcontentsMaskにバウンディングボックスが存在しません。" +
-          "Shapeを利用する場合はsetBounds関数を利用して" +
-          "バウンディングボックスを手動で設定してください。"
+        `ScrollBarView : 初期化オプションで指定された${targetType}にバウンディングボックスが存在しません。
+ShapeやContainerを利用する場合はsetBounds関数を利用して、バウンディングボックスを手動で設定してください。`
       );
     }
   }
