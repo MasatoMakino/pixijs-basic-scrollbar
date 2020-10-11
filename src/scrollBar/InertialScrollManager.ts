@@ -1,13 +1,12 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { SliderViewUtil } from "../SliderView";
-import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
-import { ScrollBarEventType } from "./ScrollBarEvent";
-
+import TWEEN from "@tweenjs/tween.js";
 import * as PIXI from "pixi.js";
 import { Ticker } from "pixi.js";
-import TWEEN from "@tweenjs/tween.js";
-import Tween = TWEEN.Tween;
+import { SliderViewUtil } from "../SliderView";
+import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
 import Easing = TWEEN.Easing;
+import Tween = TWEEN.Tween;
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
@@ -70,17 +69,29 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private addDragListener(): void {
-    const target = this.scrollBarView.targetContents;
-    target.on("pointermove", this.onMouseMove);
-    target.on("pointerup", this.onMouseUp);
-    target.on("pointerupoutside", this.onMouseUp);
+    this.switchDragListener(true);
   }
 
   private removeDragListener(): void {
+    this.switchDragListener(false);
+  }
+
+  private switchDragListener(isOn: boolean): void {
     const target = this.scrollBarView.targetContents;
-    target.off("pointermove", this.onMouseMove);
-    target.off("pointerup", this.onMouseUp);
-    target.off("pointerupoutside", this.onMouseUp);
+    const switchListener = (
+      isOn: boolean,
+      event: string,
+      listener: Function
+    ) => {
+      if (isOn) {
+        target.on(event, listener);
+      } else {
+        target.off(event, listener);
+      }
+    };
+    switchListener(isOn, "pointermove", this.onMouseMove);
+    switchListener(isOn, "pointerup", this.onMouseUp);
+    switchListener(isOn, "pointerupoutside", this.onMouseUp);
   }
 
   private getDragPos(e: InteractionEvent): number {
