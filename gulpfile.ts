@@ -1,13 +1,15 @@
 const { parallel, series } = require("gulp");
 
-const doc = require("gulptask-tsdoc").get();
+const doc = require("gulptask-tsdoc").generateTask({
+  ignoreCompilerErrors: true,
+});
 const server = require("gulptask-dev-server").get("./docs/demo");
 const { bundleDemo, watchDemo } = require("gulptask-demo-page").get({
-  externalScripts: []
+  externalScripts: [],
 });
 
 const { tsc, tscClean, watchTsc } = require("gulptask-tsc").get({
-  projects: ["tsconfig.json", "tsconfig.esm.json"]
+  projects: ["tsconfig.json", "tsconfig.esm.json"],
 });
 
 const watchTasks = async () => {
