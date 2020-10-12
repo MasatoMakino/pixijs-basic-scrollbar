@@ -56,8 +56,7 @@ export class SliderViewOption {
 
     if (obj.parent) {
       console.warn(
-        "初期化オプションで指定されたパーツがすでに別の親にaddChildされています。" +
-          "SliderViewおよびScrollBarViewの構成パーツはインスタンスにaddChildされることを前提としています。"
+        `初期化オプションで指定されたパーツがすでに別の親にaddChildされています。SliderViewおよびScrollBarViewの構成パーツは同一のコンテナにaddChildされることを前提としています。`
       );
     }
   }

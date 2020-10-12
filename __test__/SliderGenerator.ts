@@ -38,6 +38,7 @@ export class SliderGenerator {
       ...this.generateMinimalOption(w, h, hasHitArea),
       bar: this.getSliderBase(w, h, 0x00ffff, hasHitArea),
       mask: this.getSliderBase(w, h, 0xff00ff, hasHitArea),
+      isHorizontal: true,
       rate: 1.0,
     };
   }
