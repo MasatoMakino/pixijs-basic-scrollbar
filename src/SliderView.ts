@@ -1,5 +1,5 @@
-import { DisplayObject, Container, Graphics, Point } from "pixi.js";
 import { InteractionEvent } from "@pixi/interaction";
+import { Container, DisplayObject, Graphics, Point } from "pixi.js";
 
 import { SliderEventContext, SliderEventType } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
@@ -102,9 +102,9 @@ export class SliderView extends Container {
     const localPos = this.toLocal(new Point(global.x, global.y));
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this.on("pointermove", this.moveSlider);
-    this.on("pointerup", this.moveSliderFinish);
-    this.on("pointerupoutside", this.moveSliderFinish);
+    this._slideButton.on("pointermove", this.moveSlider);
+    this._slideButton.on("pointerup", this.moveSliderFinish);
+    this._slideButton.on("pointerupoutside", this.moveSliderFinish);
   }
 
   /**
@@ -168,8 +168,9 @@ export class SliderView extends Container {
    */
   private moveSliderFinish = (e: Object) => {
     this.isDragging = false;
-    this.removeListener("pointermove", this.moveSlider);
-    this.removeListener("pointerup", this.moveSliderFinish);
+    this._slideButton.off("pointermove", this.moveSlider);
+    this._slideButton.off("pointerup", this.moveSliderFinish);
+    this._slideButton.off("pointerupoutside", this.moveSliderFinish);
     this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
   };
 
@@ -233,7 +234,7 @@ export class SliderView extends Container {
 
     this._base = value;
     this._base.interactive = true;
-    this._base.on("pointertap", e => {
+    this._base.on("pointertap", (e) => {
       this.onPressBase(e);
     });
     this.addChildParts(value);

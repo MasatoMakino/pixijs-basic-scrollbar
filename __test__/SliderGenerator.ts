@@ -4,6 +4,7 @@ import { SliderEventType, SliderView } from "../src";
 export interface SliderSet {
   slider: SliderView;
   sliderButton: DisplayObject;
+  sliderBase: DisplayObject;
 }
 export class SliderGenerator {
   public static initSlider(w, h): SliderSet {
@@ -23,6 +24,7 @@ export class SliderGenerator {
     return {
       slider,
       sliderButton: option.button,
+      sliderBase: option.base,
     };
   }
 
