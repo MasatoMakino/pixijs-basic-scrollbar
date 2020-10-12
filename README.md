@@ -17,13 +17,13 @@ Scrollbar modules for pixi.js
 
 pixijs-basic-scrollbar depend on [pixi.js](https://github.com/pixijs/pixi.js) and [@tweenjs/tween.js](https://github.com/tweenjs/tween.js/)
 
-```bash
+```shell script
 npm install pixi.js @tweenjs/tween.js --save-dev
 ```
 
 and
 
-```bash
+```shell script
 npm install https://github.com/MasatoMakino/pixijs-basic-scrollbar.git --save-dev
 ```
 
