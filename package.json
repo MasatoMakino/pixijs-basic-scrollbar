@@ -14,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@tweenjs/tween.js": "18.5.x",
+    "@types/jest": "^26.0.14",
     "@types/node": "^14.11.8",
     "@types/tween.js": "^18.5.1",
     "dat.gui": "^0.7.7",
@@ -23,9 +24,12 @@
     "gulptask-tsc": "https://github.com/MasatoMakino/gulptask-tsc.git",
     "gulptask-tsdoc": "https://github.com/MasatoMakino/gulptask-tsdoc.git",
     "husky": "^4.3.0",
+    "jest": "^26.5.3",
+    "jest-canvas-mock": "^2.3.0",
     "pixi.js": "^5.3.3",
     "prettier": "^2.1.2",
     "pretty-quick": "^3.0.2",
+    "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
@@ -34,6 +38,7 @@
     "pixi.js": "^5.2.0"
   },
   "scripts": {
+    "test": "jest --coverage",
     "start:dev": "gulp start_dev",
     "build": "gulp build",
     "build:clean": "gulp build_clean",
