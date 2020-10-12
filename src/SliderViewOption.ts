@@ -9,10 +9,17 @@ export class SliderViewOption {
   maxPosition: number; //スライダーボタンの座標の最大値
   rate?: number;
   base: DisplayObject; //スライダーの地
-  button: DisplayObject; //スライドボタン
+  /**
+   * スライドボタン
+   */
+  button: DisplayObject;
   mask?: Graphics; //バーのマスク
   bar?: DisplayObject; //スライドにあわせて表示されるバー
-  isHorizontal?: boolean; //水平スクロールか否か 既定値 true
+  /**
+   * 水平スクロールか否か
+   * @default true
+   */
+  isHorizontal?: boolean;
 
   public static init(option: SliderViewOption): SliderViewOption {
     if (option.rate != null) {
