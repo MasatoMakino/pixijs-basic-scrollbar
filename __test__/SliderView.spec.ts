@@ -12,9 +12,9 @@ describe("SliderView", () => {
     x;
   });
   const sliderSize = 100;
+  const option = SliderGenerator.generateOption(sliderSize, sliderSize);
   const { slider, sliderButton, sliderBase } = SliderGenerator.initSlider(
-    sliderSize,
-    sliderSize
+    option
   );
 
   beforeEach(() => {
@@ -89,6 +89,12 @@ describe("SliderView", () => {
     expect(slider.rate).toBe(0.5);
     dragButton(0.0 * sliderSize, "pointermove");
     dragButton(0.0 * sliderSize, "pointerup");
+  });
+
+  test("dispose", () => {
+    slider.dispose();
+    expect(slider.children.length).toBe(0);
+    expect(sliderButton.listenerCount("pointerdown")).toBe(0);
   });
 });
 

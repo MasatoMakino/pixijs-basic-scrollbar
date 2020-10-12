@@ -1,7 +1,7 @@
 /**
  * スライダーを初期化する際のオプション
  */
-import { DisplayObject, Graphics } from "pixi.js";
+import { DisplayObject, Graphics, SHAPES } from "pixi.js";
 import { SliderView } from "./SliderView";
 
 export class SliderViewOption {
@@ -43,9 +43,14 @@ export class SliderViewOption {
   private static checkParts(obj: DisplayObject, targetName: string): void {
     if (obj == null) return;
 
-    if (obj.getBounds() === null) {
+    const bounds = obj.getLocalBounds();
+    if (
+      bounds.width === 0 &&
+      bounds.height === 0 &&
+      bounds.type === SHAPES.RECT
+    ) {
       throw new Error(
-        `SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。ShapeやContainerを利用する場合はsetBounds関数を利用してバウンディングボックスを手動で設定してください。`
+        `SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。Containerを利用する場合はhitAreaを利用してバウンディングボックスを手動で設定してください。`
       );
     }
 

@@ -1,5 +1,5 @@
-import { DisplayObject, Graphics, Rectangle } from "pixi.js";
-import { SliderEventType, SliderView } from "../src";
+import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
+import { SliderEventType, SliderView, SliderViewOption } from "../src";
 
 export interface SliderSet {
   slider: SliderView;
@@ -7,16 +7,42 @@ export interface SliderSet {
   sliderBase: DisplayObject;
 }
 export class SliderGenerator {
-  public static initSlider(w, h): SliderSet {
-    const option = {
-      base: this.getSliderBase(w, h, 0x0000ff),
-      bar: this.getSliderBase(w, h, 0x00ffff),
-      button: this.getSliderButton(w, h, 0xffff00),
-      mask: this.getSliderMask(w, h),
+  public static generateNonBoundsOption() {
+    return {
+      minPosition: 0,
+      maxPosition: 100,
+      base: new Container(),
+      button: new Container(),
+    };
+  }
+
+  public static generateMinimalOption(
+    w: number,
+    h: number,
+    hasHitArea: boolean = true
+  ): SliderViewOption {
+    return {
       minPosition: 0,
       maxPosition: w,
+      base: this.getSliderBase(w, h, 0x0000ff, hasHitArea),
+      button: this.getSliderButton(w, h, 0xffff00, hasHitArea),
+    };
+  }
+
+  public static generateOption(
+    w: number,
+    h: number,
+    hasHitArea: boolean = true
+  ): SliderViewOption {
+    return {
+      ...this.generateMinimalOption(w, h, hasHitArea),
+      bar: this.getSliderBase(w, h, 0x00ffff, hasHitArea),
+      mask: this.getSliderBase(w, h, 0xff00ff, hasHitArea),
       rate: 1.0,
     };
+  }
+
+  public static initSlider(option: SliderViewOption): SliderSet {
     const slider = new SliderView(option);
     slider.on(SliderEventType.CHANGE, (e) => {
       console.log(e.rate);
@@ -28,29 +54,34 @@ export class SliderGenerator {
     };
   }
 
-  private static getSliderBase(w, h, color): Graphics {
+  private static getSliderBase(
+    w,
+    h,
+    color,
+    hasHitArea: boolean = true
+  ): Graphics {
     const g = new Graphics();
     g.beginFill(color);
-    g.moveTo(0, 0).lineTo(w, 0).lineTo(w, h).lineTo(0, 0).endFill();
-    g.hitArea = new Rectangle(0, 0, w, h);
-    return g;
-  }
-
-  private static getSliderMask(w, h): Graphics {
-    const g = new Graphics();
-    g.beginFill(0xff00ff, 0.1);
     g.drawRect(0, 0, w, h);
-    g.hitArea = new Rectangle(0, 0, w, h);
+    if (hasHitArea) {
+      g.hitArea = new Rectangle(0, 0, w, h);
+    }
     return g;
   }
 
-  private static getSliderButton(w, h, color): Graphics {
+  private static getSliderButton(
+    w: number,
+    h: number,
+    color: number,
+    hasHitArea: boolean = true
+  ): Graphics {
     const size = 16;
-
     const g = new Graphics();
     g.beginFill(color, 0.5);
     g.drawRect(-size / 2, 0, size, h);
-    g.hitArea = new Rectangle(-size / 2, 0, size, h);
+    if (hasHitArea) {
+      g.hitArea = new Rectangle(-size / 2, 0, size, h);
+    }
     return g;
   }
 }
