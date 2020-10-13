@@ -19,15 +19,11 @@ describe("SliderView", () => {
   });
 
   test("set rate", () => {
-    SliderViewTester.changeRate(sliders, 0.0);
-    SliderViewTester.changeRate(sliders, 0.5);
-    SliderViewTester.changeRate(sliders, 1.0);
+    SliderViewTester.changeRateTest(sliders);
   });
 
   test("tap base", () => {
-    SliderViewTester.tapBase(sliders, 0.0);
-    SliderViewTester.tapBase(sliders, 0.5 * sliderSize);
-    SliderViewTester.tapBase(sliders, 1.0 * sliderSize);
+    SliderViewTester.tabBaseTest(sliders);
   });
 
   test("drag button", () => {
@@ -76,9 +72,20 @@ describe("Minimal SliderView", () => {
   });
 
   test("set rate", () => {
-    SliderViewTester.changeRate(sliders, 0.0);
-    SliderViewTester.changeRate(sliders, 0.5);
-    SliderViewTester.changeRate(sliders, 1.0);
+    SliderViewTester.changeRateTest(sliders);
+  });
+
+  test("tap base", () => {
+    SliderViewTester.tabBaseTest(sliders);
+  });
+
+  test("drag button", () => {
+    SliderViewTester.dragButton(sliders, sliderSize, "pointerdown", {
+      hasChangedEvent: false,
+    });
+    SliderViewTester.dragButton(sliders, 0.5 * sliderSize, "pointermove");
+    SliderViewTester.dragButton(sliders, 0, "pointermove");
+    SliderViewTester.dragButton(sliders, 0, "pointerup");
   });
 });
 
@@ -97,5 +104,41 @@ describe("Vertical SliderView", () => {
 
   test("init", () => {
     expect(sliders.slider).toBeTruthy();
+    expect(sliders.slider.isHorizontal).toBe(false);
+  });
+
+  test("tap base", () => {
+    SliderViewTester.tabBaseTest(sliders);
+  });
+
+  test("drag button", () => {
+    SliderViewTester.dragButton(sliders, sliderSize, "pointerdown", {
+      hasChangedEvent: false,
+    });
+    SliderViewTester.dragButton(sliders, 0.5 * sliderSize, "pointermove");
+    SliderViewTester.dragButton(sliders, 0, "pointermove");
+    SliderViewTester.dragButton(sliders, 0, "pointerup");
+  });
+});
+
+describe("Slider without mask", () => {
+  const sliderSize = 1000;
+  const option = SliderGenerator.generateOption(sliderSize, sliderSize, {
+    hasMask: false,
+  });
+  const sliders = SliderGenerator.initSlider(option);
+
+  beforeEach(() => {
+    sliders.sliderButton.emit("pointerup");
+    sliders.slider.changeRate(1.0);
+    sliders.spyLog.mockReset();
+  });
+
+  test("init", () => {
+    expect(sliders.slider).toBeTruthy();
+  });
+
+  test("tap base", () => {
+    SliderViewTester.tabBaseTest(sliders);
   });
 });

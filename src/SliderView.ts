@@ -349,7 +349,13 @@ export class SliderViewUtil {
   }
 
   /**
-   * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+   *
+   */
+  /**
+   * スクロール方向の高さ、もしくは幅を設定する。
+   * @param displayObj
+   * @param isHorizontal
+   * @param amount width or height, range : 0 ~ displayObj.size.width or height, unit : px
    */
   public static setSize(
     displayObj: DisplayObject,

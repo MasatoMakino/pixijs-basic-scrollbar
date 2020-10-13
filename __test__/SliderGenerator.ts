@@ -6,6 +6,8 @@ export interface SliderSet {
   slider: SliderView;
   sliderButton: DisplayObject;
   sliderBase: DisplayObject;
+  sliderBar?: DisplayObject;
+  sliderBarMask?: DisplayObject;
   spyLog: SpyInstance;
   size: number;
 }
@@ -45,15 +47,21 @@ export class SliderGenerator {
   public static generateOption(
     w: number,
     h: number,
-    option?: { hasHitArea?: boolean; isHorizontal?: boolean }
+    option?: { hasHitArea?: boolean; isHorizontal?: boolean; hasMask?: boolean }
   ): SliderViewOption {
     option ??= {};
     option.hasHitArea ??= true;
     option.isHorizontal ??= true;
+    option.hasMask ??= true;
+
+    const mask = option.hasMask
+      ? this.getSliderBase(w, h, 0xff00ff, option.hasHitArea)
+      : undefined;
+
     return {
       ...this.generateMinimalOption(w, h, option.hasHitArea),
       bar: this.getSliderBase(w, h, 0x00ffff, option.hasHitArea),
-      mask: this.getSliderBase(w, h, 0xff00ff, option.hasHitArea),
+      mask,
       isHorizontal: option.isHorizontal,
       rate: 1.0,
     };
@@ -69,6 +77,8 @@ export class SliderGenerator {
       slider,
       sliderButton: option.button,
       sliderBase: option.base,
+      sliderBar: option.bar,
+      sliderBarMask: option.mask,
       spyLog,
       size: option.maxPosition - option.minPosition,
     };

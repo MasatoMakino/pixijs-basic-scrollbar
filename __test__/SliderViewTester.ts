@@ -8,12 +8,10 @@ import { SliderSet } from "./SliderGenerator";
 
 export class TestRateOption {
   hasChangedEvent?: boolean;
-  isHorizontal?: boolean;
 
   public static initOption(option?: TestRateOption) {
     option ??= {};
     option.hasChangedEvent ??= true;
-    option.isHorizontal ??= true;
     return option;
   }
 }
@@ -32,11 +30,14 @@ export class SliderViewTester {
   }
 
   public static controlButton(
+    isHorizontal: boolean,
     target: DisplayObject,
     pos: number,
     type: string
   ) {
-    const e = SliderViewTester.generateInteractionEvent(target, pos, 0);
+    const globalX = isHorizontal ? pos : 0;
+    const globalY = isHorizontal ? 0 : pos;
+    const e = this.generateInteractionEvent(target, globalX, globalY);
     target.emit(type, e);
   }
 
@@ -48,13 +49,28 @@ export class SliderViewTester {
     option = TestRateOption.initOption(option);
 
     expect(targets.slider.rate).toBe(rate);
+
     if (option.hasChangedEvent) {
       expect(targets.spyLog).toBeCalledWith(rate);
     }
-    if (option.isHorizontal) {
-      expect(targets.sliderButton.x).toBe(rate * targets.size);
-    } else {
-      expect(targets.sliderButton.y).toBe(rate * targets.size);
+
+    const isHorizontal = targets.slider.isHorizontal;
+
+    const buttonPos = isHorizontal
+      ? targets.sliderButton.x
+      : targets.sliderButton.y;
+    expect(buttonPos).toBe(rate * targets.size);
+
+    if (targets.sliderBar && targets.sliderBarMask) {
+      const maskScale = targets.sliderBarMask.scale;
+      const scale = targets.slider.isHorizontal ? maskScale.x : maskScale.y;
+      expect(scale).toBe(rate);
+    }
+
+    if (targets.sliderBar && !targets.sliderBarMask) {
+      const barScale = targets.sliderBar.scale;
+      const scale = targets.slider.isHorizontal ? barScale.x : barScale.y;
+      expect(scale).toBe(rate);
     }
   }
 
@@ -72,7 +88,12 @@ export class SliderViewTester {
     pos: number,
     option?: TestRateOption
   ) {
-    SliderViewTester.controlButton(sliders.sliderBase, pos, "pointertap");
+    SliderViewTester.controlButton(
+      sliders.slider.isHorizontal,
+      sliders.sliderBase,
+      pos,
+      "pointertap"
+    );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
 
@@ -82,7 +103,24 @@ export class SliderViewTester {
     type: string,
     option?: TestRateOption
   ) {
-    SliderViewTester.controlButton(sliders.sliderButton, pos, type);
+    SliderViewTester.controlButton(
+      sliders.slider.isHorizontal,
+      sliders.sliderButton,
+      pos,
+      type
+    );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
+  }
+
+  public static changeRateTest(sliders: SliderSet) {
+    SliderViewTester.changeRate(sliders, 0.0);
+    SliderViewTester.changeRate(sliders, 0.5);
+    SliderViewTester.changeRate(sliders, 1.0);
+  }
+
+  public static tabBaseTest(sliders: SliderSet) {
+    SliderViewTester.tapBase(sliders, 0.0);
+    SliderViewTester.tapBase(sliders, 0.5 * sliders.size);
+    SliderViewTester.tapBase(sliders, sliders.size);
   }
 }
