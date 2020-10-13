@@ -140,7 +140,7 @@ export class SliderView extends Container {
       SliderViewUtil.setSize(
         this._bar,
         this._isHorizontal,
-        Math.max(1.0, mousePos - this._minPosition)
+        mousePos - SliderViewUtil.getPosition(this._bar, this._isHorizontal)
       );
     }
     //バーマスクがあれば、マスクを伸縮する。
