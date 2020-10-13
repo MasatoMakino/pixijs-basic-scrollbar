@@ -67,7 +67,7 @@ export class SliderView extends Container {
 
   private addChildParts(obj: DisplayObject): void {
     if (!obj) return;
-    if (obj.parent) obj.parent.removeChild(obj);
+    obj.parent?.removeChild(obj);
     this.addChild(obj);
   }
 
@@ -98,8 +98,7 @@ export class SliderView extends Container {
     this.isDragging = true;
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
-    const global = e.data.global;
-    const localPos = this.toLocal(new Point(global.x, global.y));
+    const localPos = this.toLocal(e.data.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
     this._slideButton.on("pointermove", this.moveSlider);
@@ -318,7 +317,7 @@ export class SliderViewUtil {
   }
 
   /**
-   * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+   * ディスプレイオブジェクトにスクロール方向の座標値を設定する
    */
   public static setPosition(
     displayObj: DisplayObject,

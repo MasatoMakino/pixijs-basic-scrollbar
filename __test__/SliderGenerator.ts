@@ -1,12 +1,19 @@
 import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
 import { SliderEventType, SliderView, SliderViewOption } from "../src";
+import SpyInstance = jest.SpyInstance;
 
 export interface SliderSet {
   slider: SliderView;
   sliderButton: DisplayObject;
   sliderBase: DisplayObject;
+  spyLog: SpyInstance;
+  size: number;
 }
 export class SliderGenerator {
+  /**
+   * バウンディングボックスが存在しないスライダー初期化オプションを生成する。
+   * 異常系テスト用
+   */
   public static generateNonBoundsOption() {
     return {
       minPosition: 0,
@@ -16,6 +23,12 @@ export class SliderGenerator {
     };
   }
 
+  /**
+   * 最小限のスライダー初期化オプションを生成する。
+   * @param w
+   * @param h
+   * @param hasHitArea
+   */
   public static generateMinimalOption(
     w: number,
     h: number,
@@ -32,13 +45,16 @@ export class SliderGenerator {
   public static generateOption(
     w: number,
     h: number,
-    hasHitArea: boolean = true
+    option?: { hasHitArea?: boolean; isHorizontal?: boolean }
   ): SliderViewOption {
+    option ??= {};
+    option.hasHitArea ??= true;
+    option.isHorizontal ??= true;
     return {
-      ...this.generateMinimalOption(w, h, hasHitArea),
-      bar: this.getSliderBase(w, h, 0x00ffff, hasHitArea),
-      mask: this.getSliderBase(w, h, 0xff00ff, hasHitArea),
-      isHorizontal: true,
+      ...this.generateMinimalOption(w, h, option.hasHitArea),
+      bar: this.getSliderBase(w, h, 0x00ffff, option.hasHitArea),
+      mask: this.getSliderBase(w, h, 0xff00ff, option.hasHitArea),
+      isHorizontal: option.isHorizontal,
       rate: 1.0,
     };
   }
@@ -48,10 +64,13 @@ export class SliderGenerator {
     slider.on(SliderEventType.CHANGE, (e) => {
       console.log(e.rate);
     });
+    const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
     return {
       slider,
       sliderButton: option.button,
       sliderBase: option.base,
+      spyLog,
+      size: option.maxPosition - option.minPosition,
     };
   }
 
