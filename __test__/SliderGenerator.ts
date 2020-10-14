@@ -18,7 +18,6 @@ export class SliderGenerator {
    */
   public static generateNonBoundsOption() {
     return {
-      minPosition: 0,
       maxPosition: 100,
       base: new Container(),
       button: new Container(),
@@ -37,7 +36,6 @@ export class SliderGenerator {
     hasHitArea: boolean = true
   ): SliderViewOption {
     return {
-      minPosition: 0,
       maxPosition: w,
       base: this.getSliderBase(w, h, 0x0000ff, hasHitArea),
       button: this.getSliderButton(w, h, 0xffff00, hasHitArea),

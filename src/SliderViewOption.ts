@@ -5,8 +5,15 @@ import { DisplayObject, Graphics, SHAPES } from "pixi.js";
 import { SliderView } from "./SliderView";
 
 export class SliderViewOption {
-  minPosition: number; //スライダーボタンの座標の最小値
+  /**
+   * スライダーボタンの座標の最小値
+   * @default 0.0
+   */
+  minPosition?: number;
   maxPosition: number; //スライダーボタンの座標の最大値
+  /**
+   * @default 0.0
+   */
   rate?: number;
   base: DisplayObject; //スライダーの地
   /**
@@ -26,8 +33,9 @@ export class SliderViewOption {
       option.rate = Math.max(0, option.rate);
       option.rate = Math.min(SliderView.MAX_RATE, option.rate);
     }
-    option.rate = option.rate ?? 0.0;
-    option.isHorizontal = option.isHorizontal ?? true;
+    option.minPosition ??= 0.0;
+    option.rate ??= 0.0;
+    option.isHorizontal ??= true;
 
     this.check(option);
     return option;
