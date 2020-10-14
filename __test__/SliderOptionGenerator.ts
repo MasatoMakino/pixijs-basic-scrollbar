@@ -66,6 +66,23 @@ export class SliderOptionGenerator {
     };
   }
 
+  public static generateScrollBarOption(
+    w: number,
+    h: number,
+    option?: SliderGeneratorOption
+  ): SliderViewOption {
+    option = SliderGeneratorOption.init(option);
+    const maxPos = option.isHorizontal ? w : h;
+    const buttonSize = option.isHorizontal ? h : w;
+    return {
+      maxPosition: maxPos,
+      button: this.getScrollBarButton(buttonSize, 0x00ffff, option.hasHitArea),
+      base: this.getSliderBase(w, h, 0x00ffff, option.hasHitArea),
+      isHorizontal: option.isHorizontal,
+      rate: 0.0,
+    };
+  }
+
   private static getSliderBase(
     w,
     h,
@@ -93,6 +110,20 @@ export class SliderOptionGenerator {
     g.drawRect(-size / 2, 0, size, h);
     if (hasHitArea) {
       g.hitArea = new Rectangle(-size / 2, 0, size, h);
+    }
+    return g;
+  }
+
+  private static getScrollBarButton(
+    size: number,
+    color: number,
+    hasHitArea: boolean = true
+  ): Graphics {
+    const g = new Graphics();
+    g.beginFill(color, 0);
+    g.drawRect(-size / 2, -size / 2, size, size);
+    if (hasHitArea) {
+      g.hitArea = new Rectangle(-size / 2, -size / 2, size, size);
     }
     return g;
   }

@@ -30,6 +30,9 @@ export class ScrollBarView extends SliderView {
   constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption) {
     super(option);
 
+    this.updateSlider();
+    this.on(SliderEventType.CHANGE, this.updateContentsPosition);
+
     ScrollBarViewInitOption.check(scrollOption);
     this.targetContents = scrollOption.targetContents;
     this.contentsMask = scrollOption.contentsMask;
@@ -48,21 +51,11 @@ export class ScrollBarView extends SliderView {
   }
 
   /**
-   * 初期化処理
-   * スライダーボタンの位置の初期化に加え、サイズの初期化も行う
-   * @param {SliderViewOption} option
-   */
-  protected init(option: SliderViewOption): void {
-    super.init(option);
-    this.initSliderButton();
-  }
-
-  /**
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値
    */
   protected limitSliderButtonPosition(evt: InteractionEvent): number {
-    let mousePos: number = this.getMousePosition(this, evt);
+    const mousePos: number = this.getMousePosition(this, evt);
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
   }
@@ -92,8 +85,14 @@ export class ScrollBarView extends SliderView {
    */
   private getRangeOfSliderButtonPosition(): { max: number; min: number } {
     const buttonSize: number = this.slideButtonSize;
-    const max: number = this._maxPosition - buttonSize / 2;
-    const min: number = this._minPosition + buttonSize / 2;
+    /**
+     * TODO : ここで`buttonSize / 2`を修正に使っている。
+     * そのためボタンが中心から偏った場合、対応できない。
+     * this._sliderButton.getLocalBounds()で中心位置を調べて、動的に補正する修正を検討。
+     */
+    const sizeHalf = buttonSize / 2;
+    const max: number = this._maxPosition - sizeHalf;
+    const min: number = this._minPosition + sizeHalf;
     return { max, min };
   }
 
@@ -110,17 +109,13 @@ export class ScrollBarView extends SliderView {
    * スクロールバーのボタンサイズ及び位置を更新する。
    * コンテンツサイズが変更された場合の更新にも利用する。
    */
-  public initSliderButton(): void {
+  public updateSlider(): void {
     if (!this._slideButton || !this._targetContents || !this._contentsMask) {
       return;
     }
 
     this.updateSliderSize();
     this.updateSliderPosition();
-
-    if (this.listeners(SliderEventType.CHANGE).length != 0) return;
-
-    this.on(SliderEventType.CHANGE, this.updateContentsPosition);
   }
 
   /**
@@ -131,14 +126,14 @@ export class ScrollBarView extends SliderView {
     const getPos = SliderViewUtil.getPosition;
     const zeroPos = getPos(this._contentsMask, this.isHorizontal);
     const contentsPos = getPos(this._targetContents, this.isHorizontal);
-    const posDif = zeroPos - contentsPos;
+    const contentsPositionDif = zeroPos - contentsPos;
 
     const getSize = SliderViewUtil.getSize;
     const targetSize = getSize(this._targetContents, this.isHorizontal);
     const maskSize = getSize(this._contentsMask, this.isHorizontal);
-    const sizeDif = targetSize - maskSize;
+    const contentsSizeDif = targetSize - maskSize;
 
-    const rate = (posDif / sizeDif) * SliderView.MAX_RATE;
+    const rate = (contentsPositionDif / contentsSizeDif) * SliderView.MAX_RATE;
     this.changeRate(rate);
   }
 
@@ -247,7 +242,7 @@ export class ScrollBarView extends SliderView {
 
   set targetContents(value: DisplayObject) {
     this._targetContents = value;
-    this.initSliderButton();
+    this.updateSlider();
   }
 
   get contentsMask(): DisplayObject {
@@ -256,7 +251,7 @@ export class ScrollBarView extends SliderView {
 
   set contentsMask(value: DisplayObject) {
     this._contentsMask = value;
-    this.initSliderButton();
+    this.updateSlider();
   }
 
   protected onDisposeFunction(e?: Event): void {
