@@ -1,6 +1,7 @@
 import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
 import { ScrollBarView, ScrollBarViewInitOption } from "../src";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
+import { SliderViewTester } from "./SliderViewTester";
 
 export class ScrollBarTargetSet {
   targetContents: DisplayObject;
@@ -63,6 +64,7 @@ describe("ScrollBarView", () => {
   const W = 100;
   const H = 100;
   const SCROLL_BAR_W = 16;
+  const CONTENTS_SCALE: number = 2.0;
 
   const sliderOption = SliderOptionGenerator.generateScrollBarOption(
     SCROLL_BAR_W,
@@ -73,6 +75,11 @@ describe("ScrollBarView", () => {
   const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
 
   const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
+
+  beforeEach(() => {
+    scrollbar.changeRate(0.0);
+    spyLog.mockReset();
+  });
 
   test("init", () => {
     expect(scrollbar).toBeTruthy();
@@ -88,5 +95,27 @@ describe("ScrollBarView", () => {
     expect(scrollBarContents.targetContents.y).toBe(-H * 0.5);
     scrollbar.changeRate(1.0);
     expect(scrollBarContents.targetContents.y).toBe(-H);
+  });
+
+  test("tap base", () => {
+    const base = sliderOption.base;
+    const barH = H / CONTENTS_SCALE;
+    const isHorizontal = scrollbar.isHorizontal;
+
+    SliderViewTester.controlButton(isHorizontal, base, 0.0, "pointertap");
+    expect(scrollbar.rate).toBe(0.0);
+    SliderViewTester.controlButton(isHorizontal, base, barH / 2, "pointertap");
+    expect(scrollbar.rate).toBe(0.0);
+    SliderViewTester.controlButton(isHorizontal, base, H / 2, "pointertap");
+    expect(scrollbar.rate).toBe(0.5);
+    SliderViewTester.controlButton(
+      isHorizontal,
+      base,
+      H - barH / 2,
+      "pointertap"
+    );
+    expect(scrollbar.rate).toBe(1.0);
+    SliderViewTester.controlButton(isHorizontal, base, H, "pointertap");
+    expect(scrollbar.rate).toBe(1.0);
   });
 });
