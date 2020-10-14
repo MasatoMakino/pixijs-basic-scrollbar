@@ -4,7 +4,8 @@ import * as PIXI from "pixi.js";
 import { Ticker } from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventType } from "./ScrollBarEvent";
-import { ScrollBarView, ScrollBarViewUtil } from "./ScrollBarView";
+import { ScrollBarView } from "./ScrollBarView";
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 import Easing = TWEEN.Easing;
 import Tween = TWEEN.Tween;
 
