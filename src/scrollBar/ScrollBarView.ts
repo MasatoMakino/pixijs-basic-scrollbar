@@ -254,7 +254,6 @@ export class ScrollBarView extends SliderView {
   }
 
   protected onDisposeFunction(e?: Event): void {
-    this.removeListener(SliderEventType.CHANGE, this.updateContentsPosition);
     this._targetContents = null;
     this._contentsMask = null;
     super.onDisposeFunction(e);
