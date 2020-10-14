@@ -218,8 +218,7 @@ export class SliderView extends Container {
     displayObj: DisplayObject,
     evt: InteractionEvent
   ): number {
-    const global = evt.data.global;
-    const localPos = displayObj.toLocal(new Point(global.x, global.y));
+    const localPos = displayObj.toLocal(evt.data.global);
 
     if (this._isHorizontal) {
       return localPos.x - this.dragStartPos.x;
@@ -288,7 +287,7 @@ export class SliderViewUtil {
     max: number,
     min: number
   ): number {
-    let rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
+    const rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
     return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
   }
 
@@ -297,7 +296,7 @@ export class SliderViewUtil {
     max: number,
     min: number
   ): number {
-    let pix: number = ((max - min) * rate) / SliderView.MAX_RATE + min;
+    const pix: number = ((max - min) * rate) / SliderView.MAX_RATE + min;
     return SliderViewUtil.clamp(pix, max, min);
   }
 
@@ -348,9 +347,6 @@ export class SliderViewUtil {
     }
   }
 
-  /**
-   *
-   */
   /**
    * スクロール方向の高さ、もしくは幅を設定する。
    * @param displayObj
