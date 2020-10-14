@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
 import { SliderViewOption } from "../src";
-import { SliderGenerator } from "./SliderGenerator";
+import { SliderOptionGenerator } from "./SliderOptionGenerator";
 
 describe("SliderViewOption", () => {
   const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => {
@@ -13,7 +13,7 @@ describe("SliderViewOption", () => {
 
   test("default value", () => {
     const size = 100;
-    const option = SliderGenerator.generateMinimalOption(size, size);
+    const option = SliderOptionGenerator.generateMinimalOption(size, size);
     const initializedOption = SliderViewOption.init(option);
     expect(initializedOption.isHorizontal).toBe(true);
     expect(initializedOption.rate).toBe(0.0);
@@ -21,7 +21,7 @@ describe("SliderViewOption", () => {
   });
 
   test("non hitArea", () => {
-    const option = SliderGenerator.generateNonBoundsOption();
+    const option = SliderOptionGenerator.generateNonBoundsOption();
     expect(() => {
       SliderViewOption.init(option);
     }).toThrowError(
@@ -31,7 +31,7 @@ describe("SliderViewOption", () => {
 
   test("has parent", () => {
     const size = 100;
-    const option = SliderGenerator.generateMinimalOption(size, size);
+    const option = SliderOptionGenerator.generateMinimalOption(size, size);
     const parent = new Container();
     parent.addChild(option.button);
     SliderViewOption.init(option);

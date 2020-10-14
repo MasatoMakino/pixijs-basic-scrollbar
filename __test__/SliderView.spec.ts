@@ -1,10 +1,11 @@
 import { SliderView } from "../src";
 import { SliderGenerator } from "./SliderGenerator";
+import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
 
 describe("SliderView", () => {
   const sliderSize = 100;
-  const option = SliderGenerator.generateOption(sliderSize, sliderSize);
+  const option = SliderOptionGenerator.generateOption(sliderSize, sliderSize);
   const sliders = SliderGenerator.initSlider(option);
 
   beforeEach(() => {
@@ -58,7 +59,10 @@ describe("SliderView", () => {
 
 describe("Minimal SliderView", () => {
   const sliderSize = 100;
-  const option = SliderGenerator.generateMinimalOption(sliderSize, sliderSize);
+  const option = SliderOptionGenerator.generateMinimalOption(
+    sliderSize,
+    sliderSize
+  );
   const sliders = SliderGenerator.initSlider(option);
 
   beforeEach(() => {
@@ -91,7 +95,7 @@ describe("Minimal SliderView", () => {
 
 describe("Vertical SliderView", () => {
   const sliderSize = 100;
-  const option = SliderGenerator.generateOption(sliderSize, sliderSize, {
+  const option = SliderOptionGenerator.generateOption(sliderSize, sliderSize, {
     isHorizontal: false,
   });
   const sliders = SliderGenerator.initSlider(option);
@@ -123,7 +127,7 @@ describe("Vertical SliderView", () => {
 
 describe("Slider without mask", () => {
   const sliderSize = 1000;
-  const option = SliderGenerator.generateOption(sliderSize, sliderSize, {
+  const option = SliderOptionGenerator.generateOption(sliderSize, sliderSize, {
     hasMask: false,
   });
   const sliders = SliderGenerator.initSlider(option);
