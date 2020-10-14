@@ -17,6 +17,7 @@ describe("SliderViewOption", () => {
     const initializedOption = SliderViewOption.init(option);
     expect(initializedOption.isHorizontal).toBe(true);
     expect(initializedOption.rate).toBe(0.0);
+    expect(initializedOption.minPosition).toBe(0.0);
   });
 
   test("non hitArea", () => {
