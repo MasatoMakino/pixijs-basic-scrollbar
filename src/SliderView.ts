@@ -125,7 +125,7 @@ export class SliderView extends Container {
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
   protected limitSliderButtonPosition(evt: InteractionEvent): number {
-    let mousePos: number = this.getMousePosition(this, evt);
+    const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
 
