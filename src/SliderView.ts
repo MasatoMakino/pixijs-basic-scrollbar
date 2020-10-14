@@ -122,7 +122,7 @@ export class SliderView extends Container {
 
   /**
    * スライダーボタンの位置を制限する関数
-   * @return 制限で切り落とされたスライダーボタンの座標値
+   * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
   protected limitSliderButtonPosition(evt: InteractionEvent): number {
     let mousePos: number = this.getMousePosition(this, evt);
@@ -132,7 +132,7 @@ export class SliderView extends Container {
   /**
    * 各MCの位置、サイズをマウスポインタの位置に合わせて更新する
    * moveSliderの内部処理
-   * @param	mousePos
+   * @param	mousePos SliderViewを原点としたローカルのマウス座標、limitSliderButtonPosition関数で可動範囲に制限済み。
    */
   private updateParts(mousePos: number): void {
     //バーマスクがなければ、バー自体を伸縮する
