@@ -30,7 +30,6 @@ export class ScrollBarView extends SliderView {
   constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption) {
     super(option);
 
-    this.updateSlider();
     this.on(SliderEventType.CHANGE, this.updateContentsPosition);
 
     ScrollBarViewInitOption.check(scrollOption);
