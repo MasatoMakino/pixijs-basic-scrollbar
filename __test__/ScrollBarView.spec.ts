@@ -1,5 +1,6 @@
 import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
 import { ScrollBarView, ScrollBarViewInitOption } from "../src";
+import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
 
@@ -12,12 +13,13 @@ export class ScrollBarViewOptionGenerator {
   public static generate(
     contentsW: number,
     scrollBarH: number,
+    contentsScale: number,
     container: Container
   ): ScrollBarViewInitOption {
     const targetContents = this.getScrollBarContents(
       0xff00ff,
       contentsW,
-      scrollBarH * 2,
+      scrollBarH * contentsScale,
       container
     );
     const contentsMask = this.getScrollBarContents(
@@ -45,12 +47,14 @@ export class ScrollBarViewOptionGenerator {
 export class ScrollBarViewGenerator {
   public static generateTargets(
     contentsW: number,
-    scrollBarH: number
+    scrollBarH: number,
+    contentsScale: number
   ): ScrollBarTargetSet {
     const container = new Container();
     const option = ScrollBarViewOptionGenerator.generate(
       contentsW,
       scrollBarH,
+      contentsScale,
       container
     );
     return {
@@ -71,7 +75,11 @@ describe("ScrollBarView", () => {
     H,
     { isHorizontal: false }
   );
-  const scrollBarContents = ScrollBarViewGenerator.generateTargets(W, H);
+  const scrollBarContents = ScrollBarViewGenerator.generateTargets(
+    W,
+    H,
+    CONTENTS_SCALE
+  );
   const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
 
   const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
@@ -174,6 +182,22 @@ describe("ScrollBarView", () => {
       scroll -= delta;
       expect(scrollbar.rate).toBe(Math.max(0.0, scroll / H));
     }
+  });
+
+  test("WheelManager : start and stop", () => {
+    const target = scrollBarContents.targetContents;
+    scrollbar.wheelManager.start();
+    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+    scrollbar.wheelManager.start();
+    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+
+    scrollbar.wheelManager.stop();
+    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(0);
+    scrollbar.wheelManager.stop();
+    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(0);
+
+    scrollbar.wheelManager.start();
+    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
   });
 
   test("dispose", () => {
