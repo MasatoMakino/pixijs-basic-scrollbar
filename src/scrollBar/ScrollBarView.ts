@@ -24,7 +24,15 @@ import { ScrollBarEventType } from "./ScrollBarEvent";
 export class ScrollBarView extends SliderView {
   protected _targetContents: DisplayObject;
   protected _contentsMask: DisplayObject;
-  public autoHide: boolean = false;
+
+  get autoHide(): boolean {
+    return this._autoHide;
+  }
+  set autoHide(value: boolean) {
+    this._autoHide = value;
+    this.updateSliderVisible();
+  }
+  private _autoHide: boolean = false;
   public wheelManager: MouseWheelScrollManager;
 
   constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption) {
@@ -161,8 +169,14 @@ export class ScrollBarView extends SliderView {
     }
 
     SliderViewUtil.setSize(this._slideButton, this.isHorizontal, sliderSize);
+    this.updateSliderVisible();
+  }
 
-    //autoHideの条件に一致するかを判定し、表示を切り替える。
+  /**
+   * autoHideの条件に一致するかを判定し、表示を切り替える。
+   * @private
+   */
+  private updateSliderVisible(): void {
     this._slideButton.visible = this._slideButton.interactive = !this.isHide;
   }
 
@@ -188,7 +202,7 @@ export class ScrollBarView extends SliderView {
       return true;
     }
 
-    //マスクサイズとコンテンツサイズが同一の場合スライダーを隠す
+    //マスクサイズとコンテンツサイズが同一か判定する
     return (
       SliderViewUtil.getSize(this._slideButton, this.isHorizontal) == fullSize
     );

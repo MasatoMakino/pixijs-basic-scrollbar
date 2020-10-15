@@ -62,6 +62,32 @@ export class ScrollBarViewGenerator {
       container,
     };
   }
+
+  public static generateScrollBarSet(
+    w: number,
+    h: number,
+    scrollBarW: number,
+    contentsScale: number
+  ) {
+    const sliderOption = SliderOptionGenerator.generateScrollBarOption(
+      scrollBarW,
+      h,
+      { isHorizontal: false }
+    );
+    const scrollBarContents = ScrollBarViewGenerator.generateTargets(
+      w,
+      h,
+      contentsScale
+    );
+    const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
+    const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
+    return {
+      sliderOption,
+      scrollBarContents,
+      scrollbar,
+      spyLog,
+    };
+  }
 }
 
 describe("ScrollBarView", () => {
@@ -69,20 +95,17 @@ describe("ScrollBarView", () => {
   const H = 100;
   const SCROLL_BAR_W = 16;
   const CONTENTS_SCALE: number = 2.0;
-
-  const sliderOption = SliderOptionGenerator.generateScrollBarOption(
-    SCROLL_BAR_W,
-    H,
-    { isHorizontal: false }
-  );
-  const scrollBarContents = ScrollBarViewGenerator.generateTargets(
+  const {
+    sliderOption,
+    scrollBarContents,
+    scrollbar,
+    spyLog,
+  } = ScrollBarViewGenerator.generateScrollBarSet(
     W,
     H,
+    SCROLL_BAR_W,
     CONTENTS_SCALE
   );
-  const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
-
-  const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
 
   beforeEach(() => {
     scrollbar.changeRate(0.0);
@@ -207,6 +230,35 @@ describe("ScrollBarView", () => {
   });
 });
 
-//TODO : scale 0.5のスクロールバー
+describe("ScrollBarView with autoHide", () => {
+  const W = 100;
+  const H = 100;
+  const SCROLL_BAR_W = 16;
+  const CONTENTS_SCALE: number = 0.5;
+  const {
+    sliderOption,
+    scrollBarContents,
+    scrollbar,
+    spyLog,
+  } = ScrollBarViewGenerator.generateScrollBarSet(
+    W,
+    H,
+    SCROLL_BAR_W,
+    CONTENTS_SCALE
+  );
+  scrollbar.autoHide = true;
 
-//TODO : AutoHideのスクロールバー
+  afterEach(() => {
+    scrollbar.changeRate(0.0);
+    sliderOption.base.emit("pointerup");
+    sliderOption.button.emit("pointerup");
+    spyLog.mockReset();
+  });
+
+  test("init", () => {
+    expect(scrollbar).toBeTruthy();
+    expect(scrollbar.autoHide).toBe(true);
+    expect(scrollBarContents.targetContents.scale.y).toBe(1.0);
+    expect(sliderOption.button.visible).toBe(false);
+  });
+});
