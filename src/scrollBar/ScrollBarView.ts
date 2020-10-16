@@ -5,8 +5,8 @@ import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
 import { InertialScrollManager } from "./InertialScrollManager";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
+import { ScrollBarContents } from "./ScrollBarContents";
 import { ScrollBarEventType } from "./ScrollBarEvent";
-import { ScrollBarViewInitOption } from "./ScrollBarViewInitOption";
 
 /**
  * スクロールバーを表すクラスです。
@@ -36,12 +36,12 @@ export class ScrollBarView extends SliderView {
   private _autoHide: boolean = false;
   public wheelManager: MouseWheelScrollManager;
 
-  constructor(option: SliderViewOption, scrollOption: ScrollBarViewInitOption) {
+  constructor(option: SliderViewOption, scrollOption: ScrollBarContents) {
     super(option);
 
     this.on(SliderEventType.CHANGE, this.updateContentsPosition);
 
-    ScrollBarViewInitOption.check(scrollOption);
+    ScrollBarContents.init(scrollOption);
     this.targetContents = scrollOption.targetContents;
     this.contentsMask = scrollOption.contentsMask;
 

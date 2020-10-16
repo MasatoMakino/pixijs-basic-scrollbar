@@ -1,22 +1,17 @@
-import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
+import { Container, Graphics, Rectangle } from "pixi.js";
 import { ScrollBarView } from "../src";
 import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
-import { ScrollBarViewInitOption } from "../src/scrollBar/ScrollBarViewInitOption";
+import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
 
-export class ScrollBarTargetSet {
-  targetContents: DisplayObject;
-  contentsMask: DisplayObject;
-  container: Container;
-}
 export class ScrollBarViewOptionGenerator {
   public static generate(
     contentsW: number,
     scrollBarH: number,
     contentsScale: number,
     container: Container
-  ): ScrollBarViewInitOption {
+  ): ScrollBarContents {
     const targetContents = this.getScrollBarContents(
       0xff00ff,
       contentsW,
@@ -33,6 +28,7 @@ export class ScrollBarViewOptionGenerator {
     return {
       targetContents,
       contentsMask,
+      container,
     };
   }
   private static getScrollBarContents(color, w, h, container: Container) {
@@ -50,7 +46,7 @@ export class ScrollBarViewGenerator {
     contentsW: number,
     scrollBarH: number,
     contentsScale: number
-  ): ScrollBarTargetSet {
+  ): ScrollBarContents {
     const container = new Container();
     const option = ScrollBarViewOptionGenerator.generate(
       contentsW,
@@ -261,5 +257,18 @@ describe("ScrollBarView with autoHide", () => {
     expect(scrollbar.autoHide).toBe(true);
     expect(scrollBarContents.targetContents.scale.y).toBe(1.0);
     expect(sliderOption.button.visible).toBe(false);
+  });
+
+  /**
+   * hiddenの場合、SliderのBaseタップは無視する
+   */
+  test("tap base on hidden", () => {
+    const base = sliderOption.base;
+    const isHorizontal = scrollbar.isHorizontal;
+
+    SliderViewTester.controlButton(isHorizontal, base, 0.0, "pointertap");
+    expect(scrollbar.rate).toBe(0.0);
+    SliderViewTester.controlButton(isHorizontal, base, H, "pointertap");
+    expect(scrollbar.rate).toBe(0.0);
   });
 });
