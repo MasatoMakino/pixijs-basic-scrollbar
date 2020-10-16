@@ -1,30 +1,10 @@
-import { Container } from "pixi.js";
 import { ScrollBarView } from "../src";
 import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
-import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
 
 export class ScrollBarViewGenerator {
-  public static generateTargets(
-    contentsW: number,
-    scrollBarH: number,
-    contentsScale: number
-  ): ScrollBarContents {
-    const container = new Container();
-    const option = ScrollBarContentsGenerator.generate(
-      contentsW,
-      scrollBarH,
-      contentsScale,
-      container
-    );
-    return {
-      ...option,
-      container,
-    };
-  }
-
   public static generateScrollBarSet(
     w: number,
     h: number,
@@ -36,7 +16,7 @@ export class ScrollBarViewGenerator {
       h,
       { isHorizontal: false }
     );
-    const scrollBarContents = ScrollBarViewGenerator.generateTargets(
+    const scrollBarContents = ScrollBarContentsGenerator.generate(
       w,
       h,
       contentsScale
