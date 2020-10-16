@@ -1,45 +1,10 @@
-import { Container, Graphics, Rectangle } from "pixi.js";
+import { Container } from "pixi.js";
 import { ScrollBarView } from "../src";
 import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
 import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
+import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
-
-export class ScrollBarViewOptionGenerator {
-  public static generate(
-    contentsW: number,
-    scrollBarH: number,
-    contentsScale: number,
-    container: Container
-  ): ScrollBarContents {
-    const targetContents = this.getScrollBarContents(
-      0xff00ff,
-      contentsW,
-      scrollBarH * contentsScale,
-      container
-    );
-    const contentsMask = this.getScrollBarContents(
-      0x0000ff,
-      contentsW,
-      scrollBarH,
-      container
-    );
-    targetContents.mask = contentsMask;
-    return {
-      targetContents,
-      contentsMask,
-      container,
-    };
-  }
-  private static getScrollBarContents(color, w, h, container: Container) {
-    const g = new Graphics();
-    g.beginFill(color);
-    g.drawRect(0, 0, w, h);
-    g.hitArea = new Rectangle(0, 0, w, h);
-    container.addChild(g);
-    return g;
-  }
-}
 
 export class ScrollBarViewGenerator {
   public static generateTargets(
@@ -48,7 +13,7 @@ export class ScrollBarViewGenerator {
     contentsScale: number
   ): ScrollBarContents {
     const container = new Container();
-    const option = ScrollBarViewOptionGenerator.generate(
+    const option = ScrollBarContentsGenerator.generate(
       contentsW,
       scrollBarH,
       contentsScale,
