@@ -178,13 +178,13 @@ export class ScrollBarView extends SliderView {
    * @private
    */
   private updateSliderVisible(): void {
-    this._slideButton.visible = this._slideButton.interactive = !this.isHide;
+    this._slideButton.visible = this._slideButton.interactive = !this.isHidden;
   }
 
   /**
    * autoHideの条件に一致するかを判定する
    */
-  protected get isHide(): boolean {
+  protected get isHidden(): boolean {
     //autoHideが設定されていない場合は常に表示
     if (!this.autoHide) return false;
 
@@ -245,7 +245,7 @@ export class ScrollBarView extends SliderView {
   }
 
   protected onPressBase(evt: InteractionEvent): void {
-    if (this.isHide) return;
+    if (this.isHidden) return;
     super.onPressBase(evt);
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
