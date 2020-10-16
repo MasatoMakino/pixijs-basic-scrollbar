@@ -6,7 +6,7 @@ const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 800 });
   document.body.appendChild(app.view);
 
-  Ticker.shared.add(e => {
+  Ticker.shared.add((e) => {
     TWEEN.update(performance.now());
   });
 
@@ -17,7 +17,7 @@ const onDomContentsLoaded = () => {
  * スクロールバーの実装サンプル
  * @param stage
  */
-const initScrollBar = stage => {
+const initScrollBar = (stage) => {
   const SCROLLBAR_W = 16;
   const SCROLLBAR_H = 360;
   const SCROLLBAR_Y = 120;
@@ -28,6 +28,7 @@ const initScrollBar = stage => {
   container.x = 32;
   container.y = SCROLLBAR_Y;
 
+  const contents = getScrollBarOption(CONTENTS_W, SCROLLBAR_H, container);
   const scrollbar = new ScrollBarView(
     {
       base: getScrollBarBase(SCROLLBAR_W, SCROLLBAR_H, 0x0000ff),
@@ -35,18 +36,23 @@ const initScrollBar = stage => {
       minPosition: 0,
       maxPosition: SCROLLBAR_H,
       rate: 35.0,
-      isHorizontal: false
+      isHorizontal: false,
     },
-    getScrollBarOption(CONTENTS_W, SCROLLBAR_H, container)
+    contents
   );
 
   stage.addChild(scrollbar);
   scrollbar.x = container.x + CONTENTS_W;
   scrollbar.y = SCROLLBAR_Y;
 
-  scrollbar.on(SliderEventType.CHANGE, e => {
+  scrollbar.on(SliderEventType.CHANGE, (e) => {
     console.log(e);
   });
+
+  /**
+   * スクロール動作を確認するために、故意にマスクを外しています。
+   */
+  contents.targetContents.mask = null;
 };
 
 const getScrollBarBase = (w, h, color) => {
@@ -89,10 +95,11 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
     container,
     0.3
   );
-  // targetContents.mask = contentsMask;
+
   return {
     targetContents,
-    contentsMask
+    contentsMask,
+    container,
   };
 };
 
