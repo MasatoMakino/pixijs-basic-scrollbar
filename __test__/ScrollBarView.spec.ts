@@ -1,6 +1,7 @@
 import { Container, DisplayObject, Graphics, Rectangle } from "pixi.js";
-import { ScrollBarView, ScrollBarViewInitOption } from "../src";
+import { ScrollBarView } from "../src";
 import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
+import { ScrollBarViewInitOption } from "../src/scrollBar/ScrollBarViewInitOption";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 import { SliderViewTester } from "./SliderViewTester";
 
