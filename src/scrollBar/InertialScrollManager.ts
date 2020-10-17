@@ -13,11 +13,14 @@ import Tween = TWEEN.Tween;
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
 export class InertialScrollManager extends PIXI.utils.EventEmitter {
+  get speed(): number {
+    return this._speed;
+  }
   private scrollBarView: ScrollBarView;
 
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
-  protected speed: number = 0.0;
+  private _speed: number = 0.0;
   protected isDragging: boolean = false;
   protected dragPos: number;
 
@@ -63,7 +66,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.updateDragPos(e);
 
     this.isDragging = true;
-    this.speed = 0.0;
+    this._speed = 0.0;
     if (this.tween) this.tween.stop();
 
     this.addDragListener();
@@ -112,7 +115,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   private onMouseMoveHandler(e: InteractionEvent): void {
     const delta = this.getDragPos(e) - this.dragPos;
 
-    this.speed = delta;
+    this._speed = delta;
     this.addTargetPosition(delta * this.getOverflowDeceleration());
 
     this.updateDragPos(e);
@@ -138,19 +141,19 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
 
   private onTick = () => {
     if (this.isDragging) return;
-    if (this.speed === 0.0 && this.getLeaveRangeFromMask() === 0.0) return;
+    if (this._speed === 0.0 && this.getLeaveRangeFromMask() === 0.0) return;
     if (this.tween?.isPlaying()) return;
 
     //位置による減速率増加。マスクエリアから離れているなら減速率が大きくなる。
     const overflowDeceleration = this.getOverflowDeceleration();
 
-    this.speed *= this.decelerationRate * overflowDeceleration;
-    this.addTargetPosition(this.speed);
+    this._speed *= this.decelerationRate * overflowDeceleration;
+    this.addTargetPosition(this._speed);
 
-    if (Math.abs(this.speed) > 0.1) return;
+    if (Math.abs(this._speed) > 0.1) return;
 
     //back ease
-    this.speed = 0.0;
+    this._speed = 0.0;
     const toObj = { y: this.getClampedPos() };
 
     this.tween = new Tween(this.scrollBarView.contents.target)
@@ -163,7 +166,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   };
 
   public stopInertial = () => {
-    this.speed = 0.0;
+    this._speed = 0.0;
     if (this.tween) this.tween.stop();
   };
 

@@ -37,7 +37,11 @@ export class SliderViewTester {
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
-    const e = this.generateInteractionEvent(target, globalX, globalY);
+    const e = SliderViewTester.generateInteractionEvent(
+      target,
+      globalX,
+      globalY
+    );
     target.emit(type, e);
   }
 
@@ -80,7 +84,7 @@ export class SliderViewTester {
     option?: TestRateOption
   ) {
     sliders.slider.changeRate(rate);
-    this.testRate(sliders, rate, option);
+    SliderViewTester.testRate(sliders, rate, option);
   }
 
   public static tapBase(

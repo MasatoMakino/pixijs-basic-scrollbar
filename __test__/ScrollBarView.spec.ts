@@ -1,3 +1,5 @@
+import TWEEN from "@tweenjs/tween.js";
+import * as PIXI from "pixi.js";
 import { ScrollBarView } from "../src";
 import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
 import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
@@ -50,10 +52,12 @@ describe("ScrollBarView", () => {
   );
 
   beforeEach(() => {
+    scrollbar.contents.target.emit("pointerup");
     scrollbar.inertialManager.stopInertial();
     scrollbar.changeRate(0.0);
     sliderOption.base.emit("pointerup");
     sliderOption.button.emit("pointerup");
+    updateTicker(0);
     spyLog.mockReset();
   });
 
@@ -166,8 +170,12 @@ describe("ScrollBarView", () => {
     expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
   });
 
+  const updateTicker = (t: number) => {
+    PIXI.Ticker.shared.update(t);
+    TWEEN.update(t);
+  };
   describe("InertialScrollManager", () => {
-    test("InertialScrollManager : start and stop", () => {
+    test("start and stop", () => {
       scrollbar.inertialManager.start();
       expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
       scrollbar.inertialManager.start();
@@ -180,6 +188,48 @@ describe("ScrollBarView", () => {
 
       scrollbar.inertialManager.start();
       expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
+    });
+
+    test("drag", () => {
+      const controlButton = SliderViewTester.controlButton;
+      const target = scrollBarContents.target;
+      const isHorizontal = scrollbar.isHorizontal;
+      const maxPos = -H * (CONTENTS_SCALE - 1);
+      const inertial = scrollbar.inertialManager;
+      inertial.decelerationRate = 0.975;
+
+      controlButton(isHorizontal, target, 0, "pointerdown");
+      expect(scrollbar.rate).toBe(0);
+      controlButton(isHorizontal, target, maxPos, "pointermove");
+      expect(scrollbar.rate).toBe(1.0);
+      controlButton(isHorizontal, target, maxPos, "pointerup");
+      expect(scrollbar.rate).toBe(
+        1.0 + scrollbar.inertialManager.decelerationRate
+      );
+      expect(inertial.speed).toBe(-97.5);
+
+      updateTicker(16);
+      expect(scrollbar.rate).toBeCloseTo(2.41);
+      expect(inertial.speed).toBeCloseTo(-43.57);
+
+      updateTicker(16 * 2);
+      expect(scrollbar.rate).toBeCloseTo(2.502);
+      expect(inertial.speed).toBeCloseTo(-9.1876);
+
+      updateTicker(16 * 3);
+      expect(scrollbar.rate).toBeCloseTo(2.517);
+      expect(inertial.speed).toBeCloseTo(-1.4801);
+
+      updateTicker(16 * 4);
+      expect(scrollbar.rate).toBeCloseTo(2.519);
+      expect(inertial.speed).toBeCloseTo(-0.2265);
+
+      updateTicker(16 * 5);
+      expect(scrollbar.rate).toBeCloseTo(2.519);
+      expect(inertial.speed).toBeCloseTo(0);
+
+      updateTicker(Infinity);
+      expect(scrollbar.rate).toBe(1.0);
     });
   });
 
