@@ -152,13 +152,7 @@ export class SliderView extends Container {
       );
     }
     //ボタンの位置を更新する。
-    if (this._slideButton) {
-      SliderViewUtil.setPosition(
-        this._slideButton,
-        this._isHorizontal,
-        mousePos
-      );
-    }
+    SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
   }
 
   /**
@@ -228,8 +222,6 @@ export class SliderView extends Container {
   }
 
   private set base(value: DisplayObject) {
-    if (!value) return;
-
     this._base = value;
     this._base.interactive = true;
     this._base.on("pointertap", (e) => {
@@ -246,8 +238,6 @@ export class SliderView extends Container {
   }
 
   private set slideButton(value: DisplayObject) {
-    if (!value) return;
-
     this._slideButton = value;
     this._slideButton.on("pointerdown", this.startMove);
     this._slideButton.interactive = true;
