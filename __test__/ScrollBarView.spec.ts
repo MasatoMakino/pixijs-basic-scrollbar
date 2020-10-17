@@ -61,7 +61,9 @@ describe("ScrollBarView", () => {
     expect(sliderOption.isHorizontal).toBe(false);
     expect(scrollBarContents.targetContents.y).toBe(0);
     expect(sliderOption.button.scale.y).toBe(H / 2 / SCROLL_BAR_W);
-    expect(scrollbar.contentsMask).toBe(scrollBarContents.contentsMask);
+    expect(scrollbar.contents.contentsMask).toBe(
+      scrollBarContents.contentsMask
+    );
     expect(scrollbar.autoHide).toBe(false);
   });
 
@@ -167,8 +169,7 @@ describe("ScrollBarView", () => {
 
   test("dispose", () => {
     scrollbar.dispose();
-    expect(scrollbar.targetContents).toBeNull();
-    expect(scrollbar.contentsMask).toBeNull();
+    expect(scrollbar.contents).toBeNull();
   });
 });
 

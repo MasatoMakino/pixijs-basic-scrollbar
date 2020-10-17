@@ -1,11 +1,11 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { DisplayObject } from "pixi.js";
 import { SliderEventContext, SliderEventType } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
 import { InertialScrollManager } from "./InertialScrollManager";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarContents } from "./ScrollBarContents";
+import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 import { ScrollBarEventType } from "./ScrollBarEvent";
 
 /**
@@ -16,15 +16,13 @@ import { ScrollBarEventType } from "./ScrollBarEvent";
  * 		1.コンテンツサイズに合わせた、スクロールバーの伸縮
  * 		2.スクロールバーの伸縮にあわせた、移動範囲の制限
  * 		3.スクロールバーの伸縮にあわせた、移動値の取得
- *
- * 初期設定の注意
- * 		 スクロール対象とマスクは同一の親をもつこと。
- * 		 ローカル、グローバルの座標変換は行っていないので別の親をもつとスクロールが破たんします。
  */
 
 export class ScrollBarView extends SliderView {
-  protected _targetContents: DisplayObject;
-  protected _contentsMask: DisplayObject;
+  get contents(): ScrollBarContents {
+    return this._contents;
+  }
+  private _contents: ScrollBarContents;
 
   get autoHide(): boolean {
     return this._autoHide;
@@ -36,14 +34,15 @@ export class ScrollBarView extends SliderView {
   private _autoHide: boolean = false;
   public wheelManager: MouseWheelScrollManager;
 
-  constructor(option: SliderViewOption, scrollOption: ScrollBarContents) {
+  constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
 
+    this._contents = scrollContents;
+    this._contents.on(
+      ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE,
+      this.updateSlider
+    );
     this.on(SliderEventType.CHANGE, this.updateContentsPosition);
-
-    ScrollBarContents.init(scrollOption);
-    this.targetContents = scrollOption.targetContents;
-    this.contentsMask = scrollOption.contentsMask;
 
     this.changeRate(option.rate);
 
@@ -118,9 +117,7 @@ export class ScrollBarView extends SliderView {
    * コンテンツサイズが変更された場合の更新にも利用する。
    */
   public updateSlider(): void {
-    if (!this._slideButton || !this._targetContents || !this._contentsMask) {
-      return;
-    }
+    if (!this.isUpdatableSliderSize()) return;
 
     this.updateSliderSize();
     this.updateSliderPosition();
@@ -132,35 +129,43 @@ export class ScrollBarView extends SliderView {
    */
   protected updateSliderPosition(): void {
     const getPos = SliderViewUtil.getPosition;
-    const zeroPos = getPos(this._contentsMask, this.isHorizontal);
-    const contentsPos = getPos(this._targetContents, this.isHorizontal);
+    const zeroPos = getPos(this._contents.contentsMask, this.isHorizontal);
+    const contentsPos = getPos(
+      this._contents.targetContents,
+      this.isHorizontal
+    );
     const contentsPositionDif = zeroPos - contentsPos;
 
     const getSize = SliderViewUtil.getSize;
-    const targetSize = getSize(this._targetContents, this.isHorizontal);
-    const maskSize = getSize(this._contentsMask, this.isHorizontal);
+    const targetSize = getSize(this.contents.targetContents, this.isHorizontal);
+    const maskSize = getSize(this.contents.contentsMask, this.isHorizontal);
     const contentsSizeDif = targetSize - maskSize;
 
     const rate = (contentsPositionDif / contentsSizeDif) * SliderView.MAX_RATE;
     this.changeRate(rate);
   }
 
+  private isUpdatableSliderSize(): boolean {
+    return (
+      this._contents?.targetContents != null &&
+      this._contents?.contentsMask != null &&
+      this._slideButton != null
+    );
+  }
   /**
    * スライダーボタンのサイズの伸縮を行う。
    */
   protected updateSliderSize(): void {
-    if (!this._targetContents || !this._contentsMask || !this._slideButton) {
-      return;
-    }
+    if (!this.isUpdatableSliderSize()) return;
 
     const fullSize: number = this._maxPosition - this._minPosition;
 
     const contentsSize: number = SliderViewUtil.getSize(
-      this._targetContents,
+      this.contents.targetContents,
       this.isHorizontal
     );
     const maskSize: number = SliderViewUtil.getSize(
-      this._contentsMask,
+      this.contents.contentsMask,
       this.isHorizontal
     );
 
@@ -190,11 +195,11 @@ export class ScrollBarView extends SliderView {
 
     const fullSize: number = this._maxPosition - this._minPosition;
     const contentsSize: number = SliderViewUtil.getSize(
-      this._targetContents,
+      this.contents.targetContents,
       this.isHorizontal
     );
     const maskSize: number = SliderViewUtil.getSize(
-      this._contentsMask,
+      this.contents.contentsMask,
       this.isHorizontal
     );
 
@@ -224,16 +229,23 @@ export class ScrollBarView extends SliderView {
    */
   protected updateContentsPositionWithRate(rate: number): void {
     const zeroPos: number = SliderViewUtil.getPosition(
-      this._contentsMask,
+      this.contents.contentsMask,
       this.isHorizontal
     );
     const nextPos: number =
       zeroPos -
       (rate / SliderView.MAX_RATE) *
-        (SliderViewUtil.getSize(this._targetContents, this.isHorizontal) -
-          SliderViewUtil.getSize(this._contentsMask, this.isHorizontal));
+        (SliderViewUtil.getSize(
+          this.contents.targetContents,
+          this.isHorizontal
+        ) -
+          SliderViewUtil.getSize(
+            this.contents.contentsMask,
+            this.isHorizontal
+          ));
+
     SliderViewUtil.setPosition(
-      this._targetContents,
+      this.contents.targetContents,
       this.isHorizontal,
       nextPos
     );
@@ -250,27 +262,9 @@ export class ScrollBarView extends SliderView {
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
 
-  get targetContents(): DisplayObject {
-    return this._targetContents;
-  }
-
-  set targetContents(value: DisplayObject) {
-    this._targetContents = value;
-    this.updateSlider();
-  }
-
-  get contentsMask(): DisplayObject {
-    return this._contentsMask;
-  }
-
-  set contentsMask(value: DisplayObject) {
-    this._contentsMask = value;
-    this.updateSlider();
-  }
-
   protected onDisposeFunction(e?: Event): void {
-    this._targetContents = null;
-    this._contentsMask = null;
+    this._contents.dispose();
+    this._contents = null;
     super.onDisposeFunction(e);
   }
 }
