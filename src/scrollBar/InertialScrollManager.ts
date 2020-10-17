@@ -162,7 +162,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
       .start();
   };
 
-  private stopInertial = () => {
+  public stopInertial = () => {
     this.speed = 0.0;
     if (this.tween) this.tween.stop();
   };

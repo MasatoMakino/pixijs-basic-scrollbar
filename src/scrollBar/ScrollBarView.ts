@@ -33,6 +33,7 @@ export class ScrollBarView extends SliderView {
   }
   private _autoHide: boolean = false;
   public wheelManager: MouseWheelScrollManager;
+  public inertialManager: InertialScrollManager;
 
   constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
@@ -51,8 +52,8 @@ export class ScrollBarView extends SliderView {
       this.updateSliderPosition();
     });
 
-    const inertial = new InertialScrollManager(this);
-    inertial.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
+    this.inertialManager = new InertialScrollManager(this);
+    this.inertialManager.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
       this.updateSliderPosition();
     });
   }

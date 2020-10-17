@@ -50,6 +50,7 @@ describe("ScrollBarView", () => {
   );
 
   beforeEach(() => {
+    scrollbar.inertialManager.stopInertial();
     scrollbar.changeRate(0.0);
     sliderOption.base.emit("pointerup");
     sliderOption.button.emit("pointerup");
@@ -163,6 +164,23 @@ describe("ScrollBarView", () => {
 
     scrollbar.wheelManager.start();
     expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+  });
+
+  describe("InertialScrollManager", () => {
+    test("InertialScrollManager : start and stop", () => {
+      scrollbar.inertialManager.start();
+      expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
+      scrollbar.inertialManager.start();
+      expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
+
+      scrollbar.inertialManager.stop();
+      expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(0);
+      scrollbar.inertialManager.stop();
+      expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(0);
+
+      scrollbar.inertialManager.start();
+      expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
+    });
   });
 
   test("dispose", () => {
