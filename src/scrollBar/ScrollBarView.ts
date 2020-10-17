@@ -146,20 +146,10 @@ export class ScrollBarView extends SliderView {
     if (!this.isUpdatableSliderSize()) return;
 
     const fullSize: number = this._maxPosition - this._minPosition;
-
-    const contentsSize: number = SliderViewUtil.getSize(
-      this.contents.target,
+    const displayRate: number = this._contents.getDisplayRate(
       this.isHorizontal
     );
-    const maskSize: number = SliderViewUtil.getSize(
-      this.contents.mask,
-      this.isHorizontal
-    );
-
-    let sliderSize: number = (fullSize * maskSize) / contentsSize;
-    if (sliderSize > fullSize) {
-      sliderSize = fullSize;
-    }
+    const sliderSize: number = fullSize * displayRate;
 
     SliderViewUtil.setSize(this._slideButton, this.isHorizontal, sliderSize);
     this.updateSliderVisible();
@@ -179,26 +169,7 @@ export class ScrollBarView extends SliderView {
   protected get isHidden(): boolean {
     //autoHideが設定されていない場合は常に表示
     if (!this.autoHide) return false;
-
-    const fullSize: number = this._maxPosition - this._minPosition;
-    const contentsSize: number = SliderViewUtil.getSize(
-      this.contents.target,
-      this.isHorizontal
-    );
-    const maskSize: number = SliderViewUtil.getSize(
-      this.contents.mask,
-      this.isHorizontal
-    );
-
-    //マスク、コンテンツ、スクロール幅のいずれかが0以下の場合スライダーを隠す
-    if (contentsSize < 0 || maskSize < 0 || fullSize < 0) {
-      return true;
-    }
-
-    //マスクサイズとコンテンツサイズが同一か判定する
-    return (
-      SliderViewUtil.getSize(this._slideButton, this.isHorizontal) == fullSize
-    );
+    return this._contents.getDisplayRate(this.isHorizontal) === 1.0;
   }
 
   /**

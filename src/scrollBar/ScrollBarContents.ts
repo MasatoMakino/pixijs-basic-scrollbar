@@ -27,9 +27,10 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
 
   /**
    * コンストラクタ
+   *
    * @param target スクロール操作を受けるコンテンツ
-   * @param mask targetContentsを切り抜くマスク
-   * @param container targetContentsおよびcontentsMaskのマスク
+   * @param mask targetを切り抜くマスク
+   * @param container targetおよびmaskを格納する親コンテナ
    */
   constructor(
     target: DisplayObject,
@@ -60,6 +61,7 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
   /**
    * 現状のスクロール位置を取得する。単位rate
    * 0.0でコンテンツはTOP, 1.0でBOTTOMに位置している。
+   *
    * @param isHorizontal
    */
   public getScrollPositionAsRate(isHorizontal: boolean): number {
@@ -75,6 +77,7 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
 
   /**
    * スクロールの最大可動領域を取得する。単位px
+   *
    * @param isHorizontal
    * @private
    */
@@ -87,6 +90,7 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
 
   /**
    * コンテンツを、指定されたrateの位置までスクロールする
+   *
    * @param rate
    * @param isHorizontal
    */
@@ -97,6 +101,27 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
     const contentsPos = zeroPos - movableRange * (rate / SliderView.MAX_RATE);
 
     SliderViewUtil.setPosition(this._target, isHorizontal, contentsPos);
+  }
+
+  /**
+   * コンテンツが表示領域にどれだけ表示されているかの比率を取得する。
+   * この比率は、スクロールバーボタンのスケールとなる。
+   *
+   * 例 : コンテンツサイズが200、表示領域が100なら0.5
+   * コンテンツがすべて表示されているなら1.0
+   *
+   * @param isHorizontal
+   * @return 0.0 ~ 1.0
+   */
+  public getDisplayRate(isHorizontal: boolean): number {
+    const getSize = SliderViewUtil.getSize;
+    const contentsSize = getSize(this.target, isHorizontal);
+    const maskSize = getSize(this.mask, isHorizontal);
+    return SliderViewUtil.clamp(
+      maskSize / contentsSize,
+      SliderView.MAX_RATE,
+      0.0
+    );
   }
 
   public dispose(): void {
