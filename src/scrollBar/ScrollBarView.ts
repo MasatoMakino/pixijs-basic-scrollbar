@@ -128,27 +128,14 @@ export class ScrollBarView extends SliderView {
    * その割合でスライダーの位置を更新する。
    */
   protected updateSliderPosition(): void {
-    const getPos = SliderViewUtil.getPosition;
-    const zeroPos = getPos(this._contents.contentsMask, this.isHorizontal);
-    const contentsPos = getPos(
-      this._contents.targetContents,
-      this.isHorizontal
-    );
-    const contentsPositionDif = zeroPos - contentsPos;
-
-    const getSize = SliderViewUtil.getSize;
-    const targetSize = getSize(this.contents.targetContents, this.isHorizontal);
-    const maskSize = getSize(this.contents.contentsMask, this.isHorizontal);
-    const contentsSizeDif = targetSize - maskSize;
-
-    const rate = (contentsPositionDif / contentsSizeDif) * SliderView.MAX_RATE;
+    const rate = this.contents.getScrollPositionAsRate(this.isHorizontal);
     this.changeRate(rate);
   }
 
   private isUpdatableSliderSize(): boolean {
     return (
-      this._contents?.targetContents != null &&
-      this._contents?.contentsMask != null &&
+      this._contents?.target != null &&
+      this._contents?.mask != null &&
       this._slideButton != null
     );
   }
@@ -161,11 +148,11 @@ export class ScrollBarView extends SliderView {
     const fullSize: number = this._maxPosition - this._minPosition;
 
     const contentsSize: number = SliderViewUtil.getSize(
-      this.contents.targetContents,
+      this.contents.target,
       this.isHorizontal
     );
     const maskSize: number = SliderViewUtil.getSize(
-      this.contents.contentsMask,
+      this.contents.mask,
       this.isHorizontal
     );
 
@@ -195,11 +182,11 @@ export class ScrollBarView extends SliderView {
 
     const fullSize: number = this._maxPosition - this._minPosition;
     const contentsSize: number = SliderViewUtil.getSize(
-      this.contents.targetContents,
+      this.contents.target,
       this.isHorizontal
     );
     const maskSize: number = SliderViewUtil.getSize(
-      this.contents.contentsMask,
+      this.contents.mask,
       this.isHorizontal
     );
 
@@ -228,27 +215,7 @@ export class ScrollBarView extends SliderView {
    * @param {number} rate
    */
   protected updateContentsPositionWithRate(rate: number): void {
-    const zeroPos: number = SliderViewUtil.getPosition(
-      this.contents.contentsMask,
-      this.isHorizontal
-    );
-    const nextPos: number =
-      zeroPos -
-      (rate / SliderView.MAX_RATE) *
-        (SliderViewUtil.getSize(
-          this.contents.targetContents,
-          this.isHorizontal
-        ) -
-          SliderViewUtil.getSize(
-            this.contents.contentsMask,
-            this.isHorizontal
-          ));
-
-    SliderViewUtil.setPosition(
-      this.contents.targetContents,
-      this.isHorizontal,
-      nextPos
-    );
+    this._contents.scroll(rate, this.isHorizontal);
   }
 
   protected onPressedSliderButton(e): void {

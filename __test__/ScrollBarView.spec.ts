@@ -59,21 +59,19 @@ describe("ScrollBarView", () => {
   test("init", () => {
     expect(scrollbar).toBeTruthy();
     expect(sliderOption.isHorizontal).toBe(false);
-    expect(scrollBarContents.targetContents.y).toBe(0);
+    expect(scrollBarContents.target.y).toBe(0);
     expect(sliderOption.button.scale.y).toBe(H / 2 / SCROLL_BAR_W);
-    expect(scrollbar.contents.contentsMask).toBe(
-      scrollBarContents.contentsMask
-    );
+    expect(scrollbar.contents.mask).toBe(scrollBarContents.mask);
     expect(scrollbar.autoHide).toBe(false);
   });
 
   test("change rate", () => {
     scrollbar.changeRate(0.0);
-    expect(scrollBarContents.targetContents.y).toBe(0);
+    expect(scrollBarContents.target.y).toBe(0);
     scrollbar.changeRate(0.5);
-    expect(scrollBarContents.targetContents.y).toBe(-H * 0.5);
+    expect(scrollBarContents.target.y).toBe(-H * 0.5);
     scrollbar.changeRate(1.0);
-    expect(scrollBarContents.targetContents.y).toBe(-H);
+    expect(scrollBarContents.target.y).toBe(-H);
   });
 
   test("tap base", () => {
@@ -135,7 +133,7 @@ describe("ScrollBarView", () => {
   });
 
   test("wheel", () => {
-    const target = scrollBarContents.targetContents;
+    const target = scrollBarContents.target;
     const delta = scrollbar.wheelManager.delta;
     let scroll = 0;
     while (scroll < H) {
@@ -152,7 +150,7 @@ describe("ScrollBarView", () => {
   });
 
   test("WheelManager : start and stop", () => {
-    const target = scrollBarContents.targetContents;
+    const target = scrollBarContents.target;
     scrollbar.wheelManager.start();
     expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
     scrollbar.wheelManager.start();
@@ -201,7 +199,7 @@ describe("ScrollBarView with autoHide", () => {
   test("init", () => {
     expect(scrollbar).toBeTruthy();
     expect(scrollbar.autoHide).toBe(true);
-    expect(scrollBarContents.targetContents.scale.y).toBe(1.0);
+    expect(scrollBarContents.target.scale.y).toBe(1.0);
     expect(sliderOption.button.visible).toBe(false);
   });
 

@@ -29,7 +29,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.scrollBarView = scrollBarView;
     scrollBarView.on(ScrollBarEventType.STOP_INERTIAL_TWEEN, this.stopInertial);
 
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     target.interactive = true;
 
     this.start();
@@ -39,7 +39,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     if (this._isStart) return;
     this._isStart = true;
 
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     target.on("pointerdown", this.onMouseDown);
     Ticker.shared.add(this.onTick);
   }
@@ -48,7 +48,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     if (!this._isStart) return;
     this._isStart = false;
 
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     target.off("pointerdown", this.onMouseDown);
     this.removeDragListener();
     this.stopInertial();
@@ -78,7 +78,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private switchDragListener(isOn: boolean): void {
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     const switchListener = (
       isOn: boolean,
       event: string,
@@ -119,7 +119,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private addTargetPosition(delta: number): void {
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     const isHorizontal = this.scrollBarView.isHorizontal;
     const currentPos = SliderViewUtil.getPosition(target, isHorizontal);
     SliderViewUtil.setPosition(target, isHorizontal, currentPos + delta);
@@ -153,7 +153,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.speed = 0.0;
     const toObj = { y: this.getClampedPos() };
 
-    this.tween = new Tween(this.scrollBarView.contents.targetContents)
+    this.tween = new Tween(this.scrollBarView.contents.target)
       .to(toObj, 666)
       .onUpdate(() => {
         this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
@@ -184,7 +184,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
    * ターゲットコンテンツがマスク領域からどれだけ離れているか。
    */
   private getLeaveRangeFromMask() {
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     const isHorizontal = this.scrollBarView.isHorizontal;
     const currentPos = SliderViewUtil.getPosition(target, isHorizontal);
     const clampedPos = this.getClampedPos();
@@ -193,11 +193,11 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private getClampedPos() {
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     const isHorizontal = this.scrollBarView.isHorizontal;
     return ScrollBarViewUtil.getClampedTargetPosition(
       target,
-      this.scrollBarView.contents.contentsMask,
+      this.scrollBarView.contents.mask,
       isHorizontal
     );
   }

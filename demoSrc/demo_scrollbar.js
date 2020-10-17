@@ -53,7 +53,7 @@ const initScrollBar = (stage) => {
   /**
    * スクロール動作を確認するために、故意にマスクを外しています。
    */
-  contents.targetContents.mask = null;
+  contents.target.mask = null;
 };
 
 const getScrollBarBase = (w, h, color) => {

@@ -1,36 +1,50 @@
 import * as PIXI from "pixi.js";
 import { Container, DisplayObject, Graphics } from "pixi.js";
+import { SliderView, SliderViewUtil } from "../SliderView";
 import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 
 /**
  * スクロールバーで操作するコンテンツ
  */
 export class ScrollBarContents extends PIXI.utils.EventEmitter {
-  private _targetContents: DisplayObject;
-  private _contentsMask: Graphics;
+  get target(): DisplayObject {
+    return this._target;
+  }
+  set target(value: DisplayObject) {
+    this._target = value;
+    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+  }
+  private _target: DisplayObject;
+
+  get mask(): Graphics {
+    return this._mask;
+  }
+  set mask(value: Graphics) {
+    this._mask = value;
+    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+  }
+  private _mask: Graphics;
 
   /**
    * コンストラクタ
-   * @param targetContents スクロール操作を受けるコンテンツ
-   * @param contentsMask targetContentsを切り抜くマスク
+   * @param target スクロール操作を受けるコンテンツ
+   * @param mask targetContentsを切り抜くマスク
    * @param container targetContentsおよびcontentsMaskのマスク
    */
   constructor(
-    targetContents: DisplayObject,
-    contentsMask: Graphics,
+    target: DisplayObject,
+    mask: Graphics,
     public container: Container
   ) {
     super();
-    this._targetContents = targetContents;
-    this._contentsMask = contentsMask;
+    this._target = target;
+    this._mask = mask;
     ScrollBarContents.init(this);
   }
 
   private static init(scrollBarContents: ScrollBarContents): void {
-    if (
-      scrollBarContents._targetContents.mask !== scrollBarContents._contentsMask
-    ) {
-      scrollBarContents._targetContents.mask = scrollBarContents._contentsMask;
+    if (scrollBarContents._target.mask !== scrollBarContents._mask) {
+      scrollBarContents._target.mask = scrollBarContents._mask;
     }
 
     const addToContainer = (displayObject: DisplayObject) => {
@@ -39,32 +53,56 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
       displayObject.parent?.removeChild(displayObject);
       scrollBarContents.container.addChild(displayObject);
     };
-    addToContainer(scrollBarContents._targetContents);
-    addToContainer(scrollBarContents._contentsMask);
+    addToContainer(scrollBarContents._target);
+    addToContainer(scrollBarContents._mask);
   }
 
-  get targetContents(): DisplayObject {
-    return this._targetContents;
+  /**
+   * 現状のスクロール位置を取得する。単位rate
+   * 0.0でコンテンツはTOP, 1.0でBOTTOMに位置している。
+   * @param isHorizontal
+   */
+  public getScrollPositionAsRate(isHorizontal: boolean): number {
+    const getPos = SliderViewUtil.getPosition;
+    const zeroPos = getPos(this.mask, isHorizontal);
+    const contentsPos = getPos(this.target, isHorizontal);
+    const contentsPositionDif = zeroPos - contentsPos;
+
+    const movableRange = this.getMovableRange(isHorizontal);
+
+    return (contentsPositionDif / movableRange) * SliderView.MAX_RATE;
   }
 
-  set targetContents(value: DisplayObject) {
-    this._targetContents = value;
-    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+  /**
+   * スクロールの最大可動領域を取得する。単位px
+   * @param isHorizontal
+   * @private
+   */
+  private getMovableRange(isHorizontal: boolean): number {
+    const getSize = SliderViewUtil.getSize;
+    const targetSize = getSize(this._target, isHorizontal);
+    const maskSize = getSize(this._mask, isHorizontal);
+    return targetSize - maskSize;
   }
 
-  get contentsMask(): Graphics {
-    return this._contentsMask;
-  }
+  /**
+   * コンテンツを、指定されたrateの位置までスクロールする
+   * @param rate
+   * @param isHorizontal
+   */
+  public scroll(rate: number, isHorizontal: boolean): void {
+    const getPos = SliderViewUtil.getPosition;
+    const zeroPos: number = getPos(this._mask, isHorizontal);
+    const movableRange = this.getMovableRange(isHorizontal);
+    const contentsPos = zeroPos - movableRange * (rate / SliderView.MAX_RATE);
 
-  set contentsMask(value: Graphics) {
-    this._contentsMask = value;
-    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+    SliderViewUtil.setPosition(this._target, isHorizontal, contentsPos);
   }
 
   public dispose(): void {
     this.removeAllListeners();
     this.container = null;
-    this._contentsMask = null;
-    this._targetContents = null;
+    this._mask = null;
+    this._target = null;
   }
 }

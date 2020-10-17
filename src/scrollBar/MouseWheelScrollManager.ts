@@ -21,7 +21,7 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     this.scrollBarView = scrollBarView;
 
     const target = this.scrollBarView.contents
-      .targetContents as MouseWheelDisplayObject;
+      .target as MouseWheelDisplayObject;
     target.interactive = true;
     target.interactiveMousewheel = true;
 
@@ -30,13 +30,13 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
 
   public start(): void {
     if (this._isStart) return;
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     target.on(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
     this._isStart = true;
   }
 
   public stop(): void {
-    const target = this.scrollBarView.contents.targetContents;
+    const target = this.scrollBarView.contents.target;
     target.off(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
     this._isStart = false;
   }
@@ -48,8 +48,8 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
   };
 
   private scroll(delta: number): void {
-    const target = this.scrollBarView.contents.targetContents;
-    const mask = this.scrollBarView.contents.contentsMask;
+    const target = this.scrollBarView.contents.target;
+    const mask = this.scrollBarView.contents.mask;
     const isHorizontal = this.scrollBarView.isHorizontal;
 
     const pos = SliderViewUtil.getPosition(target, isHorizontal) + delta;
