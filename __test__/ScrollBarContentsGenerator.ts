@@ -18,11 +18,7 @@ export class ScrollBarContentsGenerator {
       contentsW,
       scrollBarH
     );
-    return {
-      targetContents,
-      contentsMask,
-      container,
-    };
+    return new ScrollBarContents(targetContents, contentsMask, container);
   }
   private static getScrollBarContents(color, w, h) {
     const g = new Graphics();

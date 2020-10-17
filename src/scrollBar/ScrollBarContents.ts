@@ -4,11 +4,21 @@ import { Container, DisplayObject, Graphics } from "pixi.js";
  * スクロールバーで操作するコンテンツ
  */
 export class ScrollBarContents {
-  targetContents: DisplayObject; //スクロールバーによって操作されるコンテンツ
-  contentsMask: Graphics; //スクロールバーが対象とするコンテンツが表示されるエリア
-  container: Container;
+  /**
+   * コンストラクタ
+   * @param targetContents スクロール操作を受けるコンテンツ
+   * @param contentsMask targetContentsを切り抜くマスク
+   * @param container targetContentsおよびcontentsMaskのマスク
+   */
+  constructor(
+    public targetContents: DisplayObject,
+    public contentsMask: Graphics,
+    public container: Container
+  ) {
+    ScrollBarContents.init(this);
+  }
 
-  public static init(scrollBarContents: ScrollBarContents): void {
+  private static init(scrollBarContents: ScrollBarContents): void {
     if (
       scrollBarContents.targetContents.mask !== scrollBarContents.contentsMask
     ) {

@@ -1,6 +1,7 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
 import { ScrollBarView, SliderEventType } from "../lib";
 import TWEEN from "@tweenjs/tween.js";
+import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 800 });
@@ -95,12 +96,7 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
     container,
     0.3
   );
-
-  return {
-    targetContents,
-    contentsMask,
-    container,
-  };
+  return new ScrollBarContents(targetContents, contentsMask, container);
 };
 
 /**

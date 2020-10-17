@@ -4,7 +4,6 @@ import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
 describe("ScrollBarContents", function () {
   test("init", () => {
     const contents = ScrollBarContentsGenerator.generate(100, 100, 2.0);
-    ScrollBarContents.init(contents);
     expect(contents.targetContents.mask).toBe(contents.contentsMask);
     expect(contents.targetContents.parent).toBe(contents.container);
     expect(contents.contentsMask.parent).toBe(contents.container);
@@ -15,7 +14,6 @@ describe("ScrollBarContents", function () {
 
     contents.container.addChild(contents.targetContents);
     contents.container.addChild(contents.contentsMask);
-    ScrollBarContents.init(contents);
 
     expect(contents.targetContents.parent).toBe(contents.container);
     expect(contents.contentsMask.parent).toBe(contents.container);
@@ -25,7 +23,6 @@ describe("ScrollBarContents", function () {
     const contents = ScrollBarContentsGenerator.generate(100, 100, 2.0);
 
     contents.targetContents.mask = contents.contentsMask;
-    ScrollBarContents.init(contents);
 
     expect(contents.targetContents.parent).toBe(contents.container);
     expect(contents.contentsMask.parent).toBe(contents.container);
