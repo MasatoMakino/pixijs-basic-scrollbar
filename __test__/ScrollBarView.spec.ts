@@ -53,7 +53,10 @@ describe("ScrollBarView", () => {
 
   beforeEach(() => {
     scrollbar.contents.target.emit("pointerup");
+
     scrollbar.inertialManager.stopInertial();
+    scrollbar.inertialManager.start();
+
     scrollbar.changeRate(0.0);
     sliderOption.base.emit("pointerup");
     sliderOption.button.emit("pointerup");
