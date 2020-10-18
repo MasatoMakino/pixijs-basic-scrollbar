@@ -135,21 +135,20 @@ export class SliderView extends Container {
    * @param	mousePos SliderViewを原点としたローカルのマウス座標、limitSliderButtonPosition関数で可動範囲に制限済み。
    */
   private updateParts(mousePos: number): void {
+    const stretch = (target: DisplayObject) => {
+      SliderViewUtil.setSize(
+        target,
+        this._isHorizontal,
+        mousePos - SliderViewUtil.getPosition(target, this._isHorizontal)
+      );
+    };
     //バーマスクがなければ、バー自体を伸縮する
     if (this._bar && !this._barMask) {
-      SliderViewUtil.setSize(
-        this._bar,
-        this._isHorizontal,
-        mousePos - SliderViewUtil.getPosition(this._bar, this._isHorizontal)
-      );
+      stretch(this._bar);
     }
     //バーマスクがあれば、マスクを伸縮する。
     if (this._barMask) {
-      SliderViewUtil.setSize(
-        this._barMask,
-        this._isHorizontal,
-        mousePos - SliderViewUtil.getPosition(this._barMask, this._isHorizontal)
-      );
+      stretch(this._barMask);
     }
     //ボタンの位置を更新する。
     SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
