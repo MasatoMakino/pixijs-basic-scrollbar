@@ -11,7 +11,7 @@ Scrollbar modules for pixi.js
 
 ## Demo
 
-[Demo Page](https://masatomakino.github.io/pixijs-basic-scrollbar/demo/)
+[Demo Page](https://masatomakino.github.io/pixijs-basic-scrollbar/demo/index.html)
 
 ## Getting Started
 
