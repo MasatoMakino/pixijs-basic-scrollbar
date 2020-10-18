@@ -2,4 +2,4 @@ exclude_patterns:
   - "lib/"
   - "esm/"
   - "docs/"
-  - "tests/"
+  - "__test__/"
