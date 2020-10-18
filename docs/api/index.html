@@ -69,8 +69,10 @@
 				</a>
 				<p>Scrollbar modules for pixi.js</p>
 				<p><a href="LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="MIT License"></a>
+					<a href="https://travis-ci.com/MasatoMakino/pixijs-basic-scrollbar"><img src="https://travis-ci.com/MasatoMakino/pixijs-basic-scrollbar.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/test_coverage"><img src="https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/test_coverage" alt="Test Coverage"></a>
 				<a href="https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/maintainability"><img src="https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/maintainability" alt="Maintainability"></a></p>
-				<p><a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar">Github repository</a></p>
+				<p><a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar"><img src="https://github-readme-stats.vercel.app/api/pin/?username=MasatoMakino&repo=pixijs-basic-scrollbar&show_owner=true" alt="ReadMe Card"></a></p>
 				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
 					<h2>Demo</h2>
 				</a>
@@ -82,9 +84,9 @@
 					<h3>Install</h3>
 				</a>
 				<p>pixijs-basic-scrollbar depend on <a href="https://github.com/pixijs/pixi.js">pixi.js</a> and <a href="https://github.com/tweenjs/tween.js/">@tweenjs/tween.js</a></p>
-				<pre><code class="language-bash">npm install pixi.js @tweenjs/tween.js --save-dev</code></pre>
+				<pre><code class="language-shell">npm install pixi.js @tweenjs/tween.js --save-dev</code></pre>
 				<p>and</p>
-				<pre><code class="language-bash">npm install https://github.com/MasatoMakino/pixijs-basic-scrollbar.git --save-dev</code></pre>
+				<pre><code class="language-shell">npm install https://github.com/MasatoMakino/pixijs-basic-scrollbar.git --save-dev</code></pre>
 				<a href="#import" id="import" style="color: inherit; text-decoration: none;">
 					<h3>Import</h3>
 				</a>
@@ -113,7 +115,7 @@ stage.addChild(slider);</code></pre>
 					<h3>Option : Scroll bar and Tween</h3>
 				</a>
 				<p>Tween.js needs update in rendering loop.</p>
-				<pre><code class="language-js">PIXI.Ticker.shared.add(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> {
+				<pre><code class="language-js">PIXI.Ticker.shared.add(<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
   TWEEN.update(performance.now());
 });</code></pre>
 			</div>
@@ -132,6 +134,9 @@ stage.addChild(slider);</code></pre>
 						<a href="enums/mousewheelplugineventtype.html" class="tsd-kind-icon">Mouse<wbr>Wheel<wbr>Plugin<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
+						<a href="enums/scrollbarcontentseventtype.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Contents<wbr>Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
 						<a href="enums/scrollbareventtype.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
@@ -147,10 +152,10 @@ stage.addChild(slider);</code></pre>
 						<a href="classes/mousewheelplugin.html" class="tsd-kind-icon">Mousewheel<wbr>Plugin</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/scrollbarview.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View</a>
+						<a href="classes/scrollbarcontents.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Contents</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/scrollbarviewinitoption.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View<wbr>Init<wbr>Option</a>
+						<a href="classes/scrollbarview.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/scrollbarviewutil.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View<wbr>Util</a>

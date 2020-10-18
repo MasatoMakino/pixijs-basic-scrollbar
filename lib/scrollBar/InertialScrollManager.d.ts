@@ -1,13 +1,15 @@
-import { ScrollBarView } from "./ScrollBarView";
 import * as PIXI from "pixi.js";
+import {ScrollBarView} from "./ScrollBarView";
+
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
 export declare class InertialScrollManager extends PIXI.utils.EventEmitter {
+    get speed(): number;
     private scrollBarView;
     decelerationRate: number;
     overflowScrollRange: number;
-    protected speed: number;
+    private _speed;
     protected isDragging: boolean;
     protected dragPos: number;
     private tween;
@@ -16,18 +18,16 @@ export declare class InertialScrollManager extends PIXI.utils.EventEmitter {
     start(): void;
     stop(): void;
     private onMouseDown;
-    private onMouseDownHandler;
     private addDragListener;
     private removeDragListener;
+    private switchDragListener;
     private getDragPos;
     private updateDragPos;
     private onMouseMove;
-    private onMouseMoveHandler;
     private addTargetPosition;
     private onMouseUp;
-    private onMouseUpHandler;
     private onTick;
-    private stopInertial;
+    stopInertial: () => void;
     /**
      * スクロールのオーバーフロー量から、減退率を割り出す。
      * overflowScrollRange以上に離れている場合は0.0

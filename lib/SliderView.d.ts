@@ -1,7 +1,8 @@
-import { DisplayObject, Container, Graphics, Point } from "pixi.js";
-import { InteractionEvent } from "@pixi/interaction";
-import { SliderViewOption } from "./SliderViewOption";
+import {InteractionEvent} from "@pixi/interaction";
+import {Container, DisplayObject, Graphics, Point} from "pixi.js";
+import {SliderViewOption} from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
+
 /**
  * スライダー用クラスです
  *
@@ -54,13 +55,13 @@ export declare class SliderView extends Container {
     private moveSlider;
     /**
      * スライダーボタンの位置を制限する関数
-     * @return 制限で切り落とされたスライダーボタンの座標値
+     * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
      */
     protected limitSliderButtonPosition(evt: InteractionEvent): number;
     /**
      * 各MCの位置、サイズをマウスポインタの位置に合わせて更新する
      * moveSliderの内部処理
-     * @param	mousePos
+     * @param	mousePos SliderViewを原点としたローカルのマウス座標、limitSliderButtonPosition関数で可動範囲に制限済み。
      */
     private updateParts;
     /**
@@ -118,7 +119,7 @@ export declare class SliderViewUtil {
      */
     static getPosition(displayObj: DisplayObject | IPoint, isHorizontal: boolean): number;
     /**
-     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+     * ディスプレイオブジェクトにスクロール方向の座標値を設定する
      */
     static setPosition(displayObj: DisplayObject, isHorizontal: boolean, position: number): void;
     /**
@@ -126,7 +127,10 @@ export declare class SliderViewUtil {
      */
     static getSize(displayObj: DisplayObject, isHorizontal: boolean): number;
     /**
-     * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+     * スクロール方向の高さ、もしくは幅を設定する。
+     * @param displayObj
+     * @param isHorizontal
+     * @param amount width or height, range : 0 ~ displayObj.size.width or height, unit : px
      */
     static setSize(displayObj: DisplayObject, isHorizontal: boolean, amount: number): void;
     static clamp(num: number, max: number, min: number): number;

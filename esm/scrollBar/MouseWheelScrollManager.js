@@ -1,8 +1,9 @@
-import { ScrollBarViewUtil } from "./ScrollBarView";
-import { SliderViewUtil } from "../SliderView";
 import * as PIXI from "pixi.js";
-import { ScrollBarEventType } from "./ScrollBarEvent";
-import { MouseWheelPluginEventType } from "../MouseWheelPlugin";
+import {MouseWheelPluginEventType,} from "../MouseWheelPlugin";
+import {SliderViewUtil} from "../SliderView";
+import {ScrollBarEventType} from "./ScrollBarEvent";
+import {ScrollBarViewUtil} from "./ScrollBarViewUtil";
+
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */
@@ -16,7 +17,8 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
             this.scroll(shift);
         };
         this.scrollBarView = scrollBarView;
-        const target = this.scrollBarView.targetContents;
+        const target = this.scrollBarView.contents
+            .target;
         target.interactive = true;
         target.interactiveMousewheel = true;
         this.start();
@@ -24,18 +26,18 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     start() {
         if (this._isStart)
             return;
-        const target = this.scrollBarView.targetContents;
+        const target = this.scrollBarView.contents.target;
         target.on(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
         this._isStart = true;
     }
     stop() {
-        const target = this.scrollBarView.targetContents;
+        const target = this.scrollBarView.contents.target;
         target.off(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
         this._isStart = false;
     }
     scroll(delta) {
-        const target = this.scrollBarView.targetContents;
-        const mask = this.scrollBarView.contentsMask;
+        const target = this.scrollBarView.contents.target;
+        const mask = this.scrollBarView.contents.mask;
         const isHorizontal = this.scrollBarView.isHorizontal;
         const pos = SliderViewUtil.getPosition(target, isHorizontal) + delta;
         ScrollBarViewUtil.clampTargetPosition(target, mask, pos, isHorizontal);

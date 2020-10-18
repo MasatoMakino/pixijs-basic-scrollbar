@@ -1,6 +1,7 @@
-import { Container, Point } from "pixi.js";
-import { SliderEventContext, SliderEventType } from "./SliderEvent";
-import { SliderViewOption } from "./SliderViewOption";
+import {Container, Point} from "pixi.js";
+import {SliderEventContext, SliderEventType} from "./SliderEvent";
+import {SliderViewOption} from "./SliderViewOption";
+
 /**
  * スライダー用クラスです
  *
@@ -41,8 +42,9 @@ export class SliderView extends Container {
          */
         this.moveSliderFinish = (e) => {
             this.isDragging = false;
-            this.removeListener("pointermove", this.moveSlider);
-            this.removeListener("pointerup", this.moveSliderFinish);
+            this._slideButton.off("pointermove", this.moveSlider);
+            this._slideButton.off("pointerup", this.moveSliderFinish);
+            this._slideButton.off("pointerupoutside", this.moveSliderFinish);
             this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
         };
         /**
@@ -77,10 +79,10 @@ export class SliderView extends Container {
         this.changeRate(this._rate);
     }
     addChildParts(obj) {
+        var _a;
         if (!obj)
             return;
-        if (obj.parent)
-            obj.parent.removeChild(obj);
+        (_a = obj.parent) === null || _a === void 0 ? void 0 : _a.removeChild(obj);
         this.addChild(obj);
     }
     /**
@@ -99,39 +101,39 @@ export class SliderView extends Container {
     onPressedSliderButton(e) {
         this.isDragging = true;
         const target = e.currentTarget;
-        const global = e.data.global;
-        const localPos = this.toLocal(new Point(global.x, global.y));
+        const localPos = this.toLocal(e.data.global);
         this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
-        this.on("pointermove", this.moveSlider);
-        this.on("pointerup", this.moveSliderFinish);
-        this.on("pointerupoutside", this.moveSliderFinish);
+        this._slideButton.on("pointermove", this.moveSlider);
+        this._slideButton.on("pointerup", this.moveSliderFinish);
+        this._slideButton.on("pointerupoutside", this.moveSliderFinish);
     }
     /**
      * スライダーボタンの位置を制限する関数
-     * @return 制限で切り落とされたスライダーボタンの座標値
+     * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
      */
     limitSliderButtonPosition(evt) {
-        let mousePos = this.getMousePosition(this, evt);
+        const mousePos = this.getMousePosition(this, evt);
         return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
     }
     /**
      * 各MCの位置、サイズをマウスポインタの位置に合わせて更新する
      * moveSliderの内部処理
-     * @param	mousePos
+     * @param	mousePos SliderViewを原点としたローカルのマウス座標、limitSliderButtonPosition関数で可動範囲に制限済み。
      */
     updateParts(mousePos) {
+        const stretch = (target) => {
+            SliderViewUtil.setSize(target, this._isHorizontal, mousePos - SliderViewUtil.getPosition(target, this._isHorizontal));
+        };
         //バーマスクがなければ、バー自体を伸縮する
         if (this._bar && !this._barMask) {
-            SliderViewUtil.setSize(this._bar, this._isHorizontal, Math.max(1.0, mousePos - this._minPosition));
+            stretch(this._bar);
         }
         //バーマスクがあれば、マスクを伸縮する。
         if (this._barMask) {
-            SliderViewUtil.setSize(this._barMask, this._isHorizontal, mousePos - SliderViewUtil.getPosition(this._barMask, this._isHorizontal));
+            stretch(this._barMask);
         }
         //ボタンの位置を更新する。
-        if (this._slideButton) {
-            SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
-        }
+        SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
     }
     /**
      * スライダーの地をクリックした際の処理
@@ -164,8 +166,7 @@ export class SliderView extends Container {
      * limitSliderButtonPosition内の処理。
      */
     getMousePosition(displayObj, evt) {
-        const global = evt.data.global;
-        const localPos = displayObj.toLocal(new Point(global.x, global.y));
+        const localPos = displayObj.toLocal(evt.data.global);
         if (this._isHorizontal) {
             return localPos.x - this.dragStartPos.x;
         }
@@ -174,11 +175,9 @@ export class SliderView extends Container {
         }
     }
     set base(value) {
-        if (!value)
-            return;
         this._base = value;
         this._base.interactive = true;
-        this._base.on("pointertap", e => {
+        this._base.on("pointertap", (e) => {
             this.onPressBase(e);
         });
         this.addChildParts(value);
@@ -191,8 +190,6 @@ export class SliderView extends Container {
         return value;
     }
     set slideButton(value) {
-        if (!value)
-            return;
         this._slideButton = value;
         this._slideButton.on("pointerdown", this.startMove);
         this._slideButton.interactive = true;
@@ -218,11 +215,11 @@ export class SliderViewUtil {
      * スライダーの座標から、スライダーの割合を取得する
      */
     static convertPixelToRate(pixel, max, min) {
-        let rate = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
+        const rate = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
         return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
     }
     static convertRateToPixel(rate, max, min) {
-        let pix = ((max - min) * rate) / SliderView.MAX_RATE + min;
+        const pix = ((max - min) * rate) / SliderView.MAX_RATE + min;
         return SliderViewUtil.clamp(pix, max, min);
     }
     /**
@@ -238,7 +235,7 @@ export class SliderViewUtil {
         }
     }
     /**
-     * ディスプレイオブジェクトにスクロール方向の座標地を設定する
+     * ディスプレイオブジェクトにスクロール方向の座標値を設定する
      */
     static setPosition(displayObj, isHorizontal, position) {
         if (!displayObj)
@@ -263,7 +260,10 @@ export class SliderViewUtil {
         }
     }
     /**
-     * スクロール方向の高さ、もしくは幅を設定する。単位は0.0 ~ 1.0の割合。
+     * スクロール方向の高さ、もしくは幅を設定する。
+     * @param displayObj
+     * @param isHorizontal
+     * @param amount width or height, range : 0 ~ displayObj.size.width or height, unit : px
      */
     static setSize(displayObj, isHorizontal, amount) {
         const size = displayObj.getLocalBounds();

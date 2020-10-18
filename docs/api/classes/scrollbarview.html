@@ -74,9 +74,7 @@
 					<p>このクラスは、スライダーに以下の機能を追加したものです。</p>
 					<pre><code>    <span class="hljs-number">1.</span>コンテンツサイズに合わせた、スクロールバーの伸縮
     <span class="hljs-number">2.</span>スクロールバーの伸縮にあわせた、移動範囲の制限
-    <span class="hljs-number">3.</span>スクロールバーの伸縮にあわせた、移動値の取得</code></pre><p>初期設定の注意
-						スクロール対象とマスクは同一の親をもつこと。
-					ローカル、グローバルの座標変換は行っていないので別の親をもつとスクロールが破たんします。</p>
+    <span class="hljs-number">3.</span>スクロールバーの伸縮にあわせた、移動値の取得</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -107,13 +105,14 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#_accessibleactive" class="tsd-kind-icon">_accessible<wbr>Active</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#_accessiblediv" class="tsd-kind-icon">_accessible<wbr>Div</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="scrollbarview.html#_autohide" class="tsd-kind-icon">_auto<wbr>Hide</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_bar" class="tsd-kind-icon">_bar</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_barmask" class="tsd-kind-icon">_bar<wbr>Mask</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_base" class="tsd-kind-icon">_base</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#_bounds" class="tsd-kind-icon">_bounds</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_boundsid" class="tsd-kind-icon">_boundsID</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_boundsrect" class="tsd-kind-icon">_bounds<wbr>Rect</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#_contentsmask" class="tsd-kind-icon">_contents<wbr>Mask</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="scrollbarview.html#_contents" class="tsd-kind-icon">_contents</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_destroyed" class="tsd-kind-icon">_destroyed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_enabledfilters" class="tsd-kind-icon">_enabled<wbr>Filters</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_lastsortedindex" class="tsd-kind-icon">_last<wbr>Sorted<wbr>Index</a></li>
@@ -123,7 +122,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_maxposition" class="tsd-kind-icon">_max<wbr>Position</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_minposition" class="tsd-kind-icon">_min<wbr>Position</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_slidebutton" class="tsd-kind-icon">_slide<wbr>Button</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#_targetcontents" class="tsd-kind-icon">_target<wbr>Contents</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_tempdisplayobjectparent" class="tsd-kind-icon">_temp<wbr>Display<wbr>Object<wbr>Parent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_zindex" class="tsd-kind-icon">_z<wbr>Index</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#accessible" class="tsd-kind-icon">accessible</a></li>
@@ -134,7 +132,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#accessibletype" class="tsd-kind-icon">accessible<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#alpha" class="tsd-kind-icon">alpha</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#angle" class="tsd-kind-icon">angle</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scrollbarview.html#autohide" class="tsd-kind-icon">auto<wbr>Hide</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#buttonmode" class="tsd-kind-icon">button<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#cacheasbitmap" class="tsd-kind-icon">cache<wbr>AsBitmap</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#children" class="tsd-kind-icon">children</a></li>
@@ -144,6 +141,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#filters" class="tsd-kind-icon">filters</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#height" class="tsd-kind-icon">height</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#hitarea" class="tsd-kind-icon">hit<wbr>Area</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scrollbarview.html#inertialmanager" class="tsd-kind-icon">inertial<wbr>Manager</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#interactive" class="tsd-kind-icon">interactive</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#interactivechildren" class="tsd-kind-icon">interactive<wbr>Children</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#ismask" class="tsd-kind-icon">is<wbr>Mask</a></li>
@@ -176,12 +174,12 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="scrollbarview.html#contentsmask" class="tsd-kind-icon">contents<wbr>Mask</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#ishide" class="tsd-kind-icon">is<wbr>Hide</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="scrollbarview.html#autohide" class="tsd-kind-icon">auto<wbr>Hide</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="scrollbarview.html#contents" class="tsd-kind-icon">contents</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#ishidden" class="tsd-kind-icon">is<wbr>Hidden</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#ishorizontal" class="tsd-kind-icon">is<wbr>Horizontal</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#rate" class="tsd-kind-icon">rate</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="scrollbarview.html#slidebuttonsize" class="tsd-kind-icon">slide<wbr>Button<wbr>Size</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="scrollbarview.html#targetcontents" class="tsd-kind-icon">target<wbr>Contents</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -190,7 +188,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_calculatebounds" class="tsd-kind-icon">_calculate<wbr>Bounds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#_recursivepostupdatetransform" class="tsd-kind-icon">_recursive<wbr>Post<wbr>Update<wbr>Transform</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#_render" class="tsd-kind-icon">_render</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#addchild" class="tsd-kind-icon">add<wbr>Child</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="scrollbarview.html#addchild" class="tsd-kind-icon">add<wbr>Child</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="scrollbarview.html#addchildat" class="tsd-kind-icon">add<wbr>Child<wbr>At</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#calculatebounds" class="tsd-kind-icon">calculate<wbr>Bounds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#changerate" class="tsd-kind-icon">change<wbr>Rate</a></li>
@@ -210,14 +208,14 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#getlocalbounds" class="tsd-kind-icon">get<wbr>Local<wbr>Bounds</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#getmouseposition" class="tsd-kind-icon">get<wbr>Mouse<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="scrollbarview.html#getrangeofsliderbuttonposition" class="tsd-kind-icon">get<wbr>Range<wbr>OfSlider<wbr>Button<wbr>Position</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="scrollbarview.html#init" class="tsd-kind-icon">init</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="scrollbarview.html#initsliderbutton" class="tsd-kind-icon">init<wbr>Slider<wbr>Button</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#init" class="tsd-kind-icon">init</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="scrollbarview.html#isupdatableslidersize" class="tsd-kind-icon">is<wbr>Updatable<wbr>Slider<wbr>Size</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="scrollbarview.html#limitsliderbuttonposition" class="tsd-kind-icon">limit<wbr>Slider<wbr>Button<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="scrollbarview.html#onchildrenchange" class="tsd-kind-icon">on<wbr>Children<wbr>Change</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="scrollbarview.html#ondisposefunction" class="tsd-kind-icon">on<wbr>Dispose<wbr>Function</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="scrollbarview.html#onpressbase" class="tsd-kind-icon">on<wbr>Press<wbr>Base</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="scrollbarview.html#onpressedsliderbutton" class="tsd-kind-icon">on<wbr>Pressed<wbr>Slider<wbr>Button</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="scrollbarview.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#removechildat" class="tsd-kind-icon">remove<wbr>Child<wbr>At</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#removechildren" class="tsd-kind-icon">remove<wbr>Children</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scrollbarview.html#render" class="tsd-kind-icon">render</a></li>
@@ -231,8 +229,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#tolocal" class="tsd-kind-icon">to<wbr>Local</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="scrollbarview.html#updatecontentsposition" class="tsd-kind-icon">update<wbr>Contents<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#updatecontentspositionwithrate" class="tsd-kind-icon">update<wbr>Contents<wbr>Position<wbr>With<wbr>Rate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="scrollbarview.html#updateslider" class="tsd-kind-icon">update<wbr>Slider</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#updatesliderposition" class="tsd-kind-icon">update<wbr>Slider<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="scrollbarview.html#updateslidersize" class="tsd-kind-icon">update<wbr>Slider<wbr>Size</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="scrollbarview.html#updateslidervisible" class="tsd-kind-icon">update<wbr>Slider<wbr>Visible</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="scrollbarview.html#updatetransform" class="tsd-kind-icon">update<wbr>Transform</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="scrollbarview.html#mixin" class="tsd-kind-icon">mixin</a></li>
 							</ul>
@@ -246,14 +246,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Scroll<wbr>Bar<wbr>View<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">: </span><a href="sliderviewoption.html" class="tsd-signature-type">SliderViewOption</a>, scrollOption<span class="tsd-signature-symbol">: </span><a href="scrollbarviewinitoption.html" class="tsd-signature-type">ScrollBarViewInitOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scrollbarview.html" class="tsd-signature-type">ScrollBarView</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Scroll<wbr>Bar<wbr>View<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">: </span><a href="sliderviewoption.html" class="tsd-signature-type">SliderViewOption</a>, scrollContents<span class="tsd-signature-symbol">: </span><a href="scrollbarcontents.html" class="tsd-signature-type">ScrollBarContents</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scrollbarview.html" class="tsd-signature-type">ScrollBarView</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L29">src/scrollBar/ScrollBarView.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L36">src/scrollBar/ScrollBarView.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -262,7 +262,7 @@
 									<h5>option: <a href="sliderviewoption.html" class="tsd-signature-type">SliderViewOption</a></h5>
 								</li>
 								<li>
-									<h5>scrollOption: <a href="scrollbarviewinitoption.html" class="tsd-signature-type">ScrollBarViewInitOption</a></h5>
+									<h5>scrollContents: <a href="scrollbarcontents.html" class="tsd-signature-type">ScrollBarContents</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="scrollbarview.html" class="tsd-signature-type">ScrollBarView</a></h4>
@@ -280,7 +280,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_accessibleactive">_accessibleActive</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_accessibleactive">_accessibleActive</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8549</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8558</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,7 +305,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_accessiblediv">_accessibleDiv</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_accessiblediv">_accessibleDiv</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8555</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8564</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -322,6 +322,16 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_autohide" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _auto<wbr>Hide</h3>
+					<div class="tsd-signature tsd-kind-icon">_auto<wbr>Hide<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L34">src/scrollBar/ScrollBarView.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_bar" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> _bar</h3>
@@ -329,7 +339,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_bar">_bar</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L18">src/SliderView.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L18">src/SliderView.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -340,7 +350,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_barmask">_barMask</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L19">src/SliderView.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L19">src/SliderView.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -351,7 +361,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_base">_base</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L17">src/SliderView.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L17">src/SliderView.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -363,7 +373,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_bounds">_bounds</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_bounds">_bounds</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8671</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8680</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -385,7 +395,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_boundsid">_boundsID</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_boundsid">_boundsID</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8684</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8693</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -407,7 +417,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_boundsrect">_boundsRect</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_boundsrect">_boundsRect</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8691</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8700</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -421,13 +431,13 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_contentsmask" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _contents<wbr>Mask</h3>
-					<div class="tsd-signature tsd-kind-icon">_contents<wbr>Mask<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DisplayObject</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_contents" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _contents</h3>
+					<div class="tsd-signature tsd-kind-icon">_contents<span class="tsd-signature-symbol">:</span> <a href="scrollbarcontents.html" class="tsd-signature-type">ScrollBarContents</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L27">src/scrollBar/ScrollBarView.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L25">src/scrollBar/ScrollBarView.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -439,7 +449,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_destroyed">_destroyed</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_destroyed">_destroyed</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8712</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8721</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -461,7 +471,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_enabledfilters">_enabledFilters</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_enabledfilters">_enabledFilters</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8665</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8674</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -483,7 +493,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_lastsortedindex">_lastSortedIndex</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_lastsortedindex">_lastSortedIndex</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8634</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8643</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -506,7 +516,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_localbounds">_localBounds</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_localbounds">_localBounds</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8677</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8686</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -528,7 +538,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_localboundsrect">_localBoundsRect</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_localboundsrect">_localBoundsRect</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8698</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8707</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -550,7 +560,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_mask">_mask</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_mask">_mask</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8705</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8714</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -571,7 +581,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_maxposition">_maxPosition</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L23">src/SliderView.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L23">src/SliderView.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -582,7 +592,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_minposition">_minPosition</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L22">src/SliderView.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L22">src/SliderView.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -593,17 +603,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_slidebutton">_slideButton</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L20">src/SliderView.ts:20</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_targetcontents" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _target<wbr>Contents</h3>
-					<div class="tsd-signature tsd-kind-icon">_target<wbr>Contents<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DisplayObject</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L26">src/scrollBar/ScrollBarView.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L20">src/SliderView.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -615,7 +615,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_tempdisplayobjectparent">_tempDisplayObjectParent</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_tempdisplayobjectparent">_tempDisplayObjectParent</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8785</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8794</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -634,7 +634,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_zindex">_zIndex</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_zindex">_zIndex</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8642</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8651</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -657,7 +657,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessible">accessible</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessible">accessible</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8528</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8537</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -683,7 +683,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessiblechildren">accessibleChildren</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessiblechildren">accessibleChildren</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8582</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8591</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -712,7 +712,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessiblehint">accessibleHint</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessiblehint">accessibleHint</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8543</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8552</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -737,7 +737,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessiblepointerevents">accessiblePointerEvents</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessiblepointerevents">accessiblePointerEvents</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8573</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8582</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -766,7 +766,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessibletitle">accessibleTitle</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessibletitle">accessibleTitle</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8536</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8545</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -792,7 +792,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#accessibletype">accessibleType</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#accessibletype">accessibleType</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8564</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8573</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -821,7 +821,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#alpha">alpha</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#alpha">alpha</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8595</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8604</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -843,7 +843,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#angle">angle</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#angle">angle</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8872</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8881</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -858,16 +858,6 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="autohide" class="tsd-anchor"></a>
-					<h3>auto<wbr>Hide</h3>
-					<div class="tsd-signature tsd-kind-icon">auto<wbr>Hide<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L28">src/scrollBar/ScrollBarView.ts:28</a></li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="buttonmode" class="tsd-anchor"></a>
 					<h3>button<wbr>Mode</h3>
@@ -876,7 +866,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#buttonmode">buttonMode</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#buttonmode">buttonMode</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8954</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8963</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -907,7 +897,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#cacheasbitmap">cacheAsBitmap</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#cacheasbitmap">cacheAsBitmap</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8981</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8990</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -936,7 +926,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#children">children</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8317</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8326</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -960,7 +950,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#cursor">cursor</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#cursor">cursor</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8968</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8977</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -993,7 +983,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#dragstartpos">dragStartPos</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L29">src/SliderView.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L29">src/SliderView.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1005,7 +995,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#filterarea">filterArea</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#filterarea">filterArea</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8651</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8660</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1029,7 +1019,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#filters">filters</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#filters">filters</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8659</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8668</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1054,7 +1044,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#height">height</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8492</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8501</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1076,7 +1066,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#hitarea">hitArea</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#hitarea">hitArea</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8942</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8951</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1099,6 +1089,16 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="inertialmanager" class="tsd-anchor"></a>
+					<h3>inertial<wbr>Manager</h3>
+					<div class="tsd-signature tsd-kind-icon">inertial<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="inertialscrollmanager.html" class="tsd-signature-type">InertialScrollManager</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L36">src/scrollBar/ScrollBarView.ts:36</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="interactive" class="tsd-anchor"></a>
 					<h3>interactive</h3>
@@ -1107,7 +1107,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#interactive">interactive</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#interactive">interactive</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8930</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8939</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1139,7 +1139,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#interactivechildren">interactiveChildren</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8508</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8517</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1165,7 +1165,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#ismask">isMask</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#ismask">isMask</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8722</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8731</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1187,7 +1187,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#issprite">isSprite</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#issprite">isSprite</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8717</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8726</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1209,7 +1209,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#localtransform">localTransform</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#localtransform">localTransform</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8830</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8839</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1233,7 +1233,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#mask">mask</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#mask">mask</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8908</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8917</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1270,7 +1270,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#name">name</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#name">name</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8988</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8997</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1295,7 +1295,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#parent">parent</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#parent">parent</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8619</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8628</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1317,7 +1317,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#pivot">pivot</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#pivot">pivot</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8851</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8860</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1340,7 +1340,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#position">position</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#position">position</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8837</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8846</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1363,7 +1363,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#renderable">renderable</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#renderable">renderable</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8613</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8622</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1387,7 +1387,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#rotation">rotation</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#rotation">rotation</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8865</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8874</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1410,7 +1410,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#scale">scale</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#scale">scale</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8844</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8853</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1433,7 +1433,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#skew">skew</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#skew">skew</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8858</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8867</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1455,7 +1455,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#sortdirty">sortDirty</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8340</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8349</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1477,7 +1477,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#sortablechildren">sortableChildren</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8333</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8342</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1508,7 +1508,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#transform">transform</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#transform">transform</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8589</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8598</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1531,7 +1531,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#visible">visible</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#visible">visible</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8604</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8613</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1553,7 +1553,7 @@
 					<div class="tsd-signature tsd-kind-icon">wheel<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="mousewheelscrollmanager.html" class="tsd-signature-type">MouseWheelScrollManager</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L29">src/scrollBar/ScrollBarView.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L35">src/scrollBar/ScrollBarView.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1564,7 +1564,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#width">width</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8486</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8495</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1586,7 +1586,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#worldalpha">worldAlpha</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#worldalpha">worldAlpha</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8626</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8635</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1610,7 +1610,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#worldtransform">worldTransform</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#worldtransform">worldTransform</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8823</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8832</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1634,7 +1634,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#worldvisible">worldVisible</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#worldvisible">worldVisible</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8888</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8897</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1658,7 +1658,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#x">x</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#x">x</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8809</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8818</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1681,7 +1681,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#y">y</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#y">y</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8816</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8825</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1704,7 +1704,7 @@
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#zindex">zIndex</a></p>
 						<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#zindex">zIndex</a></p>
 						<ul>
-							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8881</li>
+							<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8890</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1728,7 +1728,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#max_rate">MAX_RATE</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L35">src/SliderView.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L35">src/SliderView.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1736,48 +1736,65 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="contentsmask" class="tsd-anchor"></a>
-					<h3>contents<wbr>Mask</h3>
+					<a name="autohide" class="tsd-anchor"></a>
+					<h3>auto<wbr>Hide</h3>
 					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> contentsMask<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> contentsMask<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> autoHide<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> autoHide<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L254">src/scrollBar/ScrollBarView.ts:254</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L27">src/scrollBar/ScrollBarView.ts:27</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DisplayObject</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L258">src/scrollBar/ScrollBarView.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L30">src/scrollBar/ScrollBarView.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">DisplayObject</span></h5>
+									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
-					<a name="ishide" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> is<wbr>Hide</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isHide<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="contents" class="tsd-anchor"></a>
+					<h3>contents</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> contents<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scrollbarcontents.html" class="tsd-signature-type">ScrollBarContents</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L179">src/scrollBar/ScrollBarView.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L22">src/scrollBar/ScrollBarView.ts:22</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="scrollbarcontents.html" class="tsd-signature-type">ScrollBarContents</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
+					<a name="ishidden" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> is<wbr>Hidden</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isHidden<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L170">src/scrollBar/ScrollBarView.ts:170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1800,7 +1817,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#ishorizontal">isHorizontal</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L25">src/SliderView.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L25">src/SliderView.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1818,7 +1835,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#rate">rate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L258">src/SliderView.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L246">src/SliderView.ts:246</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1835,7 +1852,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L105">src/scrollBar/ScrollBarView.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L111">src/scrollBar/ScrollBarView.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1844,38 +1861,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="targetcontents" class="tsd-anchor"></a>
-					<h3>target<wbr>Contents</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> targetContents<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> targetContents<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L245">src/scrollBar/ScrollBarView.ts:245</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DisplayObject</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L249">src/scrollBar/ScrollBarView.ts:249</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">DisplayObject</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1893,7 +1878,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_calculatebounds">_calculateBounds</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8442</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8451</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1918,7 +1903,7 @@
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_recursivepostupdatetransform">_recursivePostUpdateTransform</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#_recursivepostupdatetransform">_recursivePostUpdateTransform</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8727</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8736</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1942,7 +1927,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#_render">_render</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8462</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8471</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1963,18 +1948,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 					<a name="addchild" class="tsd-anchor"></a>
 					<h3>add<wbr>Child</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Child<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>children<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Child&lt;TChildren&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>children<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#addchild">addChild</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8355</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8364</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1983,16 +1968,22 @@
 								</div>
 								<p>Multiple items can be added like so: <code>myContainer.addChild(thingOne, thingTwo, thingThree)</code></p>
 							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TChildren<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>children: <span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>children: <span class="tsd-signature-type">TChildren</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The DisplayObject(s) to add to the container</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DisplayObject</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">]</span></h4>
 							<p>The first child that was added.</p>
 						</li>
 					</ul>
@@ -2008,7 +1999,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#addchildat">addChildAt</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8363</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8372</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2053,7 +2044,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#calculatebounds">calculateBounds</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8426</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8435</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2076,7 +2067,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#changerate">changeRate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L78">src/SliderView.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L78">src/SliderView.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2108,7 +2099,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#containerupdatetransform">containerUpdateTransform</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8500</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8509</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2140,7 +2131,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#convertpixeltorate">convertPixelToRate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L86">src/scrollBar/ScrollBarView.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L86">src/scrollBar/ScrollBarView.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2169,7 +2160,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#convertratetopixel">convertRateToPixel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L76">src/scrollBar/ScrollBarView.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L76">src/scrollBar/ScrollBarView.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2199,7 +2190,7 @@
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#destroy">destroy</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#destroy">destroy</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8476</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8485</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2241,7 +2232,7 @@
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#disabletempparent">disableTempParent</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#disabletempparent">disableTempParent</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8802</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8811</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2274,7 +2265,7 @@
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#displayobjectupdatetransform">displayObjectUpdateTransform</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#displayobjectupdatetransform">displayObjectUpdateTransform</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8916</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8925</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2306,7 +2297,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#dispose">dispose</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L266">src/SliderView.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L254">src/SliderView.ts:254</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2340,7 +2331,7 @@
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#enabletempparent">enableTempParent</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#enabletempparent">enableTempParent</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8797</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8806</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2368,7 +2359,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getbounds">getBounds</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#getbounds">getBounds</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8737</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8746</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2401,7 +2392,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getchildat">getChildAt</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8391</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8400</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2434,7 +2425,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getchildbyname">getChildByName</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8520</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8529</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2479,7 +2470,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getchildindex">getChildIndex</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8377</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8386</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2513,7 +2504,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getglobalposition">getGlobalPosition</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#getglobalposition">getGlobalPosition</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:9000</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:9009</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2555,7 +2546,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getlocalbounds">getLocalBounds</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#getlocalbounds">getLocalBounds</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8435</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8444</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2588,7 +2579,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#getmouseposition">getMousePosition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/SliderView.ts#L217">src/SliderView.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L210">src/SliderView.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2620,7 +2611,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L94">src/scrollBar/ScrollBarView.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L94">src/scrollBar/ScrollBarView.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2640,24 +2631,23 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="init" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> init</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">init<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">: </span><a href="sliderviewoption.html" class="tsd-signature-type">SliderViewOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#init">init</a></p>
+								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L56">src/scrollBar/ScrollBarView.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/SliderView.ts#L51">src/SliderView.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>初期化処理
-									スライダーボタンの位置の初期化に加え、サイズの初期化も行う</p>
+									<p>初期化処理</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2672,26 +2662,20 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="initsliderbutton" class="tsd-anchor"></a>
-					<h3>init<wbr>Slider<wbr>Button</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Slider<wbr>Button<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="isupdatableslidersize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> is<wbr>Updatable<wbr>Slider<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Updatable<wbr>Slider<wbr>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L114">src/scrollBar/ScrollBarView.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L136">src/scrollBar/ScrollBarView.ts:136</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>スクロールバーのボタンサイズ及び位置を更新する。
-									コンテンツサイズが変更された場合の更新にも利用する。</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2706,7 +2690,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#limitsliderbuttonposition">limitSliderButtonPosition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L65">src/scrollBar/ScrollBarView.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L65">src/scrollBar/ScrollBarView.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2736,7 +2720,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#onchildrenchange">onChildrenChange</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8346</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8355</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2759,7 +2743,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#ondisposefunction">onDisposeFunction</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L263">src/scrollBar/ScrollBarView.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L204">src/scrollBar/ScrollBarView.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2783,7 +2767,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#onpressbase">onPressBase</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L239">src/scrollBar/ScrollBarView.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L198">src/scrollBar/ScrollBarView.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2807,7 +2791,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#onpressedsliderbutton">onPressedSliderButton</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L234">src/scrollBar/ScrollBarView.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L193">src/scrollBar/ScrollBarView.ts:193</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2820,18 +2804,18 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 					<a name="removechild" class="tsd-anchor"></a>
 					<h3>remove<wbr>Child</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Child<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>children<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Child&lt;TChildren&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>children<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#removechild">removeChild</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8398</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8407</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2839,16 +2823,22 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 									<p>Removes one or more children from the container.</p>
 								</div>
 							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TChildren<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>children: <span class="tsd-signature-type">DisplayObject</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>children: <span class="tsd-signature-type">TChildren</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The DisplayObject(s) to remove</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DisplayObject</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TChildren</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">]</span></h4>
 							<p>The first child that was removed.</p>
 						</li>
 					</ul>
@@ -2864,7 +2854,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#removechildat">removeChildAt</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8405</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8414</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2897,7 +2887,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#removechildren">removeChildren</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8413</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8422</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2930,7 +2920,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#render">render</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8448</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8457</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2962,7 +2952,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#renderadvanced">renderAdvanced</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8455</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8464</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2994,7 +2984,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#setchildindex">setChildIndex</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8384</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8393</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3033,7 +3023,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#setparent">setParent</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#setparent">setParent</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8765</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8774</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3067,7 +3057,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#settransform">setTransform</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#settransform">setTransform</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8780</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8789</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3121,7 +3111,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#sortchildren">sortChildren</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8417</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8426</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3144,7 +3134,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#swapchildren">swapChildren</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8370</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8379</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3183,7 +3173,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#toglobal">toGlobal</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#toglobal">toGlobal</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8747</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8756</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3223,7 +3213,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#tolocal">toLocal</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#tolocal">toLocal</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8758</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8767</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3264,7 +3254,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L208">src/scrollBar/ScrollBarView.ts:208</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L180">src/scrollBar/ScrollBarView.ts:180</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3296,7 +3286,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L217">src/scrollBar/ScrollBarView.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L189">src/scrollBar/ScrollBarView.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3316,6 +3306,29 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateslider" class="tsd-anchor"></a>
+					<h3>update<wbr>Slider</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Slider<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L120">src/scrollBar/ScrollBarView.ts:120</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>スクロールバーのボタンサイズ及び位置を更新する。
+									コンテンツサイズが変更された場合の更新にも利用する。</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="updatesliderposition" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> update<wbr>Slider<wbr>Position</h3>
@@ -3326,7 +3339,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L131">src/scrollBar/ScrollBarView.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L131">src/scrollBar/ScrollBarView.ts:131</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3349,12 +3362,34 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/7ac98b8/src/scrollBar/ScrollBarView.ts#L149">src/scrollBar/ScrollBarView.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L146">src/scrollBar/ScrollBarView.ts:146</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>スライダーボタンのサイズの伸縮を行う。</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="updateslidervisible" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> update<wbr>Slider<wbr>Visible</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Slider<wbr>Visible<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MasatoMakino/pixijs-basic-scrollbar/blob/d003f93/src/scrollBar/ScrollBarView.ts#L163">src/scrollBar/ScrollBarView.ts:163</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>autoHideの条件に一致するかを判定し、表示を切り替える。</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -3373,7 +3408,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<p>Inherited from <a href="sliderview.html">SliderView</a>.<a href="sliderview.html#updatetransform">updateTransform</a></p>
 								<p>Overrides <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#updatetransform">updateTransform</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8421</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:8430</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3396,7 +3431,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../interfaces/mousewheeldisplayobject.html">MouseWheelDisplayObject</a>.<a href="../interfaces/mousewheeldisplayobject.html#mixin">mixin</a></p>
 								<ul>
-									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:9220</li>
+									<li>Defined in node_modules/pixi.js/pixi.js.d.ts:9229</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3433,6 +3468,9 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 						<a href="../enums/mousewheelplugineventtype.html" class="tsd-kind-icon">Mouse<wbr>Wheel<wbr>Plugin<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
+						<a href="../enums/scrollbarcontentseventtype.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Contents<wbr>Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
 						<a href="../enums/scrollbareventtype.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Event<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
@@ -3447,6 +3485,9 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 					<li class=" tsd-kind-class">
 						<a href="mousewheelplugin.html" class="tsd-kind-icon">Mousewheel<wbr>Plugin</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="scrollbarcontents.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>Contents</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -3460,6 +3501,9 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#_accessiblediv" class="tsd-kind-icon">_accessible<wbr>Div</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="scrollbarview.html#_autohide" class="tsd-kind-icon">_auto<wbr>Hide</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_bar" class="tsd-kind-icon">_bar</a>
@@ -3479,8 +3523,8 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_boundsrect" class="tsd-kind-icon">_bounds<wbr>Rect</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="scrollbarview.html#_contentsmask" class="tsd-kind-icon">_contents<wbr>Mask</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="scrollbarview.html#_contents" class="tsd-kind-icon">_contents</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_destroyed" class="tsd-kind-icon">_destroyed</a>
@@ -3508,9 +3552,6 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_slidebutton" class="tsd-kind-icon">_slide<wbr>Button</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="scrollbarview.html#_targetcontents" class="tsd-kind-icon">_target<wbr>Contents</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_tempdisplayobjectparent" class="tsd-kind-icon">_temp<wbr>Display<wbr>Object<wbr>Parent</a>
@@ -3542,9 +3583,6 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#angle" class="tsd-kind-icon">angle</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="scrollbarview.html#autohide" class="tsd-kind-icon">auto<wbr>Hide</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#buttonmode" class="tsd-kind-icon">button<wbr>Mode</a>
 							</li>
@@ -3571,6 +3609,9 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#hitarea" class="tsd-kind-icon">hit<wbr>Area</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="scrollbarview.html#inertialmanager" class="tsd-kind-icon">inertial<wbr>Manager</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#interactive" class="tsd-kind-icon">interactive</a>
@@ -3654,10 +3695,13 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 								<a href="scrollbarview.html#max_rate" class="tsd-kind-icon">MAX_<wbr>RATE</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="scrollbarview.html#contentsmask" class="tsd-kind-icon">contents<wbr>Mask</a>
+								<a href="scrollbarview.html#autohide" class="tsd-kind-icon">auto<wbr>Hide</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="scrollbarview.html#contents" class="tsd-kind-icon">contents</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-protected">
-								<a href="scrollbarview.html#ishide" class="tsd-kind-icon">is<wbr>Hide</a>
+								<a href="scrollbarview.html#ishidden" class="tsd-kind-icon">is<wbr>Hidden</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="scrollbarview.html#ishorizontal" class="tsd-kind-icon">is<wbr>Horizontal</a>
@@ -3668,9 +3712,6 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="scrollbarview.html#slidebuttonsize" class="tsd-kind-icon">slide<wbr>Button<wbr>Size</a>
 							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="scrollbarview.html#targetcontents" class="tsd-kind-icon">target<wbr>Contents</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_calculatebounds" class="tsd-kind-icon">_calculate<wbr>Bounds</a>
 							</li>
@@ -3680,7 +3721,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#_render" class="tsd-kind-icon">_render</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 								<a href="scrollbarview.html#addchild" class="tsd-kind-icon">add<wbr>Child</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
@@ -3740,11 +3781,11 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="scrollbarview.html#getrangeofsliderbuttonposition" class="tsd-kind-icon">get<wbr>Range<wbr>OfSlider<wbr>Button<wbr>Position</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="scrollbarview.html#init" class="tsd-kind-icon">init</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="scrollbarview.html#initsliderbutton" class="tsd-kind-icon">init<wbr>Slider<wbr>Button</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="scrollbarview.html#isupdatableslidersize" class="tsd-kind-icon">is<wbr>Updatable<wbr>Slider<wbr>Size</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
 								<a href="scrollbarview.html#limitsliderbuttonposition" class="tsd-kind-icon">limit<wbr>Slider<wbr>Button<wbr>Position</a>
@@ -3761,7 +3802,7 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
 								<a href="scrollbarview.html#onpressedsliderbutton" class="tsd-kind-icon">on<wbr>Pressed<wbr>Slider<wbr>Button</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 								<a href="scrollbarview.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -3803,11 +3844,17 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="scrollbarview.html#updatecontentspositionwithrate" class="tsd-kind-icon">update<wbr>Contents<wbr>Position<wbr>With<wbr>Rate</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="scrollbarview.html#updateslider" class="tsd-kind-icon">update<wbr>Slider</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="scrollbarview.html#updatesliderposition" class="tsd-kind-icon">update<wbr>Slider<wbr>Position</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="scrollbarview.html#updateslidersize" class="tsd-kind-icon">update<wbr>Slider<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="scrollbarview.html#updateslidervisible" class="tsd-kind-icon">update<wbr>Slider<wbr>Visible</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="scrollbarview.html#updatetransform" class="tsd-kind-icon">update<wbr>Transform</a>
@@ -3819,9 +3866,6 @@ elem.disable<span class="hljs-constructor">TempParent(<span class="hljs-params">
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="scrollbarviewinitoption.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View<wbr>Init<wbr>Option</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="scrollbarviewutil.html" class="tsd-kind-icon">Scroll<wbr>Bar<wbr>View<wbr>Util</a>
 					</li>

@@ -1,14 +1,19 @@
+/**
+ * スライダーを初期化する際のオプション
+ */
+import {SHAPES} from "pixi.js";
 import {SliderView} from "./SliderView";
 
 export class SliderViewOption {
     static init(option) {
-        var _a, _b;
+        var _a, _b, _c;
         if (option.rate != null) {
             option.rate = Math.max(0, option.rate);
             option.rate = Math.min(SliderView.MAX_RATE, option.rate);
         }
-        option.rate = (_a = option.rate) !== null && _a !== void 0 ? _a : 0.0;
-        option.isHorizontal = (_b = option.isHorizontal) !== null && _b !== void 0 ? _b : true;
+        (_a = option.minPosition) !== null && _a !== void 0 ? _a : (option.minPosition = 0.0);
+        (_b = option.rate) !== null && _b !== void 0 ? _b : (option.rate = 0.0);
+        (_c = option.isHorizontal) !== null && _c !== void 0 ? _c : (option.isHorizontal = true);
         this.check(option);
         return option;
     }
@@ -21,12 +26,14 @@ export class SliderViewOption {
     static checkParts(obj, targetName) {
         if (obj == null)
             return;
-        if (obj.getBounds() === null) {
-            throw new Error(`SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。ShapeやContainerを利用する場合はsetBounds関数を利用してバウンディングボックスを手動で設定してください。`);
+        const bounds = obj.getLocalBounds();
+        if (bounds.width === 0 &&
+            bounds.height === 0 &&
+            bounds.type === SHAPES.RECT) {
+            throw new Error(`SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。Containerを利用する場合はhitAreaを利用してバウンディングボックスを手動で設定してください。`);
         }
         if (obj.parent) {
-            console.warn("初期化オプションで指定されたパーツがすでに別の親にaddChildされています。" +
-                "SliderViewおよびScrollBarViewの構成パーツはインスタンスにaddChildされることを前提としています。");
+            console.warn(`初期化オプションで指定されたパーツがすでに別の親にaddChildされています。SliderViewおよびScrollBarViewの構成パーツは同一のコンテナにaddChildされることを前提としています。`);
         }
     }
 }
