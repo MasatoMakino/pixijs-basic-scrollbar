@@ -59,10 +59,6 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private onMouseDown = (e: InteractionEvent) => {
-    this.onMouseDownHandler(e);
-  };
-
-  private onMouseDownHandler(e: InteractionEvent): void {
     this.updateDragPos(e);
 
     this.isDragging = true;
@@ -70,7 +66,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     if (this.tween) this.tween.stop();
 
     this.addDragListener();
-  }
+  };
 
   private addDragListener(): void {
     this.switchDragListener(true);
@@ -110,16 +106,13 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private onMouseMove = (e: InteractionEvent) => {
-    this.onMouseMoveHandler(e);
-  };
-  private onMouseMoveHandler(e: InteractionEvent): void {
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
     this.addTargetPosition(delta * this.getOverflowDeceleration());
 
     this.updateDragPos(e);
-  }
+  };
 
   private addTargetPosition(delta: number): void {
     const target = this.scrollBarView.contents.target;
@@ -131,13 +124,10 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   }
 
   private onMouseUp = (e: InteractionEvent) => {
-    this.onMouseUpHandler(e);
-  };
-  private onMouseUpHandler(e: InteractionEvent): void {
     this.removeDragListener();
     this.isDragging = false;
     this.onTick();
-  }
+  };
 
   private onTick = () => {
     if (this.isDragging) return;
