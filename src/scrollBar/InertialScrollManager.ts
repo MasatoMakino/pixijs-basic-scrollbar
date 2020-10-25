@@ -1,13 +1,11 @@
 import { InteractionEvent } from "@pixi/interaction";
-import TWEEN from "@tweenjs/tween.js";
+import { Easing, Tween } from "@tweenjs/tween.js";
 import * as PIXI from "pixi.js";
-import { Ticker } from "pixi.js";
+import { DisplayObject, Ticker } from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventType } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
-import Easing = TWEEN.Easing;
-import Tween = TWEEN.Tween;
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
@@ -24,7 +22,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   protected isDragging: boolean = false;
   protected dragPos: number;
 
-  private tween: Tween;
+  private tween: Tween<DisplayObject>;
   private _isStart: boolean;
 
   constructor(scrollBarView: ScrollBarView) {
