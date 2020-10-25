@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
-import {ScrollBarView} from "./ScrollBarView";
-
+import { ScrollBarView } from "./ScrollBarView";
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */

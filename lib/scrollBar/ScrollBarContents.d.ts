@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Container, DisplayObject, Graphics} from "pixi.js";
-
+import { Container, DisplayObject, Graphics } from "pixi.js";
 /**
  * スクロールバーで操作するコンテンツ
  */

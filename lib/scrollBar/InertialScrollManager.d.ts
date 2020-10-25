@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
-import {ScrollBarView} from "./ScrollBarView";
-
+import { ScrollBarView } from "./ScrollBarView";
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */

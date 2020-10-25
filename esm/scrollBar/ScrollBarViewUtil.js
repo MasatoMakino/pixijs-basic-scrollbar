@@ -1,5 +1,4 @@
-import {SliderViewUtil} from "../SliderView";
-
+import { SliderViewUtil } from "../SliderView";
 export class ScrollBarViewUtil {
     /**
      * ターゲットコンテンツが、マスク領域内に収まる座標値を取得する。

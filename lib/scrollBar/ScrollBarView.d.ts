@@ -1,10 +1,9 @@
-import {InteractionEvent} from "@pixi/interaction";
-import {SliderView} from "../SliderView";
-import {SliderViewOption} from "../SliderViewOption";
-import {InertialScrollManager} from "./InertialScrollManager";
-import {MouseWheelScrollManager} from "./MouseWheelScrollManager";
-import {ScrollBarContents} from "./ScrollBarContents";
-
+import { InteractionEvent } from "@pixi/interaction";
+import { SliderView } from "../SliderView";
+import { SliderViewOption } from "../SliderViewOption";
+import { InertialScrollManager } from "./InertialScrollManager";
+import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
+import { ScrollBarContents } from "./ScrollBarContents";
 /**
  * スクロールバーを表すクラスです。
  *

@@ -1,5 +1,4 @@
-import {DisplayObject} from "pixi.js";
-
+import { DisplayObject } from "pixi.js";
 export declare class ScrollBarViewUtil {
     /**
      * ターゲットコンテンツが、マスク領域内に収まる座標値を取得する。

@@ -1,9 +1,8 @@
 /**
  * スライダーを初期化する際のオプション
  */
-import {SHAPES} from "pixi.js";
-import {SliderView} from "./SliderView";
-
+import { SHAPES } from "pixi.js";
+import { SliderView } from "./SliderView";
 export class SliderViewOption {
     static init(option) {
         var _a, _b, _c;

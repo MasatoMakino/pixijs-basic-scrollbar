@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
-import {MouseWheelPluginEventType,} from "../MouseWheelPlugin";
-import {SliderViewUtil} from "../SliderView";
-import {ScrollBarEventType} from "./ScrollBarEvent";
-import {ScrollBarViewUtil} from "./ScrollBarViewUtil";
-
+import { MouseWheelPluginEventType, } from "../MouseWheelPlugin";
+import { SliderViewUtil } from "../SliderView";
+import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */

@@ -1,12 +1,9 @@
-import TWEEN from "@tweenjs/tween.js";
+import { Easing, Tween } from "@tweenjs/tween.js";
 import * as PIXI from "pixi.js";
-import {Ticker} from "pixi.js";
-import {SliderViewUtil} from "../SliderView";
-import {ScrollBarEventType} from "./ScrollBarEvent";
-import {ScrollBarViewUtil} from "./ScrollBarViewUtil";
-
-var Easing = TWEEN.Easing;
-var Tween = TWEEN.Tween;
+import { Ticker } from "pixi.js";
+import { SliderViewUtil } from "../SliderView";
+import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */

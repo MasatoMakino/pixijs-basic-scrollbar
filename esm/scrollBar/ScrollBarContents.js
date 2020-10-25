@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
-import {SliderView, SliderViewUtil} from "../SliderView";
-import {ScrollBarContentsEventType} from "./ScrollBarContentsEventType";
-
+import { SliderView, SliderViewUtil } from "../SliderView";
+import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 /**
  * スクロールバーで操作するコンテンツ
  */

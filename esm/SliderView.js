@@ -1,7 +1,6 @@
-import {Container, Point} from "pixi.js";
-import {SliderEventContext, SliderEventType} from "./SliderEvent";
-import {SliderViewOption} from "./SliderViewOption";
-
+import { Container, Point } from "pixi.js";
+import { SliderEventContext, SliderEventType } from "./SliderEvent";
+import { SliderViewOption } from "./SliderViewOption";
 /**
  * スライダー用クラスです
  *

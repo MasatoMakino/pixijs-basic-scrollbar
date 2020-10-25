@@ -1,8 +1,7 @@
 /**
  * スライダーを初期化する際のオプション
  */
-import {DisplayObject, Graphics} from "pixi.js";
-
+import { DisplayObject, Graphics } from "pixi.js";
 export declare class SliderViewOption {
     /**
      * スライダーボタンの座標の最小値

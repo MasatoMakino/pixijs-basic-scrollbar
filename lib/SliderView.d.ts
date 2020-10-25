@@ -1,8 +1,7 @@
-import {InteractionEvent} from "@pixi/interaction";
-import {Container, DisplayObject, Graphics, Point} from "pixi.js";
-import {SliderViewOption} from "./SliderViewOption";
+import { InteractionEvent } from "@pixi/interaction";
+import { Container, DisplayObject, Graphics, Point } from "pixi.js";
+import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
-
 /**
  * スライダー用クラスです
  *

@@ -1,10 +1,9 @@
-import {SliderEventType} from "../SliderEvent";
-import {SliderView, SliderViewUtil} from "../SliderView";
-import {InertialScrollManager} from "./InertialScrollManager";
-import {MouseWheelScrollManager} from "./MouseWheelScrollManager";
-import {ScrollBarContentsEventType} from "./ScrollBarContentsEventType";
-import {ScrollBarEventType} from "./ScrollBarEvent";
-
+import { SliderEventType } from "../SliderEvent";
+import { SliderView, SliderViewUtil } from "../SliderView";
+import { InertialScrollManager } from "./InertialScrollManager";
+import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
+import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
+import { ScrollBarEventType } from "./ScrollBarEvent";
 /**
  * スクロールバーを表すクラスです。
  *
