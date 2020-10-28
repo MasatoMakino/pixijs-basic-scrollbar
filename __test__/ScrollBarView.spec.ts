@@ -11,8 +11,11 @@ export class ScrollBarViewGenerator {
     w: number,
     h: number,
     scrollBarW: number,
-    contentsScale: number
+    contentsScale: number,
+    name?: string
   ) {
+    name ??= "name";
+
     const sliderOption = SliderOptionGenerator.generateScrollBarOption(
       scrollBarW,
       h,
@@ -24,6 +27,7 @@ export class ScrollBarViewGenerator {
       contentsScale
     );
     const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
+    scrollbar.name = name;
     const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
     return {
       sliderOption,
@@ -48,7 +52,8 @@ describe("ScrollBarView", () => {
     W,
     H,
     SCROLL_BAR_W,
-    CONTENTS_SCALE
+    CONTENTS_SCALE,
+    "TestScrollBar_ScrollBarView"
   );
 
   beforeEach(() => {
@@ -60,7 +65,7 @@ describe("ScrollBarView", () => {
     scrollbar.changeRate(0.0);
     sliderOption.base.emit("pointerup");
     sliderOption.button.emit("pointerup");
-    updateTicker(0);
+    updateTicker(-1);
     spyLog.mockReset();
   });
 
@@ -173,10 +178,6 @@ describe("ScrollBarView", () => {
     expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
   });
 
-  const updateTicker = (t: number) => {
-    PIXI.Ticker.shared.update(t);
-    TWEEN.update(t);
-  };
   describe("InertialScrollManager", () => {
     test("start and stop", () => {
       scrollbar.inertialManager.start();
@@ -229,7 +230,7 @@ describe("ScrollBarView", () => {
 
       updateTicker(16 * 5);
       expect(scrollbar.rate).toBeCloseTo(2.519);
-      expect(inertial.speed).toBeCloseTo(0);
+      expect(inertial.speed).toBe(0);
 
       updateTicker(Infinity);
       expect(scrollbar.rate).toBe(1.0);
@@ -256,15 +257,24 @@ describe("ScrollBarView with autoHide", () => {
     W,
     H,
     SCROLL_BAR_W,
-    CONTENTS_SCALE
+    CONTENTS_SCALE,
+    "TestScrollBar_ScrollBarView with autoHide"
   );
   scrollbar.autoHide = true;
+
+  beforeEach(() => {
+    updateTicker(-1);
+  });
 
   afterEach(() => {
     scrollbar.changeRate(0.0);
     sliderOption.base.emit("pointerup");
     sliderOption.button.emit("pointerup");
     spyLog.mockReset();
+  });
+
+  afterAll(() => {
+    scrollbar.dispose();
   });
 
   test("init", () => {
@@ -287,3 +297,8 @@ describe("ScrollBarView with autoHide", () => {
     expect(scrollbar.rate).toBe(0.0);
   });
 });
+
+const updateTicker = (t: number) => {
+  PIXI.Ticker.shared.update(t);
+  TWEEN.update(t);
+};
