@@ -15,5 +15,6 @@ export declare class ScrollBarViewUtil {
      * @param isHorizontal
      */
     static clampTargetPosition(target: DisplayObject, mask: DisplayObject, position: number, isHorizontal: boolean): void;
+    static getRatioOfOrigin(displayObj: DisplayObject, isHorizontal: boolean): number;
 }
 //# sourceMappingURL=ScrollBarViewUtil.d.ts.map

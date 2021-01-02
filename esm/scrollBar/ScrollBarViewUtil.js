@@ -26,4 +26,14 @@ export class ScrollBarViewUtil {
         const clampedPos = this.getClampedTargetPosition(target, mask, isHorizontal);
         SliderViewUtil.setPosition(target, isHorizontal, clampedPos);
     }
+    static getRatioOfOrigin(displayObj, isHorizontal) {
+        const bounds = displayObj.getLocalBounds();
+        const size = isHorizontal ? bounds.width : bounds.height;
+        const position = isHorizontal ? bounds.x : bounds.y;
+        const ratio = position / size;
+        if (ratio > 0) {
+            console.warn(`${displayObj.name} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`);
+        }
+        return ratio;
+    }
 }

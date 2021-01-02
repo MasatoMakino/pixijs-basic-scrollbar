@@ -1,3 +1,4 @@
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 import { SliderEventType } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { InertialScrollManager } from "./InertialScrollManager";
@@ -80,14 +81,9 @@ export class ScrollBarView extends SliderView {
      */
     getRangeOfSliderButtonPosition() {
         const buttonSize = this.slideButtonSize;
-        /**
-         * TODO : ここで`buttonSize / 2`を修正に使っている。
-         * そのためボタンが中心から偏った場合、対応できない。
-         * this._sliderButton.getLocalBounds()で中心位置を調べて、動的に補正する修正を検討。
-         */
-        const sizeHalf = buttonSize / 2;
-        const max = this._maxPosition - sizeHalf;
-        const min = this._minPosition + sizeHalf;
+        const ratio = ScrollBarViewUtil.getRatioOfOrigin(this._slideButton, this.isHorizontal);
+        const max = this._maxPosition - (1.0 + ratio) * buttonSize;
+        const min = this._minPosition - ratio * buttonSize;
         return { max, min };
     }
     /**
