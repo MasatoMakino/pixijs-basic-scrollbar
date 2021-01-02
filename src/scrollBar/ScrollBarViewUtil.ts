@@ -1,4 +1,4 @@
-import { DisplayObject } from "pixi.js";
+import { DisplayObject, Rectangle } from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
 
 export class ScrollBarViewUtil {
@@ -42,5 +42,22 @@ export class ScrollBarViewUtil {
       isHorizontal
     );
     SliderViewUtil.setPosition(target, isHorizontal, clampedPos);
+  }
+
+  public static getRatioOfOrigin(
+    displayObj: DisplayObject,
+    isHorizontal: boolean
+  ) {
+    const bounds = displayObj.getLocalBounds();
+    const size = isHorizontal ? bounds.width : bounds.height;
+    const position = isHorizontal ? bounds.x : bounds.y;
+
+    const ratio = position / size;
+    if (ratio > 0) {
+      console.warn(
+        `${displayObj.name} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`
+      );
+    }
+    return ratio;
   }
 }

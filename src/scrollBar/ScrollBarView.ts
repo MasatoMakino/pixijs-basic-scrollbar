@@ -1,4 +1,5 @@
 import { InteractionEvent } from "@pixi/interaction";
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 import { SliderEventContext, SliderEventType } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
@@ -93,14 +94,13 @@ export class ScrollBarView extends SliderView {
    */
   private getRangeOfSliderButtonPosition(): { max: number; min: number } {
     const buttonSize: number = this.slideButtonSize;
-    /**
-     * TODO : ここで`buttonSize / 2`を修正に使っている。
-     * そのためボタンが中心から偏った場合、対応できない。
-     * this._sliderButton.getLocalBounds()で中心位置を調べて、動的に補正する修正を検討。
-     */
-    const sizeHalf = buttonSize / 2;
-    const max: number = this._maxPosition - sizeHalf;
-    const min: number = this._minPosition + sizeHalf;
+    const ratio = ScrollBarViewUtil.getRatioOfOrigin(
+      this._slideButton,
+      this.isHorizontal
+    );
+
+    const max: number = this._maxPosition - (1.0 + ratio) * buttonSize;
+    const min: number = this._minPosition - ratio * buttonSize;
     return { max, min };
   }
 

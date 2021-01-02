@@ -65,10 +65,11 @@ const getScrollBarBase = (w, h, color) => {
 };
 
 const getScrollBarButton = (width, color) => {
+  const ratio = 0.5;
   const g = new Graphics();
   g.beginFill(color);
-  g.drawRect(-width / 2, -width / 2, width, width);
-  g.hitArea = new Rectangle(-width / 2, -width / 2, width, width);
+  g.drawRect(-width / 2, -width * ratio, width, width);
+  g.hitArea = new Rectangle(-width / 2, -width * ratio, width, width);
   g.x = width / 2;
   return g;
 };
