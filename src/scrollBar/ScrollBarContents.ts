@@ -77,6 +77,7 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
 
   /**
    * スクロールの最大可動領域を取得する。単位px
+   * もし可動域がゼロpx以下の場合、極小の正の値を返す。
    *
    * @param isHorizontal
    * @private
@@ -85,7 +86,11 @@ export class ScrollBarContents extends PIXI.utils.EventEmitter {
     const getSize = SliderViewUtil.getSize;
     const targetSize = getSize(this._target, isHorizontal);
     const maskSize = getSize(this._mask, isHorizontal);
-    return targetSize - maskSize;
+    const dif = targetSize - maskSize;
+    if (dif <= 0.0) {
+      return 1e-128;
+    }
+    return dif;
   }
 
   /**

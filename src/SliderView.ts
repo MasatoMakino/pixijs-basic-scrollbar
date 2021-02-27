@@ -276,6 +276,9 @@ export class SliderViewUtil {
     max: number,
     min: number
   ): number {
+    if (max <= min) {
+      return 0.0;
+    }
     const rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
     return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
   }
@@ -299,9 +302,8 @@ export class SliderViewUtil {
   ): number {
     if (isHorizontal) {
       return displayObj.x;
-    } else {
-      return displayObj.y;
     }
+    return displayObj.y;
   }
 
   /**
