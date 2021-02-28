@@ -19,7 +19,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
             this.isDragging = true;
             this._speed = 0.0;
             if (this.tween)
-                this.tween.stop();
+                this.disposeTween();
             this.addDragListener();
         };
         this.onMouseMove = (e) => {
@@ -50,6 +50,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
             //back ease
             this._speed = 0.0;
             const toObj = { y: this.getClampedPos() };
+            this.disposeTween();
             this.tween = new Tween(this.scrollBarView.contents.target)
                 .to(toObj, 666)
                 .onUpdate(() => {
@@ -60,8 +61,13 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
         };
         this.stopInertial = () => {
             this._speed = 0.0;
-            if (this.tween)
+            this.disposeTween();
+        };
+        this.disposeTween = () => {
+            if (this.tween) {
                 this.tween.stop();
+                this.tween = null;
+            }
         };
         this.scrollBarView = scrollBarView;
         scrollBarView.on(ScrollBarEventType.STOP_INERTIAL_TWEEN, this.stopInertial);

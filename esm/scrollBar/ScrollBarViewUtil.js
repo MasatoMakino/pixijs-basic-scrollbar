@@ -27,7 +27,7 @@ export class ScrollBarViewUtil {
         SliderViewUtil.setPosition(target, isHorizontal, clampedPos);
     }
     static getRatioOfOrigin(displayObj, isHorizontal) {
-        const bounds = displayObj.getLocalBounds();
+        const bounds = SliderViewUtil.getContentsBounds(displayObj);
         const size = isHorizontal ? bounds.width : bounds.height;
         const position = isHorizontal ? bounds.x : bounds.y;
         const ratio = position / size;

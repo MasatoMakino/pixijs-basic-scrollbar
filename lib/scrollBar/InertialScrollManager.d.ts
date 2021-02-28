@@ -27,6 +27,7 @@ export declare class InertialScrollManager extends PIXI.utils.EventEmitter {
     private onMouseUp;
     private onTick;
     stopInertial: () => void;
+    private disposeTween;
     /**
      * スクロールのオーバーフロー量から、減退率を割り出す。
      * overflowScrollRange以上に離れている場合は0.0

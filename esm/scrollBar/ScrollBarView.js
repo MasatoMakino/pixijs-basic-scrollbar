@@ -157,6 +157,10 @@ export class ScrollBarView extends SliderView {
         super.onPressedSliderButton(e);
         this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
     }
+    onMoveSlider(e) {
+        super.onMoveSlider(e);
+        this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+    }
     onPressBase(evt) {
         if (this.isHidden)
             return;

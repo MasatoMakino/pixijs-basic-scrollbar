@@ -1,5 +1,5 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { Container, DisplayObject, Graphics, Point } from "pixi.js";
+import { Container, DisplayObject, Graphics, Point, Rectangle } from "pixi.js";
 import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
 /**
@@ -52,6 +52,7 @@ export declare class SliderView extends Container {
      * @param e
      */
     private moveSlider;
+    protected onMoveSlider(e: InteractionEvent): void;
     /**
      * スライダーボタンの位置を制限する関数
      * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
@@ -133,5 +134,6 @@ export declare class SliderViewUtil {
      */
     static setSize(displayObj: DisplayObject, isHorizontal: boolean, amount: number): void;
     static clamp(num: number, max: number, min: number): number;
+    static getContentsBounds(displayObj: DisplayObject): Rectangle;
 }
 //# sourceMappingURL=SliderView.d.ts.map

@@ -29,6 +29,7 @@ export declare class ScrollBarContents extends PIXI.utils.EventEmitter {
     getScrollPositionAsRate(isHorizontal: boolean): number;
     /**
      * スクロールの最大可動領域を取得する。単位px
+     * もし可動域がゼロpx以下の場合、極小の正の値を返す。
      *
      * @param isHorizontal
      * @private

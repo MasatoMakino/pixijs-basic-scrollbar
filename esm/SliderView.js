@@ -29,11 +29,7 @@ export class SliderView extends Container {
          * @param e
          */
         this.moveSlider = (e) => {
-            const evt = e;
-            const mousePos = this.limitSliderButtonPosition(evt);
-            this.updateParts(mousePos);
-            this._rate = this.convertPixelToRate(mousePos);
-            this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+            this.onMoveSlider(e);
         };
         /**
          * スライダーのドラッグ終了時の処理
@@ -105,6 +101,13 @@ export class SliderView extends Container {
         this._slideButton.on("pointermove", this.moveSlider);
         this._slideButton.on("pointerup", this.moveSliderFinish);
         this._slideButton.on("pointerupoutside", this.moveSliderFinish);
+    }
+    onMoveSlider(e) {
+        const evt = e;
+        const mousePos = this.limitSliderButtonPosition(evt);
+        this.updateParts(mousePos);
+        this._rate = this.convertPixelToRate(mousePos);
+        this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
     }
     /**
      * スライダーボタンの位置を制限する関数
@@ -214,6 +217,9 @@ export class SliderViewUtil {
      * スライダーの座標から、スライダーの割合を取得する
      */
     static convertPixelToRate(pixel, max, min) {
+        if (max <= min) {
+            return 0.0;
+        }
         const rate = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
         return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
     }
@@ -229,9 +235,7 @@ export class SliderViewUtil {
         if (isHorizontal) {
             return displayObj.x;
         }
-        else {
-            return displayObj.y;
-        }
+        return displayObj.y;
     }
     /**
      * ディスプレイオブジェクトにスクロール方向の座標値を設定する
@@ -250,7 +254,7 @@ export class SliderViewUtil {
      * スクロール方向の高さ、もしくは幅を取得する。単位ピクセル
      */
     static getSize(displayObj, isHorizontal) {
-        const size = displayObj.getLocalBounds();
+        const size = SliderViewUtil.getContentsBounds(displayObj);
         if (isHorizontal) {
             return size.width * displayObj.scale.x;
         }
@@ -265,7 +269,7 @@ export class SliderViewUtil {
      * @param amount width or height, range : 0 ~ displayObj.size.width or height, unit : px
      */
     static setSize(displayObj, isHorizontal, amount) {
-        const size = displayObj.getLocalBounds();
+        const size = SliderViewUtil.getContentsBounds(displayObj);
         if (isHorizontal) {
             displayObj.scale.x = amount / size.width;
         }
@@ -277,5 +281,10 @@ export class SliderViewUtil {
         num = Math.max(num, min);
         num = Math.min(num, max);
         return num;
+    }
+    static getContentsBounds(displayObj) {
+        if (displayObj.hitArea)
+            return displayObj.hitArea;
+        return displayObj.getLocalBounds();
     }
 }

@@ -83,6 +83,7 @@ export declare class ScrollBarView extends SliderView {
      */
     protected updateContentsPositionWithRate(rate: number): void;
     protected onPressedSliderButton(e: any): void;
+    protected onMoveSlider(e: any): void;
     protected onPressBase(evt: InteractionEvent): void;
     protected onDisposeFunction(e?: Event): void;
 }
