@@ -2,6 +2,13 @@ import { Container, Graphics, Rectangle } from "pixi.js";
 import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 
 export class ScrollBarContentsGenerator {
+
+  /**
+   * スクロールバーのコンテンツおよびコンテンツマスクを生成する
+   * @param contentsW
+   * @param scrollBarH
+   * @param contentsScale
+   */
   public static generate(
     contentsW: number,
     scrollBarH: number,
@@ -20,6 +27,14 @@ export class ScrollBarContentsGenerator {
     );
     return new ScrollBarContents(targetContents, contentsMask, container);
   }
+
+  /**
+   * 任意の色とサイズのGraphicsオブジェクトを生成する。
+   * @param color
+   * @param w
+   * @param h
+   * @private
+   */
   private static getScrollBarContents(color, w, h) {
     const g = new Graphics();
     g.beginFill(color);
