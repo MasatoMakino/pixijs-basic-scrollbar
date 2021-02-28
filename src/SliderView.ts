@@ -1,5 +1,5 @@
 import { InteractionEvent } from "@pixi/interaction";
-import {Container, DisplayObject, Graphics, Point, Rectangle} from "pixi.js";
+import { Container, DisplayObject, Graphics, Point, Rectangle } from "pixi.js";
 
 import { SliderEventContext, SliderEventType } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
@@ -111,6 +111,10 @@ export class SliderView extends Container {
    * @param e
    */
   private moveSlider = (e: any) => {
+    this.onMoveSlider(e);
+  };
+
+  protected onMoveSlider(e: InteractionEvent): void {
     const evt = e as InteractionEvent;
     const mousePos: number = this.limitSliderButtonPosition(evt);
 
@@ -118,7 +122,7 @@ export class SliderView extends Container {
     this._rate = this.convertPixelToRate(mousePos);
 
     this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
-  };
+  }
 
   /**
    * スライダーボタンの位置を制限する関数
