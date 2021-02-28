@@ -2,7 +2,7 @@
  * スライダーを初期化する際のオプション
  */
 import { DisplayObject, Graphics, SHAPES } from "pixi.js";
-import { SliderView } from "./SliderView";
+import {SliderView, SliderViewUtil} from "./SliderView";
 
 export class SliderViewOption {
   /**
@@ -51,7 +51,7 @@ export class SliderViewOption {
   private static checkParts(obj: DisplayObject, targetName: string): void {
     if (obj == null) return;
 
-    const bounds = obj.getLocalBounds();
+    const bounds = SliderViewUtil.getContentsBounds(obj);
     if (
       bounds.width === 0 &&
       bounds.height === 0 &&

@@ -1,5 +1,5 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { Container, DisplayObject, Graphics, Point } from "pixi.js";
+import {Container, DisplayObject, Graphics, Point, Rectangle} from "pixi.js";
 
 import { SliderEventContext, SliderEventType } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
@@ -330,7 +330,7 @@ export class SliderViewUtil {
     displayObj: DisplayObject,
     isHorizontal: boolean
   ): number {
-    const size = displayObj.getLocalBounds();
+    const size = SliderViewUtil.getContentsBounds(displayObj);
     if (isHorizontal) {
       return size.width * displayObj.scale.x;
     } else {
@@ -349,7 +349,7 @@ export class SliderViewUtil {
     isHorizontal: boolean,
     amount: number
   ): void {
-    const size = displayObj.getLocalBounds();
+    const size = SliderViewUtil.getContentsBounds(displayObj);
 
     if (isHorizontal) {
       displayObj.scale.x = amount / size.width;
@@ -362,5 +362,10 @@ export class SliderViewUtil {
     num = Math.max(num, min);
     num = Math.min(num, max);
     return num;
+  }
+
+  public static getContentsBounds(displayObj: DisplayObject): Rectangle {
+    if (displayObj.hitArea) return displayObj.hitArea as Rectangle;
+    return displayObj.getLocalBounds();
   }
 }

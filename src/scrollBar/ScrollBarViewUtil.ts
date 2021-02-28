@@ -1,4 +1,4 @@
-import { DisplayObject, Rectangle } from "pixi.js";
+import { DisplayObject } from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
 
 export class ScrollBarViewUtil {
@@ -48,7 +48,7 @@ export class ScrollBarViewUtil {
     displayObj: DisplayObject,
     isHorizontal: boolean
   ) {
-    const bounds = displayObj.getLocalBounds();
+    const bounds = SliderViewUtil.getContentsBounds(displayObj);
     const size = isHorizontal ? bounds.width : bounds.height;
     const position = isHorizontal ? bounds.x : bounds.y;
 

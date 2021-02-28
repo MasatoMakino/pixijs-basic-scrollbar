@@ -11,7 +11,30 @@ const onDomContentsLoaded = () => {
     TWEEN.update(performance.now());
   });
 
-  initScrollBar(app.stage);
+  const scrollbar = initScrollBar(app.stage);
+
+  const addButton = (label) => {
+    const btnPlus = document.createElement("button");
+    btnPlus.innerText = label;
+    document.body.appendChild(btnPlus);
+    return btnPlus;
+  };
+  const btnPlus = addButton("Contents Size +");
+  const btnMinus = addButton("Contents Size -");
+  const changeSize = (dif) =>{
+    const scrollPosition = scrollbar.rate;
+    overrideContents( scrollbar.contents.target, dif);
+    scrollbar.updateSlider();
+    scrollbar.changeRate(scrollPosition);
+  }
+  const onPlus = () => {
+    changeSize(64);
+  };
+  const onMinus = () => {
+    changeSize(-64);
+  };
+  btnPlus.addEventListener("click", onPlus);
+  btnMinus.addEventListener("click", onMinus);
 };
 
 /**
@@ -54,6 +77,7 @@ const initScrollBar = (stage) => {
    * スクロール動作を確認するために、故意にマスクを外しています。
    */
   contents.target.mask = null;
+  return scrollbar;
 };
 
 const getScrollBarBase = (w, h, color) => {
@@ -81,6 +105,22 @@ const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
   g.hitArea = new Rectangle(0, 0, w, h);
   container.addChild(g);
   return g;
+};
+
+const overrideContents = (g, difHeight) => {
+  const fill = g.fill.clone();
+  console.log( fill );
+  const hitArea = g.hitArea.clone();
+  hitArea.height += difHeight;
+  g.clear();
+  g.beginFill(fill.color, fill.alpha);
+  g.drawRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+  g.hitArea = new Rectangle(
+    hitArea.x,
+    hitArea.y,
+    hitArea.width,
+    hitArea.height
+  );
 };
 
 const getScrollBarOption = (contentsW, scrollBarH, container) => {
