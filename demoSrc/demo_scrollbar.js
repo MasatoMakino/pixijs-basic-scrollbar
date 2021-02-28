@@ -42,7 +42,7 @@ const onDomContentsLoaded = () => {
  * @param stage
  */
 const initScrollBar = (stage) => {
-  const SCROLLBAR_W = 120;
+  const SCROLLBAR_W = 16;
   const SCROLLBAR_H = 360;
   const SCROLLBAR_Y = 120;
   const CONTENTS_W = 240;
