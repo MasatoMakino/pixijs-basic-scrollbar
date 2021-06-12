@@ -1,4 +1,5 @@
 import { InteractionEvent } from "@pixi/interaction";
+import * as PIXI from "pixi.js";
 import { Container, DisplayObject, Graphics, Point, Rectangle } from "pixi.js";
 import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
