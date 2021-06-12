@@ -3,9 +3,11 @@ env:
     - CC_TEST_REPORTER_ID=2375245ea90b02744b8eb1f0acf99e34508f31f1b0d29ac7b26894001a6fc317
 language: node_js
 node_js:
-  - "10"
   - "12"
   - "14"
+  - "16"
+before_install:
+  - git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
