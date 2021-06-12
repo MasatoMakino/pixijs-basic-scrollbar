@@ -79,7 +79,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     const switchListener = (
       isOn: boolean,
       event: string,
-      listener: Function
+      listener: PIXI.utils.EventEmitter.ListenerFn
     ) => {
       if (isOn) {
         target.on(event, listener);
