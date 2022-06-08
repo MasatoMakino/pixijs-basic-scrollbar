@@ -1,5 +1,5 @@
 {
-  "name": "pixijs-basic-scrollbar",
+  "name": "@masatomakino/pixijs-basic-scrollbar",
   "version": "0.3.0",
   "description": "Scrollbar modules for pixi.js",
   "main": "./lib/index.js",
@@ -9,9 +9,15 @@
     "lib",
     "esm"
   ],
-  "repository": "https://MasatoMakino@github.com/MasatoMakino/pixijs-basic-scrollbar.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://MasatoMakino@github.com/MasatoMakino/pixijs-basic-scrollbar.git"
+  },
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "pixijs-basic-button": "git+https://github.com/MasatoMakino/pixijs-basic-button.git"
+  },
   "devDependencies": {
     "@tweenjs/tween.js": "^18.6.4",
     "@types/jest": "^26.0.23",
@@ -19,10 +25,10 @@
     "canvas": "^2.8.0",
     "dat.gui": "^0.7.7",
     "gulp": "^4.0.2",
-    "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
-    "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
-    "gulptask-tsc": "https://github.com/MasatoMakino/gulptask-tsc.git",
-    "gulptask-tsdoc": "https://github.com/MasatoMakino/gulptask-tsdoc.git",
+    "gulptask-demo-page": "git+https://github.com/MasatoMakino/gulptask-demo-page.git",
+    "gulptask-dev-server": "git+https://github.com/MasatoMakino/gulptask-dev-server.git",
+    "gulptask-tsc": "git+https://github.com/MasatoMakino/gulptask-tsc.git",
+    "gulptask-tsdoc": "git+https://github.com/MasatoMakino/gulptask-tsdoc.git",
     "husky": "^6.0.0",
     "jest": "^27.0.4",
     "pixi.js": "^6.0.4",
@@ -48,7 +54,12 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "dependencies": {
-    "pixijs-basic-button": "https://github.com/MasatoMakino/pixijs-basic-button.git"
+  "bugs": {
+    "url": "https://github.com/MasatoMakino/pixijs-basic-scrollbar/issues"
+  },
+  "homepage": "https://github.com/MasatoMakino/pixijs-basic-scrollbar#readme",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
   }
 }
