@@ -1,7 +1,6 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
-import { ScrollBarView, SliderEventType } from "../lib";
+import { ScrollBarView, SliderEventType, ScrollBarContents } from "..";
 import TWEEN from "@tweenjs/tween.js";
-import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 800 });
@@ -21,12 +20,12 @@ const onDomContentsLoaded = () => {
   };
   const btnPlus = addButton("Contents Size +");
   const btnMinus = addButton("Contents Size -");
-  const changeSize = (dif) =>{
+  const changeSize = (dif) => {
     const scrollPosition = scrollbar.rate;
-    overrideContents( scrollbar.contents.target, dif);
+    overrideContents(scrollbar.contents.target, dif);
     scrollbar.updateSlider();
     scrollbar.changeRate(scrollPosition);
-  }
+  };
   const onPlus = () => {
     changeSize(64);
   };
@@ -109,7 +108,7 @@ const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
 
 const overrideContents = (g, difHeight) => {
   const fill = g.fill.clone();
-  console.log( fill );
+  console.log(fill);
   const hitArea = g.hitArea.clone();
   hitArea.height += difHeight;
   g.clear();

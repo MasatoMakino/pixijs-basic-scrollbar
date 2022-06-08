@@ -2,7 +2,7 @@
  * スライダーを初期化する際のオプション
  */
 import { DisplayObject, Graphics, SHAPES } from "pixi.js";
-import {SliderView, SliderViewUtil} from "./SliderView";
+import { SliderView, SliderViewUtil } from "./SliderView";
 
 export class SliderViewOption {
   /**
