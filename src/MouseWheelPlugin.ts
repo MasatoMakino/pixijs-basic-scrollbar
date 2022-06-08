@@ -5,7 +5,7 @@
 import { Application, DisplayObject } from "pixi.js";
 
 export enum MouseWheelPluginEventType {
-  WHEEL = "wheel"
+  WHEEL = "wheel",
 }
 
 export interface MouseWheelDisplayObject extends DisplayObject {
@@ -18,11 +18,11 @@ class MousewheelPlugin {
   constructor(app) {
     this.app = app;
     this.app.view.addEventListener("wheel", this.eventHandler, {
-      passive: false
+      passive: false,
     });
   }
 
-  eventHandler = e => {
+  eventHandler = (e) => {
     this.onMouseWheel(e);
   };
 
@@ -49,24 +49,24 @@ class MousewheelPlugin {
 
 export function initPlugin() {
   Object.defineProperty(DisplayObject.prototype, "interactiveMousewheel", {
-    get: function() {
+    get: function () {
       return this._interactiveMousewheel;
     },
-    set: function(enabled) {
+    set: function (enabled) {
       this._interactiveMousewheel = enabled;
 
       if (enabled && !this.interactive) {
         this.interactive = true;
       }
-    }
+    },
   });
 
   Application.registerPlugin({
-    init: function(options) {
+    init: function (options) {
       this._mousewheelPlugin = new MousewheelPlugin(this);
     },
-    destroy: function() {
+    destroy: function () {
       this._mousewheelPlugin.destroy();
-    }
+    },
   });
 }

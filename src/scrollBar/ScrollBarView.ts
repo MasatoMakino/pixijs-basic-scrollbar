@@ -1,5 +1,4 @@
 import { InteractionEvent } from "@pixi/interaction";
-import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 import { SliderEventContext, SliderEventType } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
@@ -8,6 +7,7 @@ import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarContents } from "./ScrollBarContents";
 import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
 /**
  * スクロールバーを表すクラスです。
@@ -195,7 +195,7 @@ export class ScrollBarView extends SliderView {
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
 
-   protected onMoveSlider(e) {
+  protected onMoveSlider(e) {
     super.onMoveSlider(e);
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }

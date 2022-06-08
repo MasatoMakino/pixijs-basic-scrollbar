@@ -12,5 +12,5 @@ export class SliderEventContext {
 
 export enum SliderEventType {
   CHANGE = "event_slider_change",
-  CHANGE_FINISH = "event_slider_change_finish"
+  CHANGE_FINISH = "event_slider_change_finish",
 }
