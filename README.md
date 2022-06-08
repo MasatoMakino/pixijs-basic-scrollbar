@@ -3,6 +3,7 @@
 Scrollbar modules for pixi.js
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![CI](https://github.com/MasatoMakino/pixijs-basic-scrollbar/actions/workflows/ci_main.yml/badge.svg)](https://github.com/MasatoMakino/pixijs-basic-scrollbar/actions/workflows/ci_main.yml)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/test_coverage)](https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/maintainability)](https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/maintainability)
 
@@ -35,7 +36,10 @@ pixijs-basic-scrollbar is composed of ES6 modules and TypeScript d.ts files.
 At first, import classes.
 
 ```js
-import { SliderView, SliderEventType } from "@masatomakino/pixijs-basic-scrollbar";
+import {
+  SliderView,
+  SliderEventType,
+} from "@masatomakino/pixijs-basic-scrollbar";
 ```
 
 ### Add to stage
