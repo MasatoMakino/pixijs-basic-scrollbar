@@ -1,5 +1,5 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
-import { SliderEventType, SliderView } from "../lib";
+import { SliderEventType, SliderView } from "..";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });
@@ -14,7 +14,7 @@ const SLIDER_H = 64;
  * スライダーの実装サンプル
  * @param stage
  */
-const initSlider = stage => {
+const initSlider = (stage) => {
   const slider = new SliderView({
     base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
     bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
@@ -22,10 +22,10 @@ const initSlider = stage => {
     mask: getSliderMask(SLIDER_W, SLIDER_H),
     minPosition: 0,
     maxPosition: SLIDER_W,
-    rate: 25.0
+    rate: 25.0,
   });
 
-  slider.on(SliderEventType.CHANGE, e => {
+  slider.on(SliderEventType.CHANGE, (e) => {
     console.log(e.rate);
   });
   stage.addChild(slider);
@@ -33,17 +33,17 @@ const initSlider = stage => {
   slider.y = 200;
 };
 
-const initNonMaskSlider = stage => {
+const initNonMaskSlider = (stage) => {
   const slider = new SliderView({
     base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
     bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
     button: getSliderButton(SLIDER_W, SLIDER_H, 0xffff00),
     minPosition: 0,
     maxPosition: SLIDER_W,
-    rate: 25.0
+    rate: 25.0,
   });
 
-  slider.on(SliderEventType.CHANGE, e => {
+  slider.on(SliderEventType.CHANGE, (e) => {
     console.log(e.rate);
   });
   stage.addChild(slider);
@@ -54,11 +54,7 @@ const initNonMaskSlider = stage => {
 const getSliderBase = (w, h, color) => {
   const g = new Graphics();
   g.beginFill(color);
-  g.moveTo(0, 0)
-    .lineTo(w, 0)
-    .lineTo(w, h)
-    .lineTo(0, 0)
-    .endFill();
+  g.moveTo(0, 0).lineTo(w, 0).lineTo(w, h).lineTo(0, 0).endFill();
 
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
