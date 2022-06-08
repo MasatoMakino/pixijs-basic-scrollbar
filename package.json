@@ -41,11 +41,17 @@
     "pixi.js": ">=5.2.0 <7.0.0"
   },
   "scripts": {
-    "test": "jest --coverage",
-    "start:dev": "gulp start_dev",
-    "build": "gulp build",
-    "build:clean": "gulp build_clean",
-    "checkout:docs": "git checkout HEAD ./docs/"
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "prepare": "husky install",
+    "start:dev": "npm run server & npm run watch:tsc & npm run watch:demo",
+    "build": "npm run buildTS && npm run demo && npm run typedocs",
+    "demo": "npx @masatomakino/gulptask-demo-page",
+    "buildTS": "npx tsc --project tsconfig.cjs.json & npx tsc --project tsconfig.esm.json",
+    "typedocs": "npx typedoc --out ./docs/api src/index.ts",
+    "server": "npx @masatomakino/gulptask-dev-server -b ./docs/demo",
+    "watch:demo": "npm run demo -- -W",
+    "watch:tsc": "tsc -W --incremental --project tsconfig.cjs.json & tsc -W --incremental --project tsconfig.esm.json"
   },
   "bugs": {
     "url": "https://github.com/MasatoMakino/pixijs-basic-scrollbar/issues"
