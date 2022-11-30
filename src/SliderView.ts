@@ -1,9 +1,14 @@
-import { InteractionEvent } from "@pixi/interaction";
-
 import * as PIXI from "pixi.js";
-import { Container, DisplayObject, Graphics, Point, Rectangle } from "pixi.js";
+import {
+  Container,
+  DisplayObject,
+  FederatedPointerEvent,
+  Graphics,
+  Point,
+  Rectangle,
+} from "pixi.js";
 
-import { SliderEventContext, SliderEventType } from "./SliderEvent";
+import { SliderEventContext, SliderEventTypes } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
 
@@ -93,10 +98,10 @@ export class SliderView extends Container {
    * @param {Object} e
    */
   private startMove = (e: any) => {
-    this.onPressedSliderButton(e as InteractionEvent);
+    this.onPressedSliderButton(e as FederatedPointerEvent);
   };
 
-  protected onPressedSliderButton(e: InteractionEvent): void {
+  protected onPressedSliderButton(e: FederatedPointerEvent): void {
     this.isDragging = true;
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
@@ -116,8 +121,8 @@ export class SliderView extends Container {
     this.onMoveSlider(e);
   };
 
-  protected onMoveSlider(e: InteractionEvent): void {
-    const evt = e as InteractionEvent;
+  protected onMoveSlider(e: FederatedPointerEvent): void {
+    const evt = e as FederatedPointerEvent;
     const mousePos: number = this.limitSliderButtonPosition(evt);
 
     this.updateParts(mousePos);
@@ -130,7 +135,7 @@ export class SliderView extends Container {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(evt: InteractionEvent): number {
+  protected limitSliderButtonPosition(evt: FederatedPointerEvent): number {
     const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -177,7 +182,7 @@ export class SliderView extends Container {
    * その位置までスライダーをジャンプする
    * @param evt
    */
-  protected onPressBase(evt: InteractionEvent): void {
+  protected onPressBase(evt: FederatedPointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
     this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
@@ -215,7 +220,7 @@ export class SliderView extends Container {
    */
   protected getMousePosition(
     displayObj: DisplayObject,
-    evt: InteractionEvent
+    evt: FederatedPointerEvent
   ): number {
     const localPos = displayObj.toLocal(evt.data.global);
 

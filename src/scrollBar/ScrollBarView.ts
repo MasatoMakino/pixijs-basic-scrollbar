@@ -1,4 +1,4 @@
-import { InteractionEvent } from "@pixi/interaction";
+import { FederatedPointerEvent } from "pixi.js";
 import { SliderEventContext, SliderEventType } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
@@ -63,7 +63,7 @@ export class ScrollBarView extends SliderView {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値
    */
-  protected limitSliderButtonPosition(evt: InteractionEvent): number {
+  protected limitSliderButtonPosition(evt: FederatedPointerEvent): number {
     const mousePos: number = this.getMousePosition(this, evt);
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
@@ -200,7 +200,7 @@ export class ScrollBarView extends SliderView {
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
   }
 
-  protected onPressBase(evt: InteractionEvent): void {
+  protected onPressBase(evt: FederatedPointerEvent): void {
     if (this.isHidden) return;
     super.onPressBase(evt);
     this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);

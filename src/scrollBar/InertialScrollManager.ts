@@ -1,7 +1,11 @@
-import { InteractionEvent } from "@pixi/interaction";
 import { Easing, Tween } from "@tweenjs/tween.js";
 import * as PIXI from "pixi.js";
-import { DisplayObject, Ticker } from "pixi.js";
+import {
+  DisplayObject,
+  DisplayObjectEvents,
+  FederatedPointerEvent,
+  Ticker,
+} from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventType } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
@@ -56,7 +60,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     Ticker.shared.remove(this.onTick);
   }
 
-  private onMouseDown = (e: InteractionEvent) => {
+  private onMouseDown = (e: FederatedPointerEvent) => {
     this.updateDragPos(e);
 
     this.isDragging = true;
@@ -78,7 +82,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     const target = this.scrollBarView.contents.target;
     const switchListener = (
       isOn: boolean,
-      event: string,
+      event: keyof DisplayObjectEvents,
       listener: PIXI.utils.EventEmitter.ListenerFn
     ) => {
       if (isOn) {
@@ -92,18 +96,18 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     switchListener(isOn, "pointerupoutside", this.onMouseUp);
   }
 
-  private getDragPos(e: InteractionEvent): number {
+  private getDragPos(e: FederatedPointerEvent): number {
     return SliderViewUtil.getPosition(
       e.data.global,
       this.scrollBarView.isHorizontal
     );
   }
 
-  private updateDragPos(e: InteractionEvent): void {
+  private updateDragPos(e: FederatedPointerEvent): void {
     this.dragPos = this.getDragPos(e);
   }
 
-  private onMouseMove = (e: InteractionEvent) => {
+  private onMouseMove = (e: FederatedPointerEvent) => {
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
@@ -121,7 +125,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
   }
 
-  private onMouseUp = (e: InteractionEvent) => {
+  private onMouseUp = (e: FederatedPointerEvent) => {
     this.removeDragListener();
     this.isDragging = false;
     this.onTick();
