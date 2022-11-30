@@ -8,7 +8,11 @@ import {
   Rectangle,
 } from "pixi.js";
 
-import { SliderEventContext, SliderEventTypes } from "./SliderEvent";
+import {
+  SliderEventContext,
+  SliderEventEmitter,
+  SliderEventTypes,
+} from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
 
@@ -41,6 +45,10 @@ export class SliderView extends Container {
   private _rate: number;
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
+  protected _sliderEventEmitter: SliderEventEmitter = new SliderEventEmitter();
+  get sliderEventEmitter(): SliderEventEmitter {
+    return this._sliderEventEmitter;
+  }
 
   /**
    * @param {SliderViewOption} option
@@ -90,7 +98,10 @@ export class SliderView extends Container {
     const pos: number = this.convertRateToPixel(this._rate);
     this.updateParts(pos);
 
-    this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**
@@ -128,7 +139,10 @@ export class SliderView extends Container {
     this.updateParts(mousePos);
     this._rate = this.convertPixelToRate(mousePos);
 
-    this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**
@@ -174,7 +188,10 @@ export class SliderView extends Container {
     this._slideButton.off("pointermove", this.moveSlider);
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
-    this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change_finished",
+      new SliderEventContext(this.rate)
+    );
   };
 
   /**
@@ -185,7 +202,10 @@ export class SliderView extends Container {
   protected onPressBase(evt: FederatedPointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
-    this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change_finished",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**

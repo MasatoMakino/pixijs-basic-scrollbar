@@ -1,17 +1,17 @@
-import * as PIXI from "pixi.js";
+import { utils } from "pixi.js";
 import {
   MouseWheelDisplayObject,
   MouseWheelPluginEventType,
 } from "../MouseWheelPlugin";
 import { SliderViewUtil } from "../SliderView";
-import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */
-export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
+export class MouseWheelScrollManager extends utils.EventEmitter<ScrollBarEventTypes> {
   protected scrollBarView: ScrollBarView;
   public delta = 16;
   private _isStart: boolean;
@@ -55,7 +55,7 @@ export class MouseWheelScrollManager extends PIXI.utils.EventEmitter {
     const pos = SliderViewUtil.getPosition(target, isHorizontal) + delta;
     ScrollBarViewUtil.clampTargetPosition(target, mask, pos, isHorizontal);
 
-    this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
-    this.scrollBarView.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+    this.emit("update_target_position");
+    this.scrollBarView.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 }

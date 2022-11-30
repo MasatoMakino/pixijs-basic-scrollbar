@@ -31,6 +31,7 @@ class MousewheelPlugin {
 
     if (!target) return;
     e.preventDefault();
+    //TODO targetオブジェクトはWHEELイベントをemitできない。
     target.emit(MouseWheelPluginEventType.WHEEL, e);
   }
 
@@ -61,7 +62,7 @@ export function initPlugin() {
     },
   });
 
-  Application.registerPlugin({
+  Application._plugins.push({
     init: function (options) {
       this._mousewheelPlugin = new MousewheelPlugin(this);
     },
