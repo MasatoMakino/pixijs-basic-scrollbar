@@ -1,8 +1,4 @@
 import { utils } from "pixi.js";
-import {
-  MouseWheelDisplayObject,
-  MouseWheelPluginEventType,
-} from "../MouseWheelPlugin";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
@@ -20,10 +16,8 @@ export class MouseWheelScrollManager extends utils.EventEmitter<ScrollBarEventTy
     super();
     this.scrollBarView = scrollBarView;
 
-    const target = this.scrollBarView.contents
-      .target as MouseWheelDisplayObject;
+    const target = this.scrollBarView.contents.target;
     target.interactive = true;
-    target.interactiveMousewheel = true;
 
     this.start();
   }
@@ -31,13 +25,13 @@ export class MouseWheelScrollManager extends utils.EventEmitter<ScrollBarEventTy
   public start(): void {
     if (this._isStart) return;
     const target = this.scrollBarView.contents.target;
-    target.on(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
+    target.on("wheel", this.wheelHandler);
     this._isStart = true;
   }
 
   public stop(): void {
     const target = this.scrollBarView.contents.target;
-    target.off(MouseWheelPluginEventType.WHEEL, this.wheelHandler);
+    target.off("wheel", this.wheelHandler);
     this._isStart = false;
   }
 
