@@ -5,8 +5,8 @@ const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });
   document.body.appendChild(app.view);
 
-  initSlider(app.stage);
-  initNonMaskSlider(app.stage);
+  initSlider(app.stage, app.view);
+  initNonMaskSlider(app.stage, app.view);
 };
 const SLIDER_W = 200;
 const SLIDER_H = 64;
@@ -14,7 +14,7 @@ const SLIDER_H = 64;
  * スライダーの実装サンプル
  * @param stage
  */
-const initSlider = (stage) => {
+const initSlider = (stage, view) => {
   const slider = new SliderView({
     base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
     bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
@@ -23,6 +23,7 @@ const initSlider = (stage) => {
     minPosition: 0,
     maxPosition: SLIDER_W,
     rate: 25.0,
+    canvas: view,
   });
 
   slider.sliderEventEmitter.on("ch", (e) => {
@@ -33,7 +34,7 @@ const initSlider = (stage) => {
   slider.y = 200;
 };
 
-const initNonMaskSlider = (stage) => {
+const initNonMaskSlider = (stage, view) => {
   const slider = new SliderView({
     base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
     bar: getSliderBase(SLIDER_W, SLIDER_H, 0x00ffff),
@@ -41,6 +42,7 @@ const initNonMaskSlider = (stage) => {
     minPosition: 0,
     maxPosition: SLIDER_W,
     rate: 25.0,
+    canvas: view,
   });
 
   slider.on("slider_change", (e) => {

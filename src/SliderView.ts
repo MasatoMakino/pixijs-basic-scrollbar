@@ -8,11 +8,7 @@ import {
   Rectangle,
 } from "pixi.js";
 
-import {
-  SliderEventContext,
-  SliderEventEmitter,
-  SliderEventTypes,
-} from "./SliderEvent";
+import { SliderEventContext, SliderEventEmitter } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
 import IPoint = PIXI.IPoint;
 
@@ -27,12 +23,16 @@ import IPoint = PIXI.IPoint;
 export class SliderView extends Container {
   protected _base: DisplayObject; // スライダーの地
   protected _bar?: DisplayObject; // スライドにあわせて表示されるバー
+
   protected _barMask?: Graphics; // バーのマスク
   protected _slideButton: DisplayObject; // スライドボタン
-
+  protected _buttonRootContainer: Container | HTMLCanvasElement;
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
   private _isHorizontal: boolean = true;
+
+  private _canvas?: HTMLCanvasElement;
+
   get isHorizontal(): boolean {
     return this._isHorizontal;
   }
@@ -51,7 +51,7 @@ export class SliderView extends Container {
   }
 
   /**
-   * @param {SliderViewOption} option
+   * @param option
    */
   constructor(option: SliderViewOption) {
     super();
@@ -61,11 +61,13 @@ export class SliderView extends Container {
 
   /**
    * 初期化処理
-   * @param {SliderViewOption} option
+   * @param option
    */
   protected init(option: SliderViewOption): void {
     option = SliderViewOption.init(option);
 
+    this._canvas = option.canvas;
+    console.log(this._canvas);
     this.base = option.base;
     this._bar = this.initBarAndMask(option.bar);
     this.slideButton = option.button;
@@ -119,9 +121,28 @@ export class SliderView extends Container {
     const localPos = this.toLocal(e.data.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this._slideButton.on("pointermove", this.moveSlider);
+    this._buttonRootContainer = SliderView.getRootContainer(
+      this._canvas,
+      this._slideButton
+    );
+    this._buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
+  }
+
+  private static getRootContainer(
+    canvas: HTMLCanvasElement | undefined,
+    button: DisplayObject
+  ): Container | HTMLCanvasElement {
+    if (canvas) {
+      return canvas;
+    }
+
+    let parent = button.parent;
+    while (parent.parent) {
+      parent = parent.parent;
+    }
+    return parent;
   }
 
   /**
@@ -132,9 +153,9 @@ export class SliderView extends Container {
     this.onMoveSlider(e);
   };
 
-  protected onMoveSlider(e: FederatedPointerEvent): void {
-    const evt = e as FederatedPointerEvent;
-    const mousePos: number = this.limitSliderButtonPosition(evt);
+  protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
+    //const evt = e as FederatedPointerEvent;
+    const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
     this._rate = this.convertPixelToRate(mousePos);
@@ -149,7 +170,9 @@ export class SliderView extends Container {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(evt: FederatedPointerEvent): number {
+  protected limitSliderButtonPosition(
+    evt: FederatedPointerEvent | PointerEvent
+  ): number {
     const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -185,7 +208,10 @@ export class SliderView extends Container {
    */
   private moveSliderFinish = (e: Object) => {
     this.isDragging = false;
-    this._slideButton.off("pointermove", this.moveSlider);
+    this._buttonRootContainer.removeEventListener(
+      "pointermove",
+      this.moveSlider
+    );
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
     this._sliderEventEmitter.emit(
@@ -240,9 +266,14 @@ export class SliderView extends Container {
    */
   protected getMousePosition(
     displayObj: DisplayObject,
-    evt: FederatedPointerEvent
+    evt: FederatedPointerEvent | PointerEvent
   ): number {
-    const localPos = displayObj.toLocal(evt.data.global);
+    let localPos;
+    if (evt instanceof FederatedPointerEvent) {
+      localPos = displayObj.toLocal(evt.global);
+    } else {
+      localPos = displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
+    }
 
     if (this._isHorizontal) {
       return localPos.x - this.dragStartPos.x;
