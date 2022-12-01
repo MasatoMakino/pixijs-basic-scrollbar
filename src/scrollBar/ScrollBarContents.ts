@@ -1,12 +1,11 @@
-import * as PIXI from "pixi.js";
-import { Container, DisplayObject, Graphics } from "pixi.js";
+import { Container, DisplayObject, Graphics, utils } from "pixi.js";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 
 /**
  * スクロールバーで操作するコンテンツ
  */
-export class ScrollBarContents extends PIXI.utils.EventEmitter {
+export class ScrollBarContents extends utils.EventEmitter {
   get target(): DisplayObject {
     return this._target;
   }

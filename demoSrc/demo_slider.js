@@ -1,5 +1,5 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
-import { SliderEventType, SliderView } from "..";
+import { SliderView } from "..";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });
@@ -25,7 +25,7 @@ const initSlider = (stage) => {
     rate: 25.0,
   });
 
-  slider.on(SliderEventType.CHANGE, (e) => {
+  slider.sliderEventEmitter.on("ch", (e) => {
     console.log(e.rate);
   });
   stage.addChild(slider);
@@ -43,7 +43,7 @@ const initNonMaskSlider = (stage) => {
     rate: 25.0,
   });
 
-  slider.on(SliderEventType.CHANGE, (e) => {
+  slider.on("slider_change", (e) => {
     console.log(e.rate);
   });
   stage.addChild(slider);

@@ -1,5 +1,5 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
-import { ScrollBarView, SliderEventType, ScrollBarContents } from "..";
+import { ScrollBarView, ScrollBarContents } from "..";
 import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = () => {
@@ -68,7 +68,7 @@ const initScrollBar = (stage) => {
   scrollbar.x = container.x + CONTENTS_W;
   scrollbar.y = SCROLLBAR_Y;
 
-  scrollbar.on(SliderEventType.CHANGE, (e) => {
+  scrollbar.sliderEventEmitter.on("slider_change", (e) => {
     // console.log(e);
   });
 
