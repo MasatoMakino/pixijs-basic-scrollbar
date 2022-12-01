@@ -56,7 +56,6 @@ export class SliderView extends Container {
   constructor(option: SliderViewOption) {
     super();
     this.init(option);
-    this.interactive = true;
   }
 
   /**
@@ -67,13 +66,12 @@ export class SliderView extends Container {
     option = SliderViewOption.init(option);
 
     this._canvas = option.canvas;
-    console.log(this._canvas);
     this.base = option.base;
     this._bar = this.initBarAndMask(option.bar);
-    this.slideButton = option.button;
     this._barMask = this.initBarAndMask(option.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
+    this.slideButton = option.button;
     this._minPosition = option.minPosition;
     this._maxPosition = option.maxPosition;
     this._isHorizontal = option.isHorizontal;
@@ -154,7 +152,6 @@ export class SliderView extends Container {
   };
 
   protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
-    //const evt = e as FederatedPointerEvent;
     const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
@@ -294,6 +291,7 @@ export class SliderView extends Container {
   private initBarAndMask(value: DisplayObject): DisplayObject {
     if (value == null) return;
     value.interactive = false;
+    value.interactiveChildren = false;
     this.addChildParts(value);
     return value;
   }
@@ -302,6 +300,7 @@ export class SliderView extends Container {
     this._slideButton = value;
     this._slideButton.on("pointerdown", this.startMove);
     this._slideButton.interactive = true;
+    this._slideButton.interactiveChildren = false;
     this.addChildParts(value);
   }
 
