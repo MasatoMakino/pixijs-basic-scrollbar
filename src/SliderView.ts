@@ -1,7 +1,7 @@
 import { Container, DisplayObject } from "@pixi/display";
-import { Graphics } from "@pixi/graphics";
 import { FederatedPointerEvent } from "@pixi/events";
-import { Point, Rectangle, IPoint } from "@pixi/math";
+import { Graphics } from "@pixi/graphics";
+import { IPoint, Point, Rectangle } from "@pixi/math";
 import { SliderEventContext, SliderEventEmitter } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
 

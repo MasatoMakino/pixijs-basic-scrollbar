@@ -1,5 +1,4 @@
 export * from "./SliderEvent";
 export * from "./SliderView";
-export * from "./scrollBar/ScrollBarView";
 export * from "./SliderViewOption";
-export * from "./scrollBar/ScrollBarContents";
+export * from "./scrollBar";
