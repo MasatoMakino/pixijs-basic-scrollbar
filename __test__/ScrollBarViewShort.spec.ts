@@ -1,5 +1,5 @@
 import TWEEN from "@tweenjs/tween.js";
-import * as PIXI from "pixi.js";
+import { Ticker } from "pixi.js";
 import { DummyPointerEvent } from "./DummpyPointerEvent";
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator";
 import { SliderViewTester } from "./SliderViewTester";
@@ -152,6 +152,6 @@ describe("ScrollBarView with content shorter than the mask", () => {
 });
 
 const updateTicker = (t: number) => {
-  PIXI.Ticker.shared.update(t);
+  Ticker.shared.update(t);
   TWEEN.update(t);
 };
