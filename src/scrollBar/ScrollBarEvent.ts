@@ -1,4 +1,7 @@
-export enum ScrollBarEventType {
-  UPDATE_TARGET_POSITION = "ScrollBarEventType_UPDATE_TARGET_POSITION",
-  STOP_INERTIAL_TWEEN = "ScrollBarEventType_STOP_INERTIAL_TWEEN",
+import { utils } from "pixi.js";
+
+export interface ScrollBarEventTypes {
+  update_target_position: [];
+  stop_inertial_tween: [];
 }
+export class ScrollBarEventEmitter extends utils.EventEmitter<ScrollBarEventTypes> {}

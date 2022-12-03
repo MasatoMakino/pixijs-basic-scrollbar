@@ -1,7 +1,8 @@
 import TWEEN from "@tweenjs/tween.js";
+import { Ticker } from "pixi.js";
+import { DummyPointerEvent } from "./DummpyPointerEvent";
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator";
 import { SliderViewTester } from "./SliderViewTester";
-import * as PIXI from "pixi.js";
 
 describe("ScrollBarView with content shorter than the mask", () => {
   const W = 100;
@@ -9,28 +10,24 @@ describe("ScrollBarView with content shorter than the mask", () => {
   const SCROLL_BAR_W = 16;
   const CONTENTS_SCALE: number = 0.8;
 
-  const {
-    sliderOption,
-    scrollBarContents,
-    scrollbar,
-    spyLog,
-  } = ScrollBarViewGenerator.generateScrollBarSet(
-    W,
-    H,
-    SCROLL_BAR_W,
-    CONTENTS_SCALE,
-    "TestScrollBar_ScrollBarView with autoHide"
-  );
+  const { sliderOption, scrollBarContents, scrollbar, spyLog } =
+    ScrollBarViewGenerator.generateScrollBarSet(
+      W,
+      H,
+      SCROLL_BAR_W,
+      CONTENTS_SCALE,
+      "TestScrollBar_ScrollBarView with autoHide"
+    );
 
   beforeEach(() => {
-    scrollbar.contents.target.emit("pointerup");
+    DummyPointerEvent.emit(scrollbar.contents.target, "pointerup");
 
     scrollbar.inertialManager.stopInertial();
     scrollbar.inertialManager.start();
 
     scrollbar.changeRate(0.0);
-    sliderOption.base.emit("pointerup");
-    sliderOption.button.emit("pointerup");
+    DummyPointerEvent.emit(sliderOption.base, "pointerup");
+    DummyPointerEvent.emit(sliderOption.button, "pointerup");
     updateTicker(-1);
     spyLog.mockReset();
   });
@@ -155,6 +152,6 @@ describe("ScrollBarView with content shorter than the mask", () => {
 });
 
 const updateTicker = (t: number) => {
-  PIXI.Ticker.shared.update(t);
+  Ticker.shared.update(t);
   TWEEN.update(t);
 };

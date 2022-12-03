@@ -1,12 +1,12 @@
-import { InteractionEvent } from "@pixi/interaction";
-import { SliderEventContext, SliderEventType } from "../SliderEvent";
+import { FederatedPointerEvent } from "pixi.js";
+import { SliderEventContext } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
 import { SliderViewOption } from "../SliderViewOption";
 import { InertialScrollManager } from "./InertialScrollManager";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarContents } from "./ScrollBarContents";
 import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
-import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarEventEmitter } from "./ScrollBarEvent";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
 /**
@@ -36,6 +36,12 @@ export class ScrollBarView extends SliderView {
   public wheelManager: MouseWheelScrollManager;
   public inertialManager: InertialScrollManager;
 
+  protected _scrollBarEventEmitter: ScrollBarEventEmitter =
+    new ScrollBarEventEmitter();
+  get scrollBarEventEmitter(): ScrollBarEventEmitter {
+    return this._scrollBarEventEmitter;
+  }
+
   constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
 
@@ -44,17 +50,17 @@ export class ScrollBarView extends SliderView {
       ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE,
       this.updateSlider
     );
-    this.on(SliderEventType.CHANGE, this.updateContentsPosition);
+    this._sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
     this.changeRate(option.rate);
 
     this.wheelManager = new MouseWheelScrollManager(this);
-    this.wheelManager.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
+    this.wheelManager.on("update_target_position", () => {
       this.updateSliderPosition();
     });
 
     this.inertialManager = new InertialScrollManager(this);
-    this.inertialManager.on(ScrollBarEventType.UPDATE_TARGET_POSITION, () => {
+    this.inertialManager.on("update_target_position", () => {
       this.updateSliderPosition();
     });
   }
@@ -63,7 +69,7 @@ export class ScrollBarView extends SliderView {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値
    */
-  protected limitSliderButtonPosition(evt: InteractionEvent): number {
+  protected limitSliderButtonPosition(evt: FederatedPointerEvent): number {
     const mousePos: number = this.getMousePosition(this, evt);
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
@@ -192,18 +198,18 @@ export class ScrollBarView extends SliderView {
 
   protected onPressedSliderButton(e): void {
     super.onPressedSliderButton(e);
-    this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+    this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
   protected onMoveSlider(e) {
     super.onMoveSlider(e);
-    this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+    this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onPressBase(evt: InteractionEvent): void {
+  protected onPressBase(evt: FederatedPointerEvent): void {
     if (this.isHidden) return;
     super.onPressBase(evt);
-    this.emit(ScrollBarEventType.STOP_INERTIAL_TWEEN);
+    this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
   protected onDisposeFunction(e?: Event): void {

@@ -1,5 +1,5 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
-import { ScrollBarView, SliderEventType, ScrollBarContents } from "..";
+import { ScrollBarView, ScrollBarContents } from "..";
 import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = () => {
@@ -10,7 +10,7 @@ const onDomContentsLoaded = () => {
     TWEEN.update(performance.now());
   });
 
-  const scrollbar = initScrollBar(app.stage);
+  const scrollbar = initScrollBar(app.stage, app.view);
 
   const addButton = (label) => {
     const btnPlus = document.createElement("button");
@@ -40,7 +40,7 @@ const onDomContentsLoaded = () => {
  * スクロールバーの実装サンプル
  * @param stage
  */
-const initScrollBar = (stage) => {
+const initScrollBar = (stage, view) => {
   const SCROLLBAR_W = 16;
   const SCROLLBAR_H = 360;
   const SCROLLBAR_Y = 120;
@@ -60,6 +60,7 @@ const initScrollBar = (stage) => {
       maxPosition: SCROLLBAR_H,
       rate: 35.0,
       isHorizontal: false,
+      canvas: view,
     },
     contents
   );
@@ -68,7 +69,7 @@ const initScrollBar = (stage) => {
   scrollbar.x = container.x + CONTENTS_W;
   scrollbar.y = SCROLLBAR_Y;
 
-  scrollbar.on(SliderEventType.CHANGE, (e) => {
+  scrollbar.sliderEventEmitter.on("slider_change", (e) => {
     // console.log(e);
   });
 

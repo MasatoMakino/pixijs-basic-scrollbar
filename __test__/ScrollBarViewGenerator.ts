@@ -1,6 +1,6 @@
+import { ScrollBarView } from "../src";
 import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
-import { ScrollBarView } from "../src";
 
 export class ScrollBarViewGenerator {
   public static generateScrollBarSet(

@@ -1,37 +1,33 @@
+import { Ticker } from "@pixi/ticker";
 import TWEEN from "@tweenjs/tween.js";
-import * as PIXI from "pixi.js";
 import { ScrollBarView } from "../src";
-import { MouseWheelPluginEventType } from "../src/MouseWheelPlugin";
-import { SliderViewTester } from "./SliderViewTester";
+import { DummyPointerEvent } from "./DummpyPointerEvent";
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator";
+import { SliderViewTester } from "./SliderViewTester";
 
 describe("ScrollBarView", () => {
   const W = 100;
   const H = 100;
   const SCROLL_BAR_W = 16;
   const CONTENTS_SCALE: number = 2.0;
-  const {
-    sliderOption,
-    scrollBarContents,
-    scrollbar,
-    spyLog,
-  } = ScrollBarViewGenerator.generateScrollBarSet(
-    W,
-    H,
-    SCROLL_BAR_W,
-    CONTENTS_SCALE,
-    "TestScrollBar_ScrollBarView"
-  );
+  const { sliderOption, scrollBarContents, scrollbar, spyLog } =
+    ScrollBarViewGenerator.generateScrollBarSet(
+      W,
+      H,
+      SCROLL_BAR_W,
+      CONTENTS_SCALE,
+      "TestScrollBar_ScrollBarView"
+    );
 
   beforeEach(() => {
-    scrollbar.contents.target.emit("pointerup");
+    DummyPointerEvent.emit(scrollbar.contents.target, "pointerup");
 
     scrollbar.inertialManager.stopInertial();
     scrollbar.inertialManager.start();
 
     scrollbar.changeRate(0.0);
-    sliderOption.base.emit("pointerup");
-    sliderOption.button.emit("pointerup");
+    DummyPointerEvent.emit(sliderOption.base, "pointerup");
+    DummyPointerEvent.emit(sliderOption.button, "pointerup");
     updateTicker(-1);
     spyLog.mockReset();
   });
@@ -83,30 +79,40 @@ describe("ScrollBarView", () => {
 
     SliderViewTester.controlButton(isHorizontal, button, 0.0, "pointerdown");
     expect(scrollbar.rate).toBe(0.0);
-    SliderViewTester.controlButton(isHorizontal, button, 0.0, "pointermove");
+    SliderViewTester.controlButton(
+      isHorizontal,
+      scrollbar.buttonRootContainer,
+      0.0,
+      "pointermove"
+    );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(
       isHorizontal,
-      button,
+      scrollbar.buttonRootContainer,
       (H - barH) / 4,
       "pointermove"
     );
     expect(scrollbar.rate).toBe(0.25);
     SliderViewTester.controlButton(
       isHorizontal,
-      button,
+      scrollbar.buttonRootContainer,
       (H - barH) / 2,
       "pointermove"
     );
     expect(scrollbar.rate).toBe(0.5);
     SliderViewTester.controlButton(
       isHorizontal,
-      button,
+      scrollbar.buttonRootContainer,
       H - barH,
       "pointermove"
     );
     expect(scrollbar.rate).toBe(1.0);
-    SliderViewTester.controlButton(isHorizontal, button, H, "pointermove");
+    SliderViewTester.controlButton(
+      isHorizontal,
+      scrollbar.buttonRootContainer,
+      H,
+      "pointermove"
+    );
     expect(scrollbar.rate).toBe(1.0);
     SliderViewTester.controlButton(isHorizontal, button, H, "pointerup");
     expect(scrollbar.rate).toBe(1.0);
@@ -117,13 +123,13 @@ describe("ScrollBarView", () => {
     const delta = scrollbar.wheelManager.delta;
     let scroll = 0;
     while (scroll < H) {
-      target.emit("wheel", { deltaY: 1 });
+      DummyPointerEvent.emit(target, "wheel", { deltaY: 1 });
       scroll += delta;
       expect(scrollbar.rate).toBe(Math.min(1.0, scroll / H));
     }
     scroll = H;
     while (scroll > 0) {
-      target.emit("wheel", { deltaY: -1 });
+      DummyPointerEvent.emit(target, "wheel", { deltaY: -1 });
       scroll -= delta;
       expect(scrollbar.rate).toBe(Math.max(0.0, scroll / H));
     }
@@ -132,17 +138,17 @@ describe("ScrollBarView", () => {
   test("WheelManager : start and stop", () => {
     const target = scrollBarContents.target;
     scrollbar.wheelManager.start();
-    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+    expect(target.listenerCount("wheel")).toBe(1);
     scrollbar.wheelManager.start();
-    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+    expect(target.listenerCount("wheel")).toBe(1);
 
     scrollbar.wheelManager.stop();
-    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(0);
+    expect(target.listenerCount("wheel")).toBe(0);
     scrollbar.wheelManager.stop();
-    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(0);
+    expect(target.listenerCount("wheel")).toBe(0);
 
     scrollbar.wheelManager.start();
-    expect(target.listenerCount(MouseWheelPluginEventType.WHEEL)).toBe(1);
+    expect(target.listenerCount("wheel")).toBe(1);
   });
 
   describe("InertialScrollManager", () => {
@@ -215,18 +221,14 @@ describe("ScrollBarView with autoHide", () => {
   const H = 100;
   const SCROLL_BAR_W = 16;
   const CONTENTS_SCALE: number = 0.5;
-  const {
-    sliderOption,
-    scrollBarContents,
-    scrollbar,
-    spyLog,
-  } = ScrollBarViewGenerator.generateScrollBarSet(
-    W,
-    H,
-    SCROLL_BAR_W,
-    CONTENTS_SCALE,
-    "TestScrollBar_ScrollBarView with autoHide"
-  );
+  const { sliderOption, scrollBarContents, scrollbar, spyLog } =
+    ScrollBarViewGenerator.generateScrollBarSet(
+      W,
+      H,
+      SCROLL_BAR_W,
+      CONTENTS_SCALE,
+      "TestScrollBar_ScrollBarView with autoHide"
+    );
   scrollbar.autoHide = true;
 
   beforeEach(() => {
@@ -235,8 +237,8 @@ describe("ScrollBarView with autoHide", () => {
 
   afterEach(() => {
     scrollbar.changeRate(0.0);
-    sliderOption.base.emit("pointerup");
-    sliderOption.button.emit("pointerup");
+    DummyPointerEvent.emit(sliderOption.base, "pointerup");
+    DummyPointerEvent.emit(sliderOption.button, "pointerup");
     spyLog.mockReset();
   });
 
@@ -266,6 +268,6 @@ describe("ScrollBarView with autoHide", () => {
 });
 
 const updateTicker = (t: number) => {
-  PIXI.Ticker.shared.update(t);
+  Ticker.shared.update(t);
   TWEEN.update(t);
 };

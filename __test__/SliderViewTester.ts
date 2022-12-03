@@ -1,9 +1,5 @@
-import {
-  DisplayObject,
-  InteractionData,
-  InteractionEvent,
-  Point,
-} from "pixi.js";
+import { DisplayObject, DisplayObjectEvents, Point } from "pixi.js";
+import { DummyPointerEvent } from "./DummpyPointerEvent";
 import { SliderSet } from "./SliderGenerator";
 
 export class TestRateOption {
@@ -21,28 +17,31 @@ export class SliderViewTester {
     target: DisplayObject,
     globalX: number,
     globalY: number
-  ): InteractionEvent {
-    const e = new InteractionEvent();
+  ): any {
+    const e = {} as any;
     e.currentTarget = target;
-    e.data = new InteractionData();
-    e.data.global = new Point(globalX, globalY);
+    e.globalX = globalX;
+    e.globalY = globalY;
+    e.offsetX = globalX;
+    e.offsetY = globalY;
+    e.global = new Point(globalX, globalY);
     return e;
   }
 
   public static controlButton(
     isHorizontal: boolean,
-    target: DisplayObject,
+    target: DisplayObject | HTMLCanvasElement,
     pos: number,
-    type: string
+    type: keyof DisplayObjectEvents
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
     const e = SliderViewTester.generateInteractionEvent(
-      target,
+      target as any,
       globalX,
       globalY
     );
-    target.emit(type, e);
+    DummyPointerEvent.emit(target, type, e);
   }
 
   public static testRate(
@@ -51,7 +50,6 @@ export class SliderViewTester {
     option?: TestRateOption
   ) {
     option = TestRateOption.initOption(option);
-
     expect(targets.slider.rate).toBe(rate);
 
     if (option.hasChangedEvent) {
@@ -104,12 +102,14 @@ export class SliderViewTester {
   public static dragButton(
     sliders: SliderSet,
     pos: number,
-    type: string,
+    type: keyof DisplayObjectEvents,
     option?: TestRateOption
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
-      sliders.sliderButton,
+      type === "pointermove"
+        ? sliders.slider.buttonRootContainer
+        : sliders.sliderButton,
       pos,
       type
     );

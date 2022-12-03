@@ -28,6 +28,8 @@ export class SliderViewOption {
    */
   isHorizontal?: boolean;
 
+  canvas?: HTMLCanvasElement;
+
   public static init(option: SliderViewOption): SliderViewOption {
     if (option.rate != null) {
       option.rate = Math.max(0, option.rate);

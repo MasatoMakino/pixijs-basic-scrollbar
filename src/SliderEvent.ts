@@ -1,3 +1,5 @@
+import { EventEmitter } from "@pixi/utils";
+
 /**
  * スライダーが移動した際に発行されるイベントです。
  * 現状のスライダー位置を報告します。
@@ -10,7 +12,9 @@ export class SliderEventContext {
   }
 }
 
-export enum SliderEventType {
-  CHANGE = "event_slider_change",
-  CHANGE_FINISH = "event_slider_change_finish",
+export interface SliderEventTypes {
+  slider_change: SliderEventContext;
+  slider_change_finished: SliderEventContext;
 }
+
+export class SliderEventEmitter extends EventEmitter<SliderEventTypes> {}

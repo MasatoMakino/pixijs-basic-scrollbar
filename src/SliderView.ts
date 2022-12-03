@@ -1,11 +1,9 @@
-import { InteractionEvent } from "@pixi/interaction";
-
-import * as PIXI from "pixi.js";
-import { Container, DisplayObject, Graphics, Point, Rectangle } from "pixi.js";
-
-import { SliderEventContext, SliderEventType } from "./SliderEvent";
+import { Container, DisplayObject } from "@pixi/display";
+import { FederatedPointerEvent } from "@pixi/events";
+import { Graphics } from "@pixi/graphics";
+import { IPoint, Point, Rectangle } from "@pixi/math";
+import { SliderEventContext, SliderEventEmitter } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
-import IPoint = PIXI.IPoint;
 
 /**
  * スライダー用クラスです
@@ -18,12 +16,20 @@ import IPoint = PIXI.IPoint;
 export class SliderView extends Container {
   protected _base: DisplayObject; // スライダーの地
   protected _bar?: DisplayObject; // スライドにあわせて表示されるバー
+
   protected _barMask?: Graphics; // バーのマスク
   protected _slideButton: DisplayObject; // スライドボタン
+  protected _buttonRootContainer: Container | HTMLCanvasElement;
+  get buttonRootContainer(): Container | HTMLCanvasElement {
+    return this._buttonRootContainer;
+  }
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
   private _isHorizontal: boolean = true;
+
+  private _canvas?: HTMLCanvasElement;
+
   get isHorizontal(): boolean {
     return this._isHorizontal;
   }
@@ -36,29 +42,33 @@ export class SliderView extends Container {
   private _rate: number;
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
+  protected _sliderEventEmitter: SliderEventEmitter = new SliderEventEmitter();
+  get sliderEventEmitter(): SliderEventEmitter {
+    return this._sliderEventEmitter;
+  }
 
   /**
-   * @param {SliderViewOption} option
+   * @param option
    */
   constructor(option: SliderViewOption) {
     super();
     this.init(option);
-    this.interactive = true;
   }
 
   /**
    * 初期化処理
-   * @param {SliderViewOption} option
+   * @param option
    */
   protected init(option: SliderViewOption): void {
     option = SliderViewOption.init(option);
 
+    this._canvas = option.canvas;
     this.base = option.base;
     this._bar = this.initBarAndMask(option.bar);
-    this.slideButton = option.button;
     this._barMask = this.initBarAndMask(option.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
+    this.slideButton = option.button;
     this._minPosition = option.minPosition;
     this._maxPosition = option.maxPosition;
     this._isHorizontal = option.isHorizontal;
@@ -85,7 +95,10 @@ export class SliderView extends Container {
     const pos: number = this.convertRateToPixel(this._rate);
     this.updateParts(pos);
 
-    this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**
@@ -93,19 +106,38 @@ export class SliderView extends Container {
    * @param {Object} e
    */
   private startMove = (e: any) => {
-    this.onPressedSliderButton(e as InteractionEvent);
+    this.onPressedSliderButton(e as FederatedPointerEvent);
   };
 
-  protected onPressedSliderButton(e: InteractionEvent): void {
+  protected onPressedSliderButton(e: FederatedPointerEvent): void {
     this.isDragging = true;
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
-    const localPos = this.toLocal(e.data.global);
+    const localPos = this.toLocal(e.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this._slideButton.on("pointermove", this.moveSlider);
+    this._buttonRootContainer = SliderView.getRootContainer(
+      this._canvas,
+      this._slideButton
+    );
+    this._buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
+  }
+
+  private static getRootContainer(
+    canvas: HTMLCanvasElement | undefined,
+    button: DisplayObject
+  ): Container | HTMLCanvasElement {
+    if (canvas) {
+      return canvas;
+    }
+
+    let parent = button.parent;
+    while (parent.parent) {
+      parent = parent.parent;
+    }
+    return parent;
   }
 
   /**
@@ -116,21 +148,25 @@ export class SliderView extends Container {
     this.onMoveSlider(e);
   };
 
-  protected onMoveSlider(e: InteractionEvent): void {
-    const evt = e as InteractionEvent;
-    const mousePos: number = this.limitSliderButtonPosition(evt);
+  protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
+    const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
     this._rate = this.convertPixelToRate(mousePos);
 
-    this.emit(SliderEventType.CHANGE, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(evt: InteractionEvent): number {
+  protected limitSliderButtonPosition(
+    evt: FederatedPointerEvent | PointerEvent
+  ): number {
     const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -166,10 +202,16 @@ export class SliderView extends Container {
    */
   private moveSliderFinish = (e: Object) => {
     this.isDragging = false;
-    this._slideButton.off("pointermove", this.moveSlider);
+    this._buttonRootContainer.removeEventListener(
+      "pointermove",
+      this.moveSlider
+    );
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
-    this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change_finished",
+      new SliderEventContext(this.rate)
+    );
   };
 
   /**
@@ -177,10 +219,13 @@ export class SliderView extends Container {
    * その位置までスライダーをジャンプする
    * @param evt
    */
-  protected onPressBase(evt: InteractionEvent): void {
+  protected onPressBase(evt: FederatedPointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
-    this.emit(SliderEventType.CHANGE_FINISH, new SliderEventContext(this.rate));
+    this._sliderEventEmitter.emit(
+      "slider_change_finished",
+      new SliderEventContext(this.rate)
+    );
   }
 
   /**
@@ -215,9 +260,14 @@ export class SliderView extends Container {
    */
   protected getMousePosition(
     displayObj: DisplayObject,
-    evt: InteractionEvent
+    evt: FederatedPointerEvent | PointerEvent
   ): number {
-    const localPos = displayObj.toLocal(evt.data.global);
+    let localPos;
+    if (evt instanceof FederatedPointerEvent) {
+      localPos = displayObj.toLocal(evt.global);
+    } else {
+      localPos = displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
+    }
 
     if (this._isHorizontal) {
       return localPos.x - this.dragStartPos.x;
@@ -230,6 +280,7 @@ export class SliderView extends Container {
     this._base = value;
     this._base.interactive = true;
     this._base.on("pointertap", (e) => {
+      console.log("tap", e);
       this.onPressBase(e);
     });
     this.addChildParts(value);
@@ -238,6 +289,7 @@ export class SliderView extends Container {
   private initBarAndMask(value: DisplayObject): DisplayObject {
     if (value == null) return;
     value.interactive = false;
+    value.interactiveChildren = false;
     this.addChildParts(value);
     return value;
   }
@@ -246,6 +298,7 @@ export class SliderView extends Container {
     this._slideButton = value;
     this._slideButton.on("pointerdown", this.startMove);
     this._slideButton.interactive = true;
+    this._slideButton.interactiveChildren = false;
     this.addChildParts(value);
   }
 

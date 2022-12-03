@@ -1,16 +1,21 @@
-import { InteractionEvent } from "@pixi/interaction";
 import { Easing, Tween } from "@tweenjs/tween.js";
 import * as PIXI from "pixi.js";
-import { DisplayObject, Ticker } from "pixi.js";
+import {
+  DisplayObject,
+  DisplayObjectEvents,
+  FederatedPointerEvent,
+  Ticker,
+  utils,
+} from "pixi.js";
 import { SliderViewUtil } from "../SliderView";
-import { ScrollBarEventType } from "./ScrollBarEvent";
+import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
-export class InertialScrollManager extends PIXI.utils.EventEmitter {
+export class InertialScrollManager extends utils.EventEmitter<ScrollBarEventTypes> {
   get speed(): number {
     return this._speed;
   }
@@ -28,7 +33,10 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
   constructor(scrollBarView: ScrollBarView) {
     super();
     this.scrollBarView = scrollBarView;
-    scrollBarView.on(ScrollBarEventType.STOP_INERTIAL_TWEEN, this.stopInertial);
+    scrollBarView.scrollBarEventEmitter.on(
+      "stop_inertial_tween",
+      this.stopInertial
+    );
 
     const target = this.scrollBarView.contents.target;
     target.interactive = true;
@@ -56,7 +64,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     Ticker.shared.remove(this.onTick);
   }
 
-  private onMouseDown = (e: InteractionEvent) => {
+  private onMouseDown = (e: FederatedPointerEvent) => {
     this.updateDragPos(e);
 
     this.isDragging = true;
@@ -78,7 +86,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     const target = this.scrollBarView.contents.target;
     const switchListener = (
       isOn: boolean,
-      event: string,
+      event: keyof DisplayObjectEvents,
       listener: PIXI.utils.EventEmitter.ListenerFn
     ) => {
       if (isOn) {
@@ -92,18 +100,18 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     switchListener(isOn, "pointerupoutside", this.onMouseUp);
   }
 
-  private getDragPos(e: InteractionEvent): number {
+  private getDragPos(e: FederatedPointerEvent): number {
     return SliderViewUtil.getPosition(
-      e.data.global,
+      e.global,
       this.scrollBarView.isHorizontal
     );
   }
 
-  private updateDragPos(e: InteractionEvent): void {
+  private updateDragPos(e: FederatedPointerEvent): void {
     this.dragPos = this.getDragPos(e);
   }
 
-  private onMouseMove = (e: InteractionEvent) => {
+  private onMouseMove = (e: FederatedPointerEvent) => {
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
@@ -118,10 +126,10 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     const currentPos = SliderViewUtil.getPosition(target, isHorizontal);
     SliderViewUtil.setPosition(target, isHorizontal, currentPos + delta);
 
-    this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
+    this.emit("update_target_position");
   }
 
-  private onMouseUp = (e: InteractionEvent) => {
+  private onMouseUp = (e: FederatedPointerEvent) => {
     this.removeDragListener();
     this.isDragging = false;
     this.onTick();
@@ -148,7 +156,7 @@ export class InertialScrollManager extends PIXI.utils.EventEmitter {
     this.tween = new Tween(this.scrollBarView.contents.target)
       .to(toObj, 666)
       .onUpdate(() => {
-        this.emit(ScrollBarEventType.UPDATE_TARGET_POSITION);
+        this.emit("update_target_position");
       })
       .easing(Easing.Cubic.Out)
       .start();

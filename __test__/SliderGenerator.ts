@@ -1,5 +1,5 @@
 import { DisplayObject } from "pixi.js";
-import { SliderEventType, SliderView, SliderViewOption } from "../src";
+import { SliderView, SliderViewOption } from "../src";
 import SpyInstance = jest.SpyInstance;
 
 export interface SliderSet {
@@ -15,7 +15,7 @@ export interface SliderSet {
 export class SliderGenerator {
   public static initSlider(option: SliderViewOption): SliderSet {
     const slider = new SliderView(option);
-    slider.on(SliderEventType.CHANGE, (e) => {
+    slider.sliderEventEmitter.on("slider_change", (e) => {
       console.log(e.rate);
     });
     const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);

@@ -2,7 +2,6 @@ import { Container, Graphics, Rectangle } from "pixi.js";
 import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
 
 export class ScrollBarContentsGenerator {
-
   /**
    * スクロールバーのコンテンツおよびコンテンツマスクを生成する
    * @param contentsW
