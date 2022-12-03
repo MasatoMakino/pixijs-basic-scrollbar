@@ -1,16 +1,9 @@
-import * as PIXI from "pixi.js";
-import {
-  Container,
-  DisplayObject,
-  FederatedPointerEvent,
-  Graphics,
-  Point,
-  Rectangle,
-} from "pixi.js";
-
+import { Container, DisplayObject } from "@pixi/display";
+import { Graphics } from "@pixi/graphics";
+import { FederatedPointerEvent } from "@pixi/events";
+import { Point, Rectangle, IPoint } from "@pixi/math";
 import { SliderEventContext, SliderEventEmitter } from "./SliderEvent";
 import { SliderViewOption } from "./SliderViewOption";
-import IPoint = PIXI.IPoint;
 
 /**
  * スライダー用クラスです
@@ -27,6 +20,10 @@ export class SliderView extends Container {
   protected _barMask?: Graphics; // バーのマスク
   protected _slideButton: DisplayObject; // スライドボタン
   protected _buttonRootContainer: Container | HTMLCanvasElement;
+  get buttonRootContainer(): Container | HTMLCanvasElement {
+    return this._buttonRootContainer;
+  }
+
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
   private _isHorizontal: boolean = true;
@@ -116,7 +113,7 @@ export class SliderView extends Container {
     this.isDragging = true;
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
-    const localPos = this.toLocal(e.data.global);
+    const localPos = this.toLocal(e.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
     this._buttonRootContainer = SliderView.getRootContainer(
@@ -283,6 +280,7 @@ export class SliderView extends Container {
     this._base = value;
     this._base.interactive = true;
     this._base.on("pointertap", (e) => {
+      console.log("tap", e);
       this.onPressBase(e);
     });
     this.addChildParts(value);

@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "lib": ["ES2021"],
+    "module": "ES2022",
+    "target": "ES2021",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+
     "baseUrl": "./",
     "paths": {
       "mini-signals": ["node_modules/resource-loader/typings/mini-signals.d.ts"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"]
 }

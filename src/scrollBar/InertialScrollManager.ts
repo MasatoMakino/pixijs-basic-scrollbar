@@ -102,7 +102,7 @@ export class InertialScrollManager extends utils.EventEmitter<ScrollBarEventType
 
   private getDragPos(e: FederatedPointerEvent): number {
     return SliderViewUtil.getPosition(
-      e.data.global,
+      e.global,
       this.scrollBarView.isHorizontal
     );
   }

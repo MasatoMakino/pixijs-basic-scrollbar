@@ -1,4 +1,4 @@
-import { utils } from "pixi.js";
+import { EventEmitter } from "@pixi/utils";
 
 /**
  * スライダーが移動した際に発行されるイベントです。
@@ -17,4 +17,4 @@ export interface SliderEventTypes {
   slider_change_finished: SliderEventContext;
 }
 
-export class SliderEventEmitter extends utils.EventEmitter<SliderEventTypes> {}
+export class SliderEventEmitter extends EventEmitter<SliderEventTypes> {}

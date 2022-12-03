@@ -1,6 +1,11 @@
+const { defaults } = require("jest-config");
+
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
-  collectCoverageFrom: ["./src/**/*.ts"],
+  coveragePathIgnorePatterns: [
+    ...defaults.coveragePathIgnorePatterns,
+    "__test__",
+  ],
   setupFilesAfterEnv: ["<rootDir>/__test__/SetupFile.ts"],
 };
