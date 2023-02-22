@@ -20,10 +20,10 @@
   },
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.5.4",
-    "@masatomakino/gulptask-dev-server": "^0.4.3",
     "@tweenjs/tween.js": "^18.6.4",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.14.0",
+    "browser-sync": "^2.27.11",
     "canvas": "^2.11.0",
     "dat.gui": "^0.7.9",
     "husky": "^8.0.3",
@@ -50,7 +50,7 @@
     "demo": "npx @masatomakino/gulptask-demo-page",
     "buildTS": "tsc --project tsconfig.cjs.json & tsc --project tsconfig.esm.json",
     "typedocs": "npx typedoc --out ./docs/api src/index.ts",
-    "server": "npx @masatomakino/gulptask-dev-server -b ./docs/demo",
+    "server": "browser-sync ./docs/demo -w",
     "watch:demo": "npm run demo -- -W",
     "watch:tsc": "tsc -W --incremental --project tsconfig.cjs.json & tsc -W --incremental --project tsconfig.esm.json"
   },
