@@ -6,18 +6,8 @@ name: CI
 on:
   push:
     branches: [main]
-    paths:
-      - "src/**"
-      - "__test__/**"
-      - "package.json"
-      - "tsconfig*.json"
   pull_request:
     branches: [main]
-    paths:
-      - "src/**"
-      - "__test__/**"
-      - "package.json"
-      - "tsconfig*.json"
 
 jobs:
   jest:
