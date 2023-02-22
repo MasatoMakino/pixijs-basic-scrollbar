@@ -280,7 +280,6 @@ export class SliderView extends Container {
     this._base = value;
     this._base.interactive = true;
     this._base.on("pointertap", (e) => {
-      console.log("tap", e);
       this.onPressBase(e);
     });
     this.addChildParts(value);
