@@ -15,10 +15,12 @@ export interface SliderSet {
 export class SliderGenerator {
   public static initSlider(option: SliderViewOption): SliderSet {
     const slider = new SliderView(option);
-    slider.sliderEventEmitter.on("slider_change", (e) => {
-      console.log(e.rate);
+    const spyLog = jest.fn((rate) => {
+      return rate;
     });
-    const spyLog = jest.spyOn(console, "log").mockImplementation((x) => x);
+    slider.sliderEventEmitter.on("slider_change", (e) => {
+      spyLog(e.rate);
+    });
     return {
       slider,
       sliderButton: option.button,
