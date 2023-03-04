@@ -3,12 +3,12 @@ import { SliderViewOption } from "../src";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 
 describe("SliderViewOption", () => {
-  const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => {
-    x;
-  });
-
+  const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => x);
   beforeEach(() => {
-    spyWarn.mockReset();
+    spyWarn.mockClear();
+  });
+  afterAll(() => {
+    spyWarn.mockRestore();
   });
 
   test("default value", () => {
