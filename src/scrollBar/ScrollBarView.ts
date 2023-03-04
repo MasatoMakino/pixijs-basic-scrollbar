@@ -46,10 +46,7 @@ export class ScrollBarView extends SliderView {
     super(option);
 
     this._contents = scrollContents;
-    this._contents.on(
-      ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE,
-      this.updateSlider
-    );
+    this._contents.on("changed_contents_size", this.updateSlider);
     this._sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
     this.changeRate(option.rate);
