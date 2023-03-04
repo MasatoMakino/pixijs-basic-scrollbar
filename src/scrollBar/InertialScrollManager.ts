@@ -1,12 +1,11 @@
 import { Easing, Tween } from "@tweenjs/tween.js";
-import * as PIXI from "pixi.js";
 import {
   DisplayObject,
   DisplayObjectEvents,
   FederatedPointerEvent,
   Ticker,
-  utils,
 } from "pixi.js";
+import { EventEmitter } from "@pixi/utils";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
@@ -15,7 +14,7 @@ import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
-export class InertialScrollManager extends utils.EventEmitter<ScrollBarEventTypes> {
+export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   get speed(): number {
     return this._speed;
   }
@@ -87,7 +86,7 @@ export class InertialScrollManager extends utils.EventEmitter<ScrollBarEventType
     const switchListener = (
       isOn: boolean,
       event: keyof DisplayObjectEvents,
-      listener: PIXI.utils.EventEmitter.ListenerFn
+      listener: EventEmitter.ListenerFn
     ) => {
       if (isOn) {
         target.on(event, listener);
