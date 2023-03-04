@@ -1,4 +1,4 @@
-import { utils } from "pixi.js";
+import { EventEmitter } from "@pixi/utils";
 import { SliderViewUtil } from "../SliderView";
 import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarView } from "./ScrollBarView";
@@ -7,7 +7,7 @@ import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス
  */
-export class MouseWheelScrollManager extends utils.EventEmitter<ScrollBarEventTypes> {
+export class MouseWheelScrollManager extends EventEmitter<ScrollBarEventTypes> {
   protected scrollBarView: ScrollBarView;
   public delta = 16;
   private _isStart: boolean;
