@@ -13,8 +13,6 @@ export class SliderEventContext {
 }
 
 export interface SliderEventTypes {
-  slider_change: SliderEventContext;
-  slider_change_finished: SliderEventContext;
+  slider_change: (e: SliderEventContext) => void;
+  slider_change_finished: (e: SliderEventContext) => void;
 }
-
-export class SliderEventEmitter extends EventEmitter<SliderEventTypes> {}
