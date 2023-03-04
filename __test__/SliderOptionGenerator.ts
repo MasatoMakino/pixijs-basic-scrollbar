@@ -30,7 +30,7 @@ export class SliderOptionGenerator {
    * 最小限のスライダー初期化オプションを生成する。
    * @param w
    * @param h
-   * @param hasHitArea
+   * @param option
    */
   public static generateMinimalOption(
     w: number,
