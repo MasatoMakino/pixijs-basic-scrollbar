@@ -6,7 +6,6 @@ import { SliderViewOption } from "../SliderViewOption";
 import { InertialScrollManager } from "./InertialScrollManager";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarContents } from "./ScrollBarContents";
-import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
