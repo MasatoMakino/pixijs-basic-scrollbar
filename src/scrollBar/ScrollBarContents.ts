@@ -1,8 +1,8 @@
 import { Graphics } from "@pixi/graphics";
 import { EventEmitter } from "@pixi/utils";
 import { Container, DisplayObject } from "pixi.js";
-import { SliderView, SliderViewUtil } from "../SliderView";
-import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
+import { SliderView, SliderViewUtil } from "../";
+import { ScrollBarContentsEventType } from "./";
 
 /**
  * スクロールバーで操作するコンテンツ

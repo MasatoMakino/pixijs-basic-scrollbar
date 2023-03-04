@@ -3,8 +3,7 @@ import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { IPoint, Point, Rectangle } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
-import { SliderEventContext, SliderEventTypes } from "./SliderEvent";
-import { SliderViewOption } from "./SliderViewOption";
+import { SliderEventContext, SliderEventTypes, SliderViewOption } from "./";
 
 /**
  * スライダー用クラスです

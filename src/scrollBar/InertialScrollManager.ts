@@ -1,3 +1,4 @@
+import { EventEmitter } from "@pixi/utils";
 import { Easing, Tween } from "@tweenjs/tween.js";
 import {
   DisplayObject,
@@ -5,11 +6,8 @@ import {
   FederatedPointerEvent,
   Ticker,
 } from "pixi.js";
-import { EventEmitter } from "@pixi/utils";
-import { SliderViewUtil } from "../SliderView";
-import { ScrollBarEventTypes } from "./ScrollBarEvent";
-import { ScrollBarView } from "./ScrollBarView";
-import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
+import { SliderViewUtil } from "../";
+import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。

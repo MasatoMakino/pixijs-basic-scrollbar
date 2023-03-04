@@ -1,5 +1,3 @@
-import { EventEmitter } from "@pixi/utils";
-
 /**
  * スライダーが移動した際に発行されるイベントです。
  * 現状のスライダー位置を報告します。
