@@ -1,3 +1,4 @@
+import { EventEmitter } from "@pixi/utils";
 import { FederatedPointerEvent } from "pixi.js";
 import { SliderEventContext } from "../SliderEvent";
 import { SliderView, SliderViewUtil } from "../SliderView";
@@ -6,7 +7,7 @@ import { InertialScrollManager } from "./InertialScrollManager";
 import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
 import { ScrollBarContents } from "./ScrollBarContents";
 import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
-import { ScrollBarEventEmitter } from "./ScrollBarEvent";
+import { ScrollBarEventTypes } from "./ScrollBarEvent";
 import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
 
 /**
@@ -36,9 +37,8 @@ export class ScrollBarView extends SliderView {
   public wheelManager: MouseWheelScrollManager;
   public inertialManager: InertialScrollManager;
 
-  protected _scrollBarEventEmitter: ScrollBarEventEmitter =
-    new ScrollBarEventEmitter();
-  get scrollBarEventEmitter(): ScrollBarEventEmitter {
+  protected _scrollBarEventEmitter = new EventEmitter<ScrollBarEventTypes>();
+  get scrollBarEventEmitter() {
     return this._scrollBarEventEmitter;
   }
 

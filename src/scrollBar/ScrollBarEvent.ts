@@ -1,7 +1,4 @@
-import { utils } from "pixi.js";
-
 export interface ScrollBarEventTypes {
-  update_target_position: [];
-  stop_inertial_tween: [];
+  update_target_position: () => void;
+  stop_inertial_tween: () => void;
 }
-export class ScrollBarEventEmitter extends utils.EventEmitter<ScrollBarEventTypes> {}
