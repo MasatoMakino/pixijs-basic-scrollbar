@@ -1,3 +1,3 @@
-export enum ScrollBarContentsEventType {
-  CHANGED_CONTENTS_SIZE = "ScrollBarContentsEventType_CHANGED_CONTENTS_SIZE",
+export interface ScrollBarContentsEventType {
+  changed_contents_size: () => void;
 }

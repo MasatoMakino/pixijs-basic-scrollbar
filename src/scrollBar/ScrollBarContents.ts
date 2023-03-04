@@ -7,13 +7,13 @@ import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
 /**
  * スクロールバーで操作するコンテンツ
  */
-export class ScrollBarContents extends EventEmitter {
+export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> {
   get target(): DisplayObject {
     return this._target;
   }
   set target(value: DisplayObject) {
     this._target = value;
-    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+    this.emit("changed_contents_size");
   }
   private _target: DisplayObject;
 
@@ -22,7 +22,7 @@ export class ScrollBarContents extends EventEmitter {
   }
   set mask(value: Graphics) {
     this._mask = value;
-    this.emit(ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE);
+    this.emit("changed_contents_size");
   }
   private _mask: Graphics;
 
