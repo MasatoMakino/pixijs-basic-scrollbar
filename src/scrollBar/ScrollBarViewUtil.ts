@@ -1,5 +1,5 @@
 import { DisplayObject } from "pixi.js";
-import { SliderViewUtil } from "../SliderView";
+import { SliderViewUtil } from "../";
 
 export class ScrollBarViewUtil {
   /**

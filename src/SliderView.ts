@@ -2,8 +2,8 @@ import { Container, DisplayObject } from "@pixi/display";
 import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { IPoint, Point, Rectangle } from "@pixi/math";
-import { SliderEventContext, SliderEventEmitter } from "./SliderEvent";
-import { SliderViewOption } from "./SliderViewOption";
+import { EventEmitter } from "@pixi/utils";
+import { SliderEventContext, SliderEventTypes, SliderViewOption } from "./";
 
 /**
  * スライダー用クラスです
@@ -42,8 +42,8 @@ export class SliderView extends Container {
   private _rate: number;
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
-  protected _sliderEventEmitter: SliderEventEmitter = new SliderEventEmitter();
-  get sliderEventEmitter(): SliderEventEmitter {
+  protected _sliderEventEmitter = new EventEmitter<SliderEventTypes>();
+  get sliderEventEmitter(): EventEmitter<SliderEventTypes> {
     return this._sliderEventEmitter;
   }
 

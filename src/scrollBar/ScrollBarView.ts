@@ -1,13 +1,18 @@
+import { EventEmitter } from "@pixi/utils";
 import { FederatedPointerEvent } from "pixi.js";
-import { SliderEventContext } from "../SliderEvent";
-import { SliderView, SliderViewUtil } from "../SliderView";
-import { SliderViewOption } from "../SliderViewOption";
-import { InertialScrollManager } from "./InertialScrollManager";
-import { MouseWheelScrollManager } from "./MouseWheelScrollManager";
-import { ScrollBarContents } from "./ScrollBarContents";
-import { ScrollBarContentsEventType } from "./ScrollBarContentsEventType";
-import { ScrollBarEventEmitter } from "./ScrollBarEvent";
-import { ScrollBarViewUtil } from "./ScrollBarViewUtil";
+import {
+  SliderEventContext,
+  SliderView,
+  SliderViewOption,
+  SliderViewUtil,
+} from "../";
+import {
+  InertialScrollManager,
+  MouseWheelScrollManager,
+  ScrollBarContents,
+  ScrollBarEventTypes,
+  ScrollBarViewUtil,
+} from "./";
 
 /**
  * スクロールバーを表すクラスです。
@@ -36,9 +41,8 @@ export class ScrollBarView extends SliderView {
   public wheelManager: MouseWheelScrollManager;
   public inertialManager: InertialScrollManager;
 
-  protected _scrollBarEventEmitter: ScrollBarEventEmitter =
-    new ScrollBarEventEmitter();
-  get scrollBarEventEmitter(): ScrollBarEventEmitter {
+  protected _scrollBarEventEmitter = new EventEmitter<ScrollBarEventTypes>();
+  get scrollBarEventEmitter() {
     return this._scrollBarEventEmitter;
   }
 
@@ -46,10 +50,7 @@ export class ScrollBarView extends SliderView {
     super(option);
 
     this._contents = scrollContents;
-    this._contents.on(
-      ScrollBarContentsEventType.CHANGED_CONTENTS_SIZE,
-      this.updateSlider
-    );
+    this._contents.on("changed_contents_size", this.updateSlider);
     this._sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
     this.changeRate(option.rate);
