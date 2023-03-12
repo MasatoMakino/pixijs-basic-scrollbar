@@ -3,6 +3,7 @@ import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { Point } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
+import { PointerEvents } from "pixi.js";
 import {
   SliderEventContext,
   SliderEventTypes,
@@ -143,11 +144,11 @@ export class SliderView extends Container {
    * スライダーのドラッグ中の処理
    * @param e
    */
-  private moveSlider = (e: FederatedPointerEvent | PointerEvent) => {
-    this.onMoveSlider(e);
+  private moveSlider = (e: Event): void => {
+    this.onMoveSlider(e as PointerEvent);
   };
 
-  protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
+  protected onMoveSlider(e: PointerEvent): void {
     const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
@@ -163,9 +164,7 @@ export class SliderView extends Container {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(
-    evt: FederatedPointerEvent | PointerEvent
-  ): number {
+  protected limitSliderButtonPosition(evt: PointerEvent): number {
     const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -197,9 +196,8 @@ export class SliderView extends Container {
 
   /**
    * スライダーのドラッグ終了時の処理
-   * @param	e
    */
-  private moveSliderFinish = (e: Object) => {
+  private moveSliderFinish = () => {
     this.isDragging = false;
     this._buttonRootContainer.removeEventListener(
       "pointermove",
@@ -218,7 +216,7 @@ export class SliderView extends Container {
    * その位置までスライダーをジャンプする
    * @param evt
    */
-  protected onPressBase(evt: FederatedPointerEvent): void {
+  protected onPressBase(evt: PointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
     this._sliderEventEmitter.emit(
@@ -259,7 +257,7 @@ export class SliderView extends Container {
    */
   protected getMousePosition(
     displayObj: DisplayObject,
-    evt: FederatedPointerEvent | PointerEvent
+    evt: PointerEvent
   ): number {
     let localPos;
     if (evt instanceof FederatedPointerEvent) {
@@ -314,7 +312,6 @@ export class SliderView extends Container {
 
   /**
    * 全てのDisplayObjectとEventListenerを解除する。
-   * @param {Event} e
    */
   protected onDisposeFunction(e?: Event): void {
     this.removeAllListeners();

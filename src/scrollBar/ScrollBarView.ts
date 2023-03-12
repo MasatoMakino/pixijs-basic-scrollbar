@@ -1,5 +1,5 @@
 import { EventEmitter } from "@pixi/utils";
-import { FederatedPointerEvent } from "pixi.js";
+import { FederatedPointerEvent, PointerEvents } from "pixi.js";
 import {
   SliderEventContext,
   SliderView,

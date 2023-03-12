@@ -11,7 +11,10 @@
       "mini-signals": ["node_modules/resource-loader/typings/mini-signals.d.ts"]
     },
     "alwaysStrict": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]
