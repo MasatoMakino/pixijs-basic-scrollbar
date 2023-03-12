@@ -22,10 +22,10 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   public overflowScrollRange: number = 180;
   private _speed: number = 0.0;
   protected isDragging: boolean = false;
-  protected dragPos: number;
+  protected dragPos?: number;
 
   private tween?: Tween<DisplayObject>;
-  private _isStart: boolean;
+  private _isStart: boolean = false;
 
   constructor(scrollBarView: ScrollBarView) {
     super();
@@ -109,6 +109,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   }
 
   private onMouseMove = (e: FederatedPointerEvent) => {
+    if (this.dragPos == null) return;
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;

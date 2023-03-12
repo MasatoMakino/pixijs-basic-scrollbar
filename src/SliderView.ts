@@ -62,12 +62,17 @@ export class SliderView extends Container {
     const initOption = SliderViewOptionUtil.init(option);
 
     this._canvas = initOption.canvas;
-    this.base = initOption.base;
+    this._base = this.initBase(initOption.base);
     this._bar = this.initBarAndMask(initOption?.bar);
     this._barMask = this.initBarAndMask(initOption?.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
-    this.slideButton = initOption.button;
+    this._slideButton = this.initSliderButton(initOption.button);
+    this._buttonRootContainer = SliderView.getRootContainer(
+      this._canvas,
+      this._slideButton
+    );
+
     this._minPosition = initOption.minPosition;
     this._maxPosition = initOption.maxPosition;
     this._isHorizontal = initOption.isHorizontal;
@@ -115,10 +120,6 @@ export class SliderView extends Container {
     const localPos = this.toLocal(e.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this._buttonRootContainer = SliderView.getRootContainer(
-      this._canvas,
-      this._slideButton
-    );
     this._buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
@@ -272,13 +273,13 @@ export class SliderView extends Container {
     }
   }
 
-  private set base(value: DisplayObject) {
-    this._base = value;
-    this._base.interactive = true;
-    this._base.on("pointertap", (e) => {
+  private initBase(value: DisplayObject): DisplayObject {
+    value.interactive = true;
+    value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
     this.addChildParts(value);
+    return value;
   }
 
   private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
@@ -289,12 +290,12 @@ export class SliderView extends Container {
     return value;
   }
 
-  private set slideButton(value: DisplayObject) {
-    this._slideButton = value;
-    this._slideButton.on("pointerdown", this.startMove);
-    this._slideButton.interactive = true;
-    this._slideButton.interactiveChildren = false;
+  private initSliderButton(value: DisplayObject): DisplayObject {
+    value.on("pointerdown", this.startMove);
+    value.interactive = true;
+    value.interactiveChildren = false;
     this.addChildParts(value);
+    return value;
   }
 
   get rate() {
