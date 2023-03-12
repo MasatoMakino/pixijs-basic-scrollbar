@@ -3,7 +3,12 @@ import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { IPoint, Point, Rectangle } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
-import { SliderEventContext, SliderEventTypes, SliderViewOption } from "./";
+import {
+  SliderEventContext,
+  SliderEventTypes,
+  SliderViewOption,
+  SliderViewOptionUtil,
+} from "./";
 
 /**
  * スライダー用クラスです
@@ -60,7 +65,7 @@ export class SliderView extends Container {
    * @param option
    */
   protected init(option: SliderViewOption): void {
-    option = SliderViewOption.init(option);
+    option = SliderViewOptionUtil.init(option);
 
     this._canvas = option.canvas;
     this.base = option.base;
