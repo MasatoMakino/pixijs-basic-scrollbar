@@ -197,12 +197,12 @@ export class ScrollBarView extends SliderView {
     this._contents.scroll(rate, this.isHorizontal);
   }
 
-  protected onPressedSliderButton(e): void {
+  protected onPressedSliderButton(e: FederatedPointerEvent): void {
     super.onPressedSliderButton(e);
     this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onMoveSlider(e) {
+  protected onMoveSlider(e: FederatedPointerEvent) {
     super.onMoveSlider(e);
     this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }

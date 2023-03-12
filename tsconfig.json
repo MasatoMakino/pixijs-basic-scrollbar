@@ -10,7 +10,8 @@
     "paths": {
       "mini-signals": ["node_modules/resource-loader/typings/mini-signals.d.ts"]
     },
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    "noImplicitAny": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]
