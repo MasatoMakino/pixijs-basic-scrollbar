@@ -1,5 +1,5 @@
 import { Container } from "pixi.js";
-import { SliderViewOption } from "../src";
+import { SliderViewOption, SliderViewOptionUtil } from "../src";
 import { SliderOptionGenerator } from "./SliderOptionGenerator";
 
 describe("SliderViewOption", () => {
@@ -14,7 +14,7 @@ describe("SliderViewOption", () => {
   test("default value", () => {
     const size = 100;
     const option = SliderOptionGenerator.generateMinimalOption(size, size);
-    const initializedOption = SliderViewOption.init(option);
+    const initializedOption = SliderViewOptionUtil.init(option);
     expect(initializedOption.isHorizontal).toBe(true);
     expect(initializedOption.rate).toBe(0.0);
     expect(initializedOption.minPosition).toBe(0.0);
@@ -23,7 +23,7 @@ describe("SliderViewOption", () => {
   test("non hitArea", () => {
     const option = SliderOptionGenerator.generateNonBoundsOption();
     expect(() => {
-      SliderViewOption.init(option);
+      SliderViewOptionUtil.init(option);
     }).toThrowError(
       "初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません"
     );
@@ -34,7 +34,7 @@ describe("SliderViewOption", () => {
     const option = SliderOptionGenerator.generateMinimalOption(size, size);
     const parent = new Container();
     parent.addChild(option.button);
-    SliderViewOption.init(option);
+    SliderViewOptionUtil.init(option);
     expect(spyWarn).toBeCalledTimes(1);
   });
 });

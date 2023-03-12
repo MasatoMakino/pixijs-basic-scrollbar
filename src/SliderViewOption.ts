@@ -4,7 +4,7 @@
 import { DisplayObject, Graphics, SHAPES } from "pixi.js";
 import { SliderView, SliderViewUtil } from "./";
 
-export class SliderViewOption {
+export interface SliderViewOption {
   /**
    * スライダーボタンの座標の最小値
    * @default 0.0
@@ -29,18 +29,28 @@ export class SliderViewOption {
   isHorizontal?: boolean;
 
   canvas?: HTMLCanvasElement;
+}
 
-  public static init(option: SliderViewOption): SliderViewOption {
+export interface InitializedSliderViewOption extends SliderViewOption {
+  minPosition: number;
+  rate: number;
+  isHorizontal: boolean;
+}
+
+export class SliderViewOptionUtil {
+  public static init(option: SliderViewOption): InitializedSliderViewOption {
+    this.check(option);
+
     if (option.rate != null) {
       option.rate = Math.max(0, option.rate);
       option.rate = Math.min(SliderView.MAX_RATE, option.rate);
     }
-    option.minPosition ??= 0.0;
     option.rate ??= 0.0;
+
+    option.minPosition ??= 0.0;
     option.isHorizontal ??= true;
 
-    this.check(option);
-    return option;
+    return option as InitializedSliderViewOption;
   }
 
   protected static check(option: SliderViewOption): void {
@@ -50,7 +60,10 @@ export class SliderViewOption {
     this.checkParts(option.bar, "bar");
   }
 
-  private static checkParts(obj: DisplayObject, targetName: string): void {
+  private static checkParts(
+    obj: DisplayObject | undefined,
+    targetName: string
+  ): void {
     if (obj == null) return;
 
     const bounds = SliderViewUtil.getContentsBounds(obj);

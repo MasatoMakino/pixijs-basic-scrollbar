@@ -3,7 +3,12 @@ import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { IPoint, Point, Rectangle } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
-import { SliderEventContext, SliderEventTypes, SliderViewOption } from "./";
+import {
+  SliderEventContext,
+  SliderEventTypes,
+  SliderViewOption,
+  SliderViewOptionUtil,
+} from "./";
 
 /**
  * スライダー用クラスです
@@ -60,19 +65,19 @@ export class SliderView extends Container {
    * @param option
    */
   protected init(option: SliderViewOption): void {
-    option = SliderViewOption.init(option);
+    const initOption = SliderViewOptionUtil.init(option);
 
-    this._canvas = option.canvas;
-    this.base = option.base;
-    this._bar = this.initBarAndMask(option.bar);
-    this._barMask = this.initBarAndMask(option.mask) as Graphics;
+    this._canvas = initOption.canvas;
+    this.base = initOption.base;
+    this._bar = this.initBarAndMask(initOption.bar);
+    this._barMask = this.initBarAndMask(initOption.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
-    this.slideButton = option.button;
-    this._minPosition = option.minPosition;
-    this._maxPosition = option.maxPosition;
-    this._isHorizontal = option.isHorizontal;
-    this._rate = option.rate;
+    this.slideButton = initOption.button;
+    this._minPosition = initOption.minPosition;
+    this._maxPosition = initOption.maxPosition;
+    this._isHorizontal = initOption.isHorizontal;
+    this._rate = initOption.rate;
 
     this.changeRate(this._rate);
   }
