@@ -63,8 +63,8 @@ export class SliderView extends Container {
 
     this._canvas = initOption.canvas;
     this.base = initOption.base;
-    this._bar = this.initBarAndMask(initOption.bar);
-    this._barMask = this.initBarAndMask(initOption.mask) as Graphics;
+    this._bar = this.initBarAndMask(initOption?.bar);
+    this._barMask = this.initBarAndMask(initOption?.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
     this.slideButton = initOption.button;
@@ -281,7 +281,7 @@ export class SliderView extends Container {
     this.addChildParts(value);
   }
 
-  private initBarAndMask(value: DisplayObject): DisplayObject {
+  private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
     value.interactive = false;
     value.interactiveChildren = false;

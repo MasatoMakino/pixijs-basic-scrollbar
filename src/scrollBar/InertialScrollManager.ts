@@ -24,7 +24,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   protected isDragging: boolean = false;
   protected dragPos: number;
 
-  private tween: Tween<DisplayObject>;
+  private tween?: Tween<DisplayObject>;
   private _isStart: boolean;
 
   constructor(scrollBarView: ScrollBarView) {
@@ -166,7 +166,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   private disposeTween = () => {
     if (this.tween) {
       this.tween.stop();
-      this.tween = null;
+      this.tween = undefined;
     }
   };
 

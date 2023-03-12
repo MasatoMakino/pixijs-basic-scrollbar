@@ -14,7 +14,8 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,
-    "strictFunctionTypes": true
+    "strictFunctionTypes": true,
+    "strictNullChecks": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]

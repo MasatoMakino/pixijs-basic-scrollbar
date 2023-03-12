@@ -18,7 +18,7 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
   private _target: DisplayObject;
 
   get mask(): Graphics {
-    return this._mask;
+    return this._mask as Graphics;
   }
   set mask(value: Graphics) {
     this._mask = value;
@@ -132,8 +132,5 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
 
   public dispose(): void {
     this.removeAllListeners();
-    this.container = null;
-    this._mask = null;
-    this._target = null;
   }
 }
