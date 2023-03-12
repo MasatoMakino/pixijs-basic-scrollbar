@@ -3,7 +3,6 @@ import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
 import { Point } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
-import { PointerEvents } from "pixi.js";
 import {
   SliderEventContext,
   SliderEventTypes,
