@@ -184,9 +184,8 @@ export class ScrollBarView extends SliderView {
    * スライダーイベントに応じてコンテンツをスクロールする
    * @param {Object} e
    */
-  public updateContentsPosition = (e: any) => {
-    const evt = e as SliderEventContext;
-    this.updateContentsPositionWithRate(evt.rate);
+  public updateContentsPosition = (e: SliderEventContext) => {
+    this.updateContentsPositionWithRate(e.rate);
   };
 
   /**

@@ -34,7 +34,7 @@ export class ScrollBarContentsGenerator {
    * @param h
    * @private
    */
-  private static getScrollBarContents(color, w, h) {
+  private static getScrollBarContents(color: number, w: number, h: number) {
     const g = new Graphics();
     g.beginFill(color);
     g.drawRect(0, 0, w, h);

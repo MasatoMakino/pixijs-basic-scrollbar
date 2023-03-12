@@ -104,7 +104,7 @@ export class SliderView extends Container {
    * スライダーのドラッグを開始する
    * @param {Object} e
    */
-  private startMove = (e: any) => {
+  private startMove = (e: FederatedPointerEvent) => {
     this.onPressedSliderButton(e as FederatedPointerEvent);
   };
 
@@ -143,7 +143,7 @@ export class SliderView extends Container {
    * スライダーのドラッグ中の処理
    * @param e
    */
-  private moveSlider = (e: any) => {
+  private moveSlider = (e: FederatedPointerEvent | PointerEvent) => {
     this.onMoveSlider(e);
   };
 
@@ -308,7 +308,7 @@ export class SliderView extends Container {
    * このインスタンスを破棄する。
    * @param	e
    */
-  public dispose = (e?: any) => {
+  public dispose = (e?: Event) => {
     this.onDisposeFunction(e as Event);
   };
 

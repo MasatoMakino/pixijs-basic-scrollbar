@@ -17,15 +17,15 @@ export class SliderViewTester {
     target: DisplayObject,
     globalX: number,
     globalY: number
-  ): any {
-    const e = {} as any;
-    e.currentTarget = target;
-    e.globalX = globalX;
-    e.globalY = globalY;
-    e.offsetX = globalX;
-    e.offsetY = globalY;
-    e.global = new Point(globalX, globalY);
-    return e;
+  ) {
+    return {
+      currentTarget: target,
+      globalX: globalX,
+      globalY: globalY,
+      offsetX: globalX,
+      offsetY: globalY,
+      global: new Point(globalX, globalY),
+    };
   }
 
   public static controlButton(
@@ -37,7 +37,7 @@ export class SliderViewTester {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
     const e = SliderViewTester.generateInteractionEvent(
-      target as any,
+      target as DisplayObject,
       globalX,
       globalY
     );
