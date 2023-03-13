@@ -10,14 +10,7 @@
     "paths": {
       "mini-signals": ["node_modules/resource-loader/typings/mini-signals.d.ts"]
     },
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "useUnknownInCatchVariables": true
+    "strict": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]
