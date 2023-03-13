@@ -16,7 +16,8 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]
