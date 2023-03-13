@@ -84,9 +84,9 @@ export class SliderOptionGenerator {
   }
 
   private static getSliderBase(
-    w,
-    h,
-    color,
+    w: number,
+    h: number,
+    color: number,
     hasHitArea: boolean = true
   ): Graphics {
     const g = new Graphics();

@@ -8,7 +8,7 @@ import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
 export class MouseWheelScrollManager extends EventEmitter<ScrollBarEventTypes> {
   protected scrollBarView: ScrollBarView;
   public delta = 16;
-  private _isStart: boolean;
+  private _isStart: boolean = false;
 
   constructor(scrollBarView: ScrollBarView) {
     super();

@@ -1,9 +1,10 @@
 import { EventEmitter } from "@pixi/utils";
-import { FederatedPointerEvent } from "pixi.js";
+import { FederatedPointerEvent, PointerEvents } from "pixi.js";
 import {
   SliderEventContext,
   SliderView,
   SliderViewOption,
+  SliderViewOptionUtil,
   SliderViewUtil,
 } from "../";
 import {
@@ -49,11 +50,13 @@ export class ScrollBarView extends SliderView {
   constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
 
+    const initOption = SliderViewOptionUtil.init(option);
+
     this._contents = scrollContents;
     this._contents.on("changed_contents_size", this.updateSlider);
     this._sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
-    this.changeRate(option.rate);
+    this.changeRate(initOption.rate);
 
     this.wheelManager = new MouseWheelScrollManager(this);
     this.wheelManager.on("update_target_position", () => {
@@ -184,9 +187,8 @@ export class ScrollBarView extends SliderView {
    * スライダーイベントに応じてコンテンツをスクロールする
    * @param {Object} e
    */
-  public updateContentsPosition = (e: any) => {
-    const evt = e as SliderEventContext;
-    this.updateContentsPositionWithRate(evt.rate);
+  public updateContentsPosition = (e: SliderEventContext) => {
+    this.updateContentsPositionWithRate(e.rate);
   };
 
   /**
@@ -197,12 +199,12 @@ export class ScrollBarView extends SliderView {
     this._contents.scroll(rate, this.isHorizontal);
   }
 
-  protected onPressedSliderButton(e): void {
+  protected onPressedSliderButton(e: FederatedPointerEvent): void {
     super.onPressedSliderButton(e);
     this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onMoveSlider(e) {
+  protected onMoveSlider(e: FederatedPointerEvent) {
     super.onMoveSlider(e);
     this._scrollBarEventEmitter.emit("stop_inertial_tween");
   }
@@ -215,7 +217,6 @@ export class ScrollBarView extends SliderView {
 
   protected onDisposeFunction(e?: Event): void {
     this._contents.dispose();
-    this._contents = null;
     super.onDisposeFunction(e);
   }
 }

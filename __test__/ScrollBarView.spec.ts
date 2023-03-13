@@ -211,8 +211,11 @@ describe("ScrollBarView", () => {
   });
 
   test("dispose", () => {
+    expect(scrollbar.contents.listeners("changed_contents_size")).not.toEqual(
+      []
+    );
     scrollbar.dispose();
-    expect(scrollbar.contents).toBeNull();
+    expect(scrollbar.contents.listeners("changed_contents_size")).toEqual([]);
   });
 });
 

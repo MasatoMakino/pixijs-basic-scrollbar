@@ -1,13 +1,14 @@
 import { Container, DisplayObject } from "@pixi/display";
 import { FederatedPointerEvent } from "@pixi/events";
 import { Graphics } from "@pixi/graphics";
-import { IPoint, Point, Rectangle } from "@pixi/math";
+import { Point } from "@pixi/math";
 import { EventEmitter } from "@pixi/utils";
 import {
   SliderEventContext,
   SliderEventTypes,
   SliderViewOption,
   SliderViewOptionUtil,
+  SliderViewUtil,
 } from "./";
 
 /**
@@ -57,23 +58,21 @@ export class SliderView extends Container {
    */
   constructor(option: SliderViewOption) {
     super();
-    this.init(option);
-  }
 
-  /**
-   * 初期化処理
-   * @param option
-   */
-  protected init(option: SliderViewOption): void {
     const initOption = SliderViewOptionUtil.init(option);
 
     this._canvas = initOption.canvas;
-    this.base = initOption.base;
-    this._bar = this.initBarAndMask(initOption.bar);
-    this._barMask = this.initBarAndMask(initOption.mask) as Graphics;
+    this._base = this.initBase(initOption.base);
+    this._bar = this.initBarAndMask(initOption?.bar);
+    this._barMask = this.initBarAndMask(initOption?.mask) as Graphics;
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
-    this.slideButton = initOption.button;
+    this._slideButton = this.initSliderButton(initOption.button);
+    this._buttonRootContainer = SliderView.getRootContainer(
+      this._canvas,
+      this._slideButton
+    );
+
     this._minPosition = initOption.minPosition;
     this._maxPosition = initOption.maxPosition;
     this._isHorizontal = initOption.isHorizontal;
@@ -82,7 +81,7 @@ export class SliderView extends Container {
     this.changeRate(this._rate);
   }
 
-  private addChildParts(obj: DisplayObject): void {
+  private addChildParts(obj?: DisplayObject): void {
     if (!obj) return;
     obj.parent?.removeChild(obj);
     this.addChild(obj);
@@ -110,7 +109,7 @@ export class SliderView extends Container {
    * スライダーのドラッグを開始する
    * @param {Object} e
    */
-  private startMove = (e: any) => {
+  private startMove = (e: FederatedPointerEvent) => {
     this.onPressedSliderButton(e as FederatedPointerEvent);
   };
 
@@ -121,10 +120,6 @@ export class SliderView extends Container {
     const localPos = this.toLocal(e.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this._buttonRootContainer = SliderView.getRootContainer(
-      this._canvas,
-      this._slideButton
-    );
     this._buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
@@ -149,11 +144,11 @@ export class SliderView extends Container {
    * スライダーのドラッグ中の処理
    * @param e
    */
-  private moveSlider = (e: any) => {
-    this.onMoveSlider(e);
+  private moveSlider = (e: Event): void => {
+    this.onMoveSlider(e as PointerEvent);
   };
 
-  protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
+  protected onMoveSlider(e: PointerEvent): void {
     const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
@@ -169,9 +164,7 @@ export class SliderView extends Container {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(
-    evt: FederatedPointerEvent | PointerEvent
-  ): number {
+  protected limitSliderButtonPosition(evt: PointerEvent): number {
     const mousePos: number = this.getMousePosition(this, evt);
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -203,9 +196,8 @@ export class SliderView extends Container {
 
   /**
    * スライダーのドラッグ終了時の処理
-   * @param	e
    */
-  private moveSliderFinish = (e: Object) => {
+  private moveSliderFinish = () => {
     this.isDragging = false;
     this._buttonRootContainer.removeEventListener(
       "pointermove",
@@ -224,7 +216,7 @@ export class SliderView extends Container {
    * その位置までスライダーをジャンプする
    * @param evt
    */
-  protected onPressBase(evt: FederatedPointerEvent): void {
+  protected onPressBase(evt: PointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
     this._sliderEventEmitter.emit(
@@ -265,7 +257,7 @@ export class SliderView extends Container {
    */
   protected getMousePosition(
     displayObj: DisplayObject,
-    evt: FederatedPointerEvent | PointerEvent
+    evt: PointerEvent
   ): number {
     let localPos;
     if (evt instanceof FederatedPointerEvent) {
@@ -281,16 +273,16 @@ export class SliderView extends Container {
     }
   }
 
-  private set base(value: DisplayObject) {
-    this._base = value;
-    this._base.interactive = true;
-    this._base.on("pointertap", (e) => {
+  private initBase(value: DisplayObject): DisplayObject {
+    value.interactive = true;
+    value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
     this.addChildParts(value);
+    return value;
   }
 
-  private initBarAndMask(value: DisplayObject): DisplayObject {
+  private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
     value.interactive = false;
     value.interactiveChildren = false;
@@ -298,12 +290,12 @@ export class SliderView extends Container {
     return value;
   }
 
-  private set slideButton(value: DisplayObject) {
-    this._slideButton = value;
-    this._slideButton.on("pointerdown", this.startMove);
-    this._slideButton.interactive = true;
-    this._slideButton.interactiveChildren = false;
+  private initSliderButton(value: DisplayObject): DisplayObject {
+    value.on("pointerdown", this.startMove);
+    value.interactive = true;
+    value.interactiveChildren = false;
     this.addChildParts(value);
+    return value;
   }
 
   get rate() {
@@ -314,121 +306,17 @@ export class SliderView extends Container {
    * このインスタンスを破棄する。
    * @param	e
    */
-  public dispose = (e?: any) => {
+  public dispose = (e?: Event) => {
     this.onDisposeFunction(e as Event);
   };
 
   /**
    * 全てのDisplayObjectとEventListenerを解除する。
-   * @param {Event} e
    */
   protected onDisposeFunction(e?: Event): void {
     this.removeAllListeners();
     this._base.removeAllListeners();
     this._slideButton.removeAllListeners();
     this.removeChildren();
-  }
-}
-
-export class SliderViewUtil {
-  /**
-   * スライダーの座標から、スライダーの割合を取得する
-   */
-  public static convertPixelToRate(
-    pixel: number,
-    max: number,
-    min: number
-  ): number {
-    if (max <= min) {
-      return 0.0;
-    }
-    const rate: number = ((pixel - min) / (max - min)) * SliderView.MAX_RATE;
-    return SliderViewUtil.clamp(rate, SliderView.MAX_RATE, 0.0);
-  }
-
-  public static convertRateToPixel(
-    rate: number,
-    max: number,
-    min: number
-  ): number {
-    const pix: number = ((max - min) * rate) / SliderView.MAX_RATE + min;
-    return SliderViewUtil.clamp(pix, max, min);
-  }
-
-  /**
-   * ディスプレイオブジェクトからスクロール方向の座標値を取り出す
-   * @return displayObjの座標値。単位ピクセル
-   */
-  public static getPosition(
-    displayObj: DisplayObject | IPoint,
-    isHorizontal: boolean
-  ): number {
-    if (isHorizontal) {
-      return displayObj.x;
-    }
-    return displayObj.y;
-  }
-
-  /**
-   * ディスプレイオブジェクトにスクロール方向の座標値を設定する
-   */
-  public static setPosition(
-    displayObj: DisplayObject,
-    isHorizontal: boolean,
-    position: number
-  ): void {
-    if (!displayObj) return;
-
-    if (isHorizontal) {
-      displayObj.x = position;
-    } else {
-      displayObj.y = position;
-    }
-  }
-
-  /**
-   * スクロール方向の高さ、もしくは幅を取得する。単位ピクセル
-   */
-  public static getSize(
-    displayObj: DisplayObject,
-    isHorizontal: boolean
-  ): number {
-    const size = SliderViewUtil.getContentsBounds(displayObj);
-    if (isHorizontal) {
-      return size.width * displayObj.scale.x;
-    } else {
-      return size.height * displayObj.scale.y;
-    }
-  }
-
-  /**
-   * スクロール方向の高さ、もしくは幅を設定する。
-   * @param displayObj
-   * @param isHorizontal
-   * @param amount width or height, range : 0 ~ displayObj.size.width or height, unit : px
-   */
-  public static setSize(
-    displayObj: DisplayObject,
-    isHorizontal: boolean,
-    amount: number
-  ): void {
-    const size = SliderViewUtil.getContentsBounds(displayObj);
-
-    if (isHorizontal) {
-      displayObj.scale.x = amount / size.width;
-    } else {
-      displayObj.scale.y = amount / size.height;
-    }
-  }
-
-  public static clamp(num: number, max: number, min: number): number {
-    num = Math.max(num, min);
-    num = Math.min(num, max);
-    return num;
-  }
-
-  public static getContentsBounds(displayObj: DisplayObject): Rectangle {
-    if (displayObj.hitArea) return displayObj.hitArea as Rectangle;
-    return displayObj.getLocalBounds();
   }
 }

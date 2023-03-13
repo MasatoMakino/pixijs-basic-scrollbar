@@ -12,6 +12,7 @@ export class ScrollBarViewGenerator {
   ) {
     name ??= "name";
 
+    const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => x);
     const sliderOption = SliderOptionGenerator.generateScrollBarOption(
       scrollBarW,
       h,
