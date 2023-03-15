@@ -1,5 +1,5 @@
 import { EventEmitter } from "@pixi/utils";
-import { FederatedPointerEvent, PointerEvents } from "pixi.js";
+import { FederatedPointerEvent } from "pixi.js";
 import {
   SliderEventContext,
   SliderView,
@@ -171,7 +171,8 @@ export class ScrollBarView extends SliderView {
    * @private
    */
   private updateSliderVisible(): void {
-    this._slideButton.visible = this._slideButton.interactive = !this.isHidden;
+    this._slideButton.visible = !this.isHidden;
+    this._slideButton.eventMode = this.isHidden ? "none" : "static";
   }
 
   /**

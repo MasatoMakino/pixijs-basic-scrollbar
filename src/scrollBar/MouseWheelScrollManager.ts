@@ -15,7 +15,7 @@ export class MouseWheelScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this.scrollBarView = scrollBarView;
 
     const target = this.scrollBarView.contents.target;
-    target.interactive = true;
+    target.eventMode = "static";
 
     this.start();
   }

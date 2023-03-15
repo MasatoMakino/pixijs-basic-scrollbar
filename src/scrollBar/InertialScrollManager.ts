@@ -36,7 +36,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     );
 
     const target = this.scrollBarView.contents.target;
-    target.interactive = true;
+    target.eventMode = "static";
 
     this.start();
   }
