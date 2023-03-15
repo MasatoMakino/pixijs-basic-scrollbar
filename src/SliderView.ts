@@ -274,7 +274,7 @@ export class SliderView extends Container {
   }
 
   private initBase(value: DisplayObject): DisplayObject {
-    value.interactive = true;
+    value.eventMode = "static";
     value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
@@ -284,16 +284,14 @@ export class SliderView extends Container {
 
   private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
-    value.interactive = false;
-    value.interactiveChildren = false;
+    value.eventMode = "none";
     this.addChildParts(value);
     return value;
   }
 
   private initSliderButton(value: DisplayObject): DisplayObject {
     value.on("pointerdown", this.startMove);
-    value.interactive = true;
-    value.interactiveChildren = false;
+    value.eventMode = "static";
     this.addChildParts(value);
     return value;
   }
