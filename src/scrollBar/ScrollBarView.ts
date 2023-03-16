@@ -69,7 +69,12 @@ export class ScrollBarView extends SliderView {
   protected override limitSliderButtonPosition(
     evt: FederatedPointerEvent
   ): number {
-    const mousePos: number = this.getMousePosition(this, evt);
+    const mousePos: number = SliderViewUtil.getPointerLocalPosition(
+      this,
+      this.isHorizontal,
+      this.dragStartPos,
+      evt
+    );
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
   }

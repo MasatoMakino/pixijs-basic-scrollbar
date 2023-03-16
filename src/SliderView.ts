@@ -30,12 +30,10 @@ export class SliderView extends Container {
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
   private readonly _isHorizontal: boolean = true;
-
-  readonly canvas?: HTMLCanvasElement;
-
   get isHorizontal(): boolean {
     return this._isHorizontal;
   }
+  readonly canvas?: HTMLCanvasElement;
 
   protected readonly dragStartPos: Point = new Point();
   /**
@@ -138,7 +136,12 @@ export class SliderView extends Container {
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
   protected limitSliderButtonPosition(evt: PointerEvent): number {
-    const mousePos: number = this.getMousePosition(this, evt);
+    const mousePos: number = SliderViewUtil.getPointerLocalPosition(
+      this,
+      this.isHorizontal,
+      this.dragStartPos,
+      evt
+    );
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
 
@@ -228,23 +231,6 @@ export class SliderView extends Container {
    * ドラッグ中のマウス座標を取得する。
    * limitSliderButtonPosition内の処理。
    */
-  protected getMousePosition(
-    displayObj: DisplayObject,
-    evt: PointerEvent
-  ): number {
-    let localPos;
-    if (evt instanceof FederatedPointerEvent) {
-      localPos = displayObj.toLocal(evt.global);
-    } else {
-      localPos = displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
-    }
-
-    if (this._isHorizontal) {
-      return localPos.x - this.dragStartPos.x;
-    } else {
-      return localPos.y - this.dragStartPos.y;
-    }
-  }
 
   private initBase(value: DisplayObject): DisplayObject {
     value.eventMode = "static";
