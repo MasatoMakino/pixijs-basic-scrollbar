@@ -29,20 +29,19 @@ export class SliderView extends Container {
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
-  private readonly _isHorizontal: boolean = true;
+  readonly isHorizontal: boolean = true;
 
   readonly canvas?: HTMLCanvasElement;
 
-  get isHorizontal(): boolean {
-    return this._isHorizontal;
-  }
-
-  protected dragStartPos: Point = new Point();
+  protected readonly dragStartPos: Point = new Point();
   /**
    * 現在のスライダーの位置の割合。
    * MIN 0.0 ~ SliderView.MAX_RATE。
    */
   private _rate: number;
+  get rate() {
+    return this._rate;
+  }
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
   readonly sliderEventEmitter = new EventEmitter<SliderEventTypes>();
@@ -69,16 +68,10 @@ export class SliderView extends Container {
 
     this._minPosition = initOption.minPosition;
     this._maxPosition = initOption.maxPosition;
-    this._isHorizontal = initOption.isHorizontal;
+    this.isHorizontal = initOption.isHorizontal;
     this._rate = initOption.rate;
 
     this.changeRate(this._rate);
-  }
-
-  private addChildParts(obj?: DisplayObject): void {
-    if (!obj) return;
-    obj.parent?.removeChild(obj);
-    this.addChild(obj);
   }
 
   /**
@@ -112,7 +105,7 @@ export class SliderView extends Container {
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
     const localPos = this.toLocal(e.global);
-    this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
+    this.dragStartPos.set(localPos.x - target.x, localPos.y - target.y);
 
     this.buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
@@ -144,7 +137,12 @@ export class SliderView extends Container {
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
   protected limitSliderButtonPosition(evt: PointerEvent): number {
-    const mousePos: number = this.getMousePosition(this, evt);
+    const mousePos: number = SliderViewUtil.getPointerLocalPosition(
+      this,
+      this.isHorizontal,
+      this.dragStartPos,
+      evt
+    );
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
 
@@ -157,8 +155,8 @@ export class SliderView extends Container {
     const stretch = (target: DisplayObject) => {
       SliderViewUtil.setSize(
         target,
-        this._isHorizontal,
-        mousePos - SliderViewUtil.getPosition(target, this._isHorizontal)
+        this.isHorizontal,
+        mousePos - SliderViewUtil.getPosition(target, this.isHorizontal)
       );
     };
     //バーマスクがなければ、バー自体を伸縮する
@@ -170,7 +168,7 @@ export class SliderView extends Container {
       stretch(this._barMask);
     }
     //ボタンの位置を更新する。
-    SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
+    SliderViewUtil.setPosition(this._slideButton, this.isHorizontal, mousePos);
   }
 
   /**
@@ -196,7 +194,7 @@ export class SliderView extends Container {
    * @param evt
    */
   protected onPressBase(evt: PointerEvent): void {
-    this.dragStartPos = new Point();
+    this.dragStartPos.set(0, 0);
     this.moveSlider(evt);
     this.sliderEventEmitter.emit(
       "slider_change_finished",
@@ -234,49 +232,28 @@ export class SliderView extends Container {
    * ドラッグ中のマウス座標を取得する。
    * limitSliderButtonPosition内の処理。
    */
-  protected getMousePosition(
-    displayObj: DisplayObject,
-    evt: PointerEvent
-  ): number {
-    let localPos;
-    if (evt instanceof FederatedPointerEvent) {
-      localPos = displayObj.toLocal(evt.global);
-    } else {
-      localPos = displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
-    }
-
-    if (this._isHorizontal) {
-      return localPos.x - this.dragStartPos.x;
-    } else {
-      return localPos.y - this.dragStartPos.y;
-    }
-  }
 
   private initBase(value: DisplayObject): DisplayObject {
     value.eventMode = "static";
     value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
   }
 
   private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
     value.eventMode = "none";
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
   }
 
   private initSliderButton(value: DisplayObject): DisplayObject {
     value.on("pointerdown", this.startMove);
     value.eventMode = "static";
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
-  }
-
-  get rate() {
-    return this._rate;
   }
 
   /**

@@ -133,4 +133,31 @@ export class SliderViewUtil {
     }
     return parent;
   }
+
+  static addChildParts(parent: Container, obj?: DisplayObject): void {
+    if (!obj) return;
+    obj.parent?.removeChild(obj);
+    parent.addChild(obj);
+  }
+
+  static getPointerLocalPosition(
+    displayObj: DisplayObject,
+    isHorizontal: boolean,
+    dragStartPos: Point,
+    evt: PointerEvent
+  ): number {
+    const getLocalPos = () => {
+      if (evt instanceof FederatedPointerEvent) {
+        return displayObj.toLocal(evt.global);
+      }
+      return displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
+    };
+    const localPos = getLocalPos();
+
+    if (isHorizontal) {
+      return localPos.x - dragStartPos.x;
+    } else {
+      return localPos.y - dragStartPos.y;
+    }
+  }
 }
