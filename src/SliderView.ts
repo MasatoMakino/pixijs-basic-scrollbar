@@ -32,9 +32,9 @@ export class SliderView extends Container {
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
-  private _isHorizontal: boolean = true;
+  private readonly _isHorizontal: boolean = true;
 
-  private _canvas?: HTMLCanvasElement;
+  readonly canvas?: HTMLCanvasElement;
 
   get isHorizontal(): boolean {
     return this._isHorizontal;
@@ -61,7 +61,7 @@ export class SliderView extends Container {
 
     const initOption = SliderViewOptionUtil.init(option);
 
-    this._canvas = initOption.canvas;
+    this.canvas = initOption.canvas;
     this._base = this.initBase(initOption.base);
     this._bar = this.initBarAndMask(initOption?.bar);
     this._barMask = this.initBarAndMask(initOption?.mask) as Graphics;
@@ -69,7 +69,7 @@ export class SliderView extends Container {
 
     this._slideButton = this.initSliderButton(initOption.button);
     this._buttonRootContainer = SliderView.getRootContainer(
-      this._canvas,
+      this.canvas,
       this._slideButton
     );
 
