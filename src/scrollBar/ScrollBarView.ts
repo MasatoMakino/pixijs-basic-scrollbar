@@ -26,10 +26,7 @@ import {
  */
 
 export class ScrollBarView extends SliderView {
-  get contents(): ScrollBarContents {
-    return this._contents;
-  }
-  private _contents: ScrollBarContents;
+  readonly contents: ScrollBarContents;
 
   get autoHide(): boolean {
     return this._autoHide;
@@ -39,22 +36,18 @@ export class ScrollBarView extends SliderView {
     this.updateSliderVisible();
   }
   private _autoHide: boolean = false;
-  public wheelManager: MouseWheelScrollManager;
-  public inertialManager: InertialScrollManager;
-
-  protected _scrollBarEventEmitter = new EventEmitter<ScrollBarEventTypes>();
-  get scrollBarEventEmitter() {
-    return this._scrollBarEventEmitter;
-  }
+  readonly wheelManager: MouseWheelScrollManager;
+  readonly inertialManager: InertialScrollManager;
+  readonly scrollBarEventEmitter = new EventEmitter<ScrollBarEventTypes>();
 
   constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
 
     const initOption = SliderViewOptionUtil.init(option);
 
-    this._contents = scrollContents;
-    this._contents.on("changed_contents_size", this.updateSlider);
-    this._sliderEventEmitter.on("slider_change", this.updateContentsPosition);
+    this.contents = scrollContents;
+    this.contents.on("changed_contents_size", this.updateSlider);
+    this.sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
     this.changeRate(initOption.rate);
 
@@ -145,8 +138,8 @@ export class ScrollBarView extends SliderView {
 
   private isUpdatableSliderSize(): boolean {
     return (
-      this._contents?.target != null &&
-      this._contents?.mask != null &&
+      this.contents?.target != null &&
+      this.contents?.mask != null &&
       this._slideButton != null
     );
   }
@@ -157,9 +150,7 @@ export class ScrollBarView extends SliderView {
     if (!this.isUpdatableSliderSize()) return;
 
     const fullSize: number = this._maxPosition - this._minPosition;
-    const displayRate: number = this._contents.getDisplayRate(
-      this.isHorizontal
-    );
+    const displayRate: number = this.contents.getDisplayRate(this.isHorizontal);
     const sliderSize: number = fullSize * displayRate;
 
     SliderViewUtil.setSize(this._slideButton, this.isHorizontal, sliderSize);
@@ -181,7 +172,7 @@ export class ScrollBarView extends SliderView {
   protected get isHidden(): boolean {
     //autoHideが設定されていない場合は常に表示
     if (!this.autoHide) return false;
-    return this._contents.getDisplayRate(this.isHorizontal) === 1.0;
+    return this.contents.getDisplayRate(this.isHorizontal) === 1.0;
   }
 
   /**
@@ -197,27 +188,27 @@ export class ScrollBarView extends SliderView {
    * @param {number} rate
    */
   protected updateContentsPositionWithRate(rate: number): void {
-    this._contents.scroll(rate, this.isHorizontal);
+    this.contents.scroll(rate, this.isHorizontal);
   }
 
   protected onPressedSliderButton(e: FederatedPointerEvent): void {
     super.onPressedSliderButton(e);
-    this._scrollBarEventEmitter.emit("stop_inertial_tween");
+    this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
   protected onMoveSlider(e: FederatedPointerEvent) {
     super.onMoveSlider(e);
-    this._scrollBarEventEmitter.emit("stop_inertial_tween");
+    this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
   protected onPressBase(evt: FederatedPointerEvent): void {
     if (this.isHidden) return;
     super.onPressBase(evt);
-    this._scrollBarEventEmitter.emit("stop_inertial_tween");
+    this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
   protected onDisposeFunction(e?: Event): void {
-    this._contents.dispose();
+    this.contents.dispose();
     super.onDisposeFunction(e);
   }
 }
