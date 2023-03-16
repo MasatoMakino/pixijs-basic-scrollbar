@@ -62,7 +62,7 @@ export class SliderView extends Container {
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
     this._slideButton = this.initSliderButton(initOption.button);
-    this.buttonRootContainer = SliderView.getRootContainer(
+    this.buttonRootContainer = SliderViewUtil.getRootContainer(
       this.canvas,
       this._slideButton
     );
@@ -83,7 +83,7 @@ export class SliderView extends Container {
 
   /**
    * スライダーの位置を変更する
-   * @param	rate	スライダーの位置 MIN 0.0 ~ MAX 100.0
+   * @param	rate	スライダーの位置 MIN 0.0 ~ MAX [SliderView.MAX_RATE]
    */
   public changeRate(rate: number): void {
     //ドラッグ中は外部からの操作を無視する。
@@ -117,21 +117,6 @@ export class SliderView extends Container {
     this.buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
-  }
-
-  private static getRootContainer(
-    canvas: HTMLCanvasElement | undefined,
-    button: DisplayObject
-  ): Container | HTMLCanvasElement {
-    if (canvas) {
-      return canvas;
-    }
-
-    let parent = button.parent;
-    while (parent.parent) {
-      parent = parent.parent;
-    }
-    return parent;
   }
 
   /**
