@@ -1,5 +1,6 @@
 import { DisplayObject } from "@pixi/display";
 import { IPoint, Rectangle } from "@pixi/math";
+import { FederatedPointerEvent, Point } from "pixi.js";
 import { SliderView } from "./";
 
 export class SliderViewUtil {
@@ -39,6 +40,20 @@ export class SliderViewUtil {
       return displayObj.x;
     }
     return displayObj.y;
+  }
+
+  public static getPointerEventPosition(
+    e: PointerEvent,
+    isHorizontal: boolean
+  ) {
+    if (e instanceof FederatedPointerEvent) {
+      return SliderViewUtil.getPosition(e.global, isHorizontal);
+    } else {
+      return SliderViewUtil.getPosition(
+        new Point(e.offsetX, e.offsetY),
+        isHorizontal
+      );
+    }
   }
 
   /**

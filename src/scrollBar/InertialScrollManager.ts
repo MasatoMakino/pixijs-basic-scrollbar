@@ -9,10 +9,6 @@ import {
 import { SliderViewUtil } from "../";
 import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
 
-export interface InertialScrollManagerOption {
-  canvas?: HTMLCanvasElement;
-}
-
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
@@ -21,7 +17,6 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     return this._speed;
   }
   private scrollBarView: ScrollBarView;
-  private option?: InertialScrollManagerOption;
 
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
@@ -32,17 +27,13 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   private tween?: Tween<DisplayObject>;
   private _isStart: boolean = false;
 
-  constructor(
-    scrollBarView: ScrollBarView,
-    option?: InertialScrollManagerOption
-  ) {
+  constructor(scrollBarView: ScrollBarView) {
     super();
     this.scrollBarView = scrollBarView;
     scrollBarView.scrollBarEventEmitter.on(
       "stop_inertial_tween",
       this.stopInertial
     );
-    this.option = option;
 
     const target = this.scrollBarView.contents.target;
     target.eventMode = "static";
@@ -90,7 +81,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
 
   private switchDragListener(isOn: boolean): void {
     const target = this.scrollBarView.contents.target;
-    const dragTarget = this.option?.canvas ?? target;
+    const dragTarget = this.scrollBarView.canvas ?? target;
     const switchListener = (
       isOn: boolean,
       dragTarget: DisplayObject | HTMLCanvasElement,
@@ -108,14 +99,14 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     switchListener(isOn, target, "pointerupoutside", this.onMouseUp);
   }
 
-  private getDragPos(e: FederatedPointerEvent): number {
-    return SliderViewUtil.getPosition(
-      e.global,
+  private getDragPos(e: PointerEvent): number {
+    return SliderViewUtil.getPointerEventPosition(
+      e,
       this.scrollBarView.isHorizontal
     );
   }
 
-  private updateDragPos(e: FederatedPointerEvent): void {
+  private updateDragPos(e: PointerEvent): void {
     this.dragPos = this.getDragPos(e);
   }
 
@@ -138,7 +129,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this.emit("update_target_position");
   }
 
-  private onMouseUp = (e: FederatedPointerEvent) => {
+  private onMouseUp = () => {
     this.removeDragListener();
     this.isDragging = false;
     this.onTick();
