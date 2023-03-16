@@ -66,7 +66,9 @@ export class ScrollBarView extends SliderView {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値
    */
-  protected limitSliderButtonPosition(evt: FederatedPointerEvent): number {
+  protected override limitSliderButtonPosition(
+    evt: FederatedPointerEvent
+  ): number {
     const mousePos: number = this.getMousePosition(this, evt);
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
@@ -77,7 +79,7 @@ export class ScrollBarView extends SliderView {
    * @param	rate
    * @return
    */
-  protected convertRateToPixel(rate: number): number {
+  protected override convertRateToPixel(rate: number): number {
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.convertRateToPixel(rate, range.max, range.min);
   }
@@ -87,7 +89,7 @@ export class ScrollBarView extends SliderView {
    * @param	pixel
    * @return
    */
-  protected convertPixelToRate(pixel: number): number {
+  protected override convertPixelToRate(pixel: number): number {
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.convertPixelToRate(pixel, range.max, range.min);
   }
@@ -191,23 +193,23 @@ export class ScrollBarView extends SliderView {
     this.contents.scroll(rate, this.isHorizontal);
   }
 
-  protected onPressedSliderButton(e: FederatedPointerEvent): void {
+  protected override onPressedSliderButton(e: FederatedPointerEvent): void {
     super.onPressedSliderButton(e);
     this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onMoveSlider(e: FederatedPointerEvent) {
+  protected override onMoveSlider(e: FederatedPointerEvent) {
     super.onMoveSlider(e);
     this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onPressBase(evt: FederatedPointerEvent): void {
+  protected override onPressBase(evt: FederatedPointerEvent): void {
     if (this.isHidden) return;
     super.onPressBase(evt);
     this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected onDisposeFunction(e?: Event): void {
+  protected override onDisposeFunction(e?: Event): void {
     this.contents.dispose();
     super.onDisposeFunction(e);
   }
