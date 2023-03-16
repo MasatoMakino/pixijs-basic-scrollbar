@@ -37,7 +37,7 @@ export class SliderView extends Container {
     return this._isHorizontal;
   }
 
-  protected dragStartPos: Point = new Point();
+  protected readonly dragStartPos: Point = new Point();
   /**
    * 現在のスライダーの位置の割合。
    * MIN 0.0 ~ SliderView.MAX_RATE。
@@ -75,12 +75,6 @@ export class SliderView extends Container {
     this.changeRate(this._rate);
   }
 
-  private addChildParts(obj?: DisplayObject): void {
-    if (!obj) return;
-    obj.parent?.removeChild(obj);
-    this.addChild(obj);
-  }
-
   /**
    * スライダーの位置を変更する
    * @param	rate	スライダーの位置 MIN 0.0 ~ MAX [SliderView.MAX_RATE]
@@ -112,7 +106,7 @@ export class SliderView extends Container {
     const target: DisplayObject = e.currentTarget as DisplayObject;
 
     const localPos = this.toLocal(e.global);
-    this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
+    this.dragStartPos.set(localPos.x - target.x, localPos.y - target.y);
 
     this.buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
@@ -196,7 +190,7 @@ export class SliderView extends Container {
    * @param evt
    */
   protected onPressBase(evt: PointerEvent): void {
-    this.dragStartPos = new Point();
+    this.dragStartPos.set(0, 0);
     this.moveSlider(evt);
     this.sliderEventEmitter.emit(
       "slider_change_finished",
@@ -257,21 +251,21 @@ export class SliderView extends Container {
     value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
   }
 
   private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
     value.eventMode = "none";
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
   }
 
   private initSliderButton(value: DisplayObject): DisplayObject {
     value.on("pointerdown", this.startMove);
     value.eventMode = "static";
-    this.addChildParts(value);
+    SliderViewUtil.addChildParts(this, value);
     return value;
   }
 

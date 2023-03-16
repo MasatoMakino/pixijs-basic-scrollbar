@@ -133,4 +133,10 @@ export class SliderViewUtil {
     }
     return parent;
   }
+
+  static addChildParts(parent: Container, obj?: DisplayObject): void {
+    if (!obj) return;
+    obj.parent?.removeChild(obj);
+    parent.addChild(obj);
+  }
 }
