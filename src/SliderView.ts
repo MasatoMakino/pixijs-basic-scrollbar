@@ -20,15 +20,12 @@ import {
  */
 
 export class SliderView extends Container {
-  protected _base: DisplayObject; // スライダーの地
-  protected _bar?: DisplayObject; // スライドにあわせて表示されるバー
+  protected readonly _base: DisplayObject; // スライダーの地
+  protected readonly _bar?: DisplayObject; // スライドにあわせて表示されるバー
 
-  protected _barMask?: Graphics; // バーのマスク
-  protected _slideButton: DisplayObject; // スライドボタン
-  protected _buttonRootContainer: Container | HTMLCanvasElement;
-  get buttonRootContainer(): Container | HTMLCanvasElement {
-    return this._buttonRootContainer;
-  }
+  protected readonly _barMask?: Graphics; // バーのマスク
+  protected readonly _slideButton: DisplayObject; // スライドボタン
+  readonly buttonRootContainer: Container | HTMLCanvasElement;
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
@@ -48,10 +45,7 @@ export class SliderView extends Container {
   private _rate: number;
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
-  protected _sliderEventEmitter = new EventEmitter<SliderEventTypes>();
-  get sliderEventEmitter(): EventEmitter<SliderEventTypes> {
-    return this._sliderEventEmitter;
-  }
+  readonly sliderEventEmitter = new EventEmitter<SliderEventTypes>();
 
   /**
    * @param option
@@ -68,7 +62,7 @@ export class SliderView extends Container {
     if (this._bar && this._barMask) this._bar.mask = this._barMask;
 
     this._slideButton = this.initSliderButton(initOption.button);
-    this._buttonRootContainer = SliderView.getRootContainer(
+    this.buttonRootContainer = SliderView.getRootContainer(
       this.canvas,
       this._slideButton
     );
@@ -99,7 +93,7 @@ export class SliderView extends Container {
     const pos: number = this.convertRateToPixel(this._rate);
     this.updateParts(pos);
 
-    this._sliderEventEmitter.emit(
+    this.sliderEventEmitter.emit(
       "slider_change",
       new SliderEventContext(this.rate)
     );
@@ -120,7 +114,7 @@ export class SliderView extends Container {
     const localPos = this.toLocal(e.global);
     this.dragStartPos = new Point(localPos.x - target.x, localPos.y - target.y);
 
-    this._buttonRootContainer.addEventListener("pointermove", this.moveSlider);
+    this.buttonRootContainer.addEventListener("pointermove", this.moveSlider);
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
   }
@@ -154,7 +148,7 @@ export class SliderView extends Container {
     this.updateParts(mousePos);
     this._rate = this.convertPixelToRate(mousePos);
 
-    this._sliderEventEmitter.emit(
+    this.sliderEventEmitter.emit(
       "slider_change",
       new SliderEventContext(this.rate)
     );
@@ -199,13 +193,13 @@ export class SliderView extends Container {
    */
   private moveSliderFinish = () => {
     this.isDragging = false;
-    this._buttonRootContainer.removeEventListener(
+    this.buttonRootContainer.removeEventListener(
       "pointermove",
       this.moveSlider
     );
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
-    this._sliderEventEmitter.emit(
+    this.sliderEventEmitter.emit(
       "slider_change_finished",
       new SliderEventContext(this.rate)
     );
@@ -219,7 +213,7 @@ export class SliderView extends Container {
   protected onPressBase(evt: PointerEvent): void {
     this.dragStartPos = new Point();
     this.moveSlider(evt);
-    this._sliderEventEmitter.emit(
+    this.sliderEventEmitter.emit(
       "slider_change_finished",
       new SliderEventContext(this.rate)
     );
