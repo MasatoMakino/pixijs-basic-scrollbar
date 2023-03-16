@@ -9,6 +9,10 @@ import {
 import { SliderViewUtil } from "../";
 import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
 
+export interface InertialScrollManagerOption {
+  canvas?: HTMLCanvasElement;
+}
+
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
@@ -17,6 +21,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     return this._speed;
   }
   private scrollBarView: ScrollBarView;
+  private option?: InertialScrollManagerOption;
 
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
@@ -27,13 +32,17 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   private tween?: Tween<DisplayObject>;
   private _isStart: boolean = false;
 
-  constructor(scrollBarView: ScrollBarView) {
+  constructor(
+    scrollBarView: ScrollBarView,
+    option?: InertialScrollManagerOption
+  ) {
     super();
     this.scrollBarView = scrollBarView;
     scrollBarView.scrollBarEventEmitter.on(
       "stop_inertial_tween",
       this.stopInertial
     );
+    this.option = option;
 
     const target = this.scrollBarView.contents.target;
     target.eventMode = "static";
@@ -81,20 +90,22 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
 
   private switchDragListener(isOn: boolean): void {
     const target = this.scrollBarView.contents.target;
+    const dragTarget = this.option?.canvas ?? target;
     const switchListener = (
       isOn: boolean,
+      dragTarget: DisplayObject | HTMLCanvasElement,
       event: keyof DisplayObjectEvents,
       listener: EventEmitter.ListenerFn
     ) => {
       if (isOn) {
-        target.on(event, listener);
+        dragTarget.addEventListener(event, listener);
       } else {
-        target.off(event, listener);
+        dragTarget.removeEventListener(event, listener);
       }
     };
-    switchListener(isOn, "pointermove", this.onMouseMove);
-    switchListener(isOn, "pointerup", this.onMouseUp);
-    switchListener(isOn, "pointerupoutside", this.onMouseUp);
+    switchListener(isOn, dragTarget, "pointermove", this.onMouseMove);
+    switchListener(isOn, target, "pointerup", this.onMouseUp);
+    switchListener(isOn, target, "pointerupoutside", this.onMouseUp);
   }
 
   private getDragPos(e: FederatedPointerEvent): number {
