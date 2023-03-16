@@ -29,10 +29,8 @@ export class SliderView extends Container {
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
-  private readonly _isHorizontal: boolean = true;
-  get isHorizontal(): boolean {
-    return this._isHorizontal;
-  }
+  readonly isHorizontal: boolean = true;
+
   readonly canvas?: HTMLCanvasElement;
 
   protected readonly dragStartPos: Point = new Point();
@@ -41,6 +39,9 @@ export class SliderView extends Container {
    * MIN 0.0 ~ SliderView.MAX_RATE。
    */
   private _rate: number;
+  get rate() {
+    return this._rate;
+  }
   public static readonly MAX_RATE: number = 1.0;
   private isDragging: Boolean = false; // 現在スライド中か否か
   readonly sliderEventEmitter = new EventEmitter<SliderEventTypes>();
@@ -67,7 +68,7 @@ export class SliderView extends Container {
 
     this._minPosition = initOption.minPosition;
     this._maxPosition = initOption.maxPosition;
-    this._isHorizontal = initOption.isHorizontal;
+    this.isHorizontal = initOption.isHorizontal;
     this._rate = initOption.rate;
 
     this.changeRate(this._rate);
@@ -154,8 +155,8 @@ export class SliderView extends Container {
     const stretch = (target: DisplayObject) => {
       SliderViewUtil.setSize(
         target,
-        this._isHorizontal,
-        mousePos - SliderViewUtil.getPosition(target, this._isHorizontal)
+        this.isHorizontal,
+        mousePos - SliderViewUtil.getPosition(target, this.isHorizontal)
       );
     };
     //バーマスクがなければ、バー自体を伸縮する
@@ -167,7 +168,7 @@ export class SliderView extends Container {
       stretch(this._barMask);
     }
     //ボタンの位置を更新する。
-    SliderViewUtil.setPosition(this._slideButton, this._isHorizontal, mousePos);
+    SliderViewUtil.setPosition(this._slideButton, this.isHorizontal, mousePos);
   }
 
   /**
@@ -253,10 +254,6 @@ export class SliderView extends Container {
     value.eventMode = "static";
     SliderViewUtil.addChildParts(this, value);
     return value;
-  }
-
-  get rate() {
-    return this._rate;
   }
 
   /**
