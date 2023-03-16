@@ -1,4 +1,4 @@
-import { DisplayObject } from "@pixi/display";
+import { Container, DisplayObject } from "@pixi/display";
 import { IPoint, Rectangle } from "@pixi/math";
 import { FederatedPointerEvent, Point } from "pixi.js";
 import { SliderView } from "./";
@@ -117,5 +117,20 @@ export class SliderViewUtil {
   public static getContentsBounds(displayObj: DisplayObject): Rectangle {
     if (displayObj.hitArea) return displayObj.hitArea as Rectangle;
     return displayObj.getLocalBounds();
+  }
+
+  static getRootContainer(
+    canvas: HTMLCanvasElement | undefined,
+    button: DisplayObject
+  ): Container | HTMLCanvasElement {
+    if (canvas) {
+      return canvas;
+    }
+
+    let parent = button.parent;
+    while (parent.parent) {
+      parent = parent.parent;
+    }
+    return parent;
   }
 }
