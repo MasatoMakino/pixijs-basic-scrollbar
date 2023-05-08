@@ -26,7 +26,7 @@ npm install pixi.js @tweenjs/tween.js --save-dev
 and
 
 ```shell script
-npm install @masatomakino/pixijs-basic-scrollbar.git --save-dev
+npm install @masatomakino/pixijs-basic-scrollbar --save-dev
 ```
 
 ### Import
