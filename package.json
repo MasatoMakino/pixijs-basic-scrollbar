@@ -46,7 +46,7 @@
     "coverage": "jest --coverage",
     "prepare": "husky install",
     "preversion": "git checkout main && git pull && npm run test",
-    "postversion": "git checkout -b version/$(git describe --tags --abbrev=0) && git add package.json package-lock.json",
+    "postversion": " git add package.json package-lock.json && git checkout -b version/$(git describe --tags --abbrev=0)",
     "start:dev": "npm run server & npm run watch:tsc & npm run watch:demo",
     "build": "npm run buildTS && npm run demo && npm run typedocs",
     "demo": "npx @masatomakino/gulptask-demo-page",
