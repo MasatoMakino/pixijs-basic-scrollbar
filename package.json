@@ -31,8 +31,8 @@
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
     "ts-node": "^10.9.1",
-    "typedoc": "^0.24.1",
-    "typescript": "^5.0.2"
+    "typedoc": "^0.24.8",
+    "typescript": "^5.1.3"
   },
   "peerDependencies": {
     "@tweenjs/tween.js": ">=18.5.0 <20.0.0",
