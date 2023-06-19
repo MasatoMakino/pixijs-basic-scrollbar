@@ -28,7 +28,7 @@ export class SliderGenerator {
       sliderBar: option.bar,
       sliderBarMask: option.mask,
       spyLog,
-      size: option.maxPosition - option.minPosition,
+      size: option.maxPosition - (option.minPosition ?? 0),
     };
   }
 }
