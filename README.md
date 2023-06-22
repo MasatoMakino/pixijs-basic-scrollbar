@@ -36,10 +36,7 @@ pixijs-basic-scrollbar is composed of ES6 modules and TypeScript d.ts files.
 At first, import classes.
 
 ```js
-import {
-  SliderView,
-  SliderEventType,
-} from "@masatomakino/pixijs-basic-scrollbar";
+import { SliderView } from "@masatomakino/pixijs-basic-scrollbar";
 ```
 
 ### Add to stage
@@ -55,7 +52,7 @@ const slider = new SliderView({
   rate: 0.0
 });
 
-slider.on(SliderEventType.CHANGE, e => {
+slider.on("slider_change", e => {
   console.log(e.rate);
 });
 stage.addChild(slider);
