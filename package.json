@@ -30,7 +30,7 @@
     "jest": "^29.4.3",
     "jest-environment-jsdom": "^29.4.3",
     "lil-gui": "^0.18.0",
-    "lint-staged": "^13.2.3",
+    "lint-staged": "^14.0.0",
     "prettier": "^3.0.1",
     "ts-node": "^10.9.1",
     "typedoc": "^0.24.8",
