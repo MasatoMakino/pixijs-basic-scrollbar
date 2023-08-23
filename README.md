@@ -17,17 +17,11 @@ Scrollbar modules for pixi.js
 
 ### Install
 
-pixijs-basic-scrollbar depend on [pixi.js](https://github.com/pixijs/pixi.js) and [@tweenjs/tween.js](https://github.com/tweenjs/tween.js/)
-
-```shell script
-npm install pixi.js @tweenjs/tween.js --save-dev
-```
-
-and
-
 ```shell script
 npm install @masatomakino/pixijs-basic-scrollbar --save-dev
 ```
+
+pixijs-basic-scrollbar depend on [pixi.js](https://github.com/pixijs/pixi.js) and [@tweenjs/tween.js](https://github.com/tweenjs/tween.js/)
 
 ### Import
 
@@ -49,7 +43,8 @@ const slider = new SliderView({
   mask: new Graphics(...),
   minPosition: 0,
   maxPosition: SLIDER_W,
-  rate: 0.0
+  rate: 0.0,
+  canvas : app.view // Option : global drag on canvas element
 });
 
 slider.on("slider_change", e => {
@@ -67,5 +62,16 @@ Tween.js needs update in rendering loop.
 ```js
 PIXI.Ticker.shared.add((e) => {
   TWEEN.update(performance.now());
+});
+```
+
+### Option : global drag on canvas element
+
+Since v7, pixi.js does not get pointer events where nothing is drawn. Give a canvas element as an argument so that dragging continues outside the slider.
+
+```js
+const slider = new SliderView(
+  ...,
+  canvas: app.view
 });
 ```
