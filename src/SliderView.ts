@@ -10,6 +10,7 @@ import {
   SliderViewOptionUtil,
   SliderViewUtil,
 } from "./";
+import { FederatedWheelEvent } from "pixi.js";
 
 /**
  * スライダー用クラスです
@@ -30,6 +31,7 @@ export class SliderView extends Container {
   protected _minPosition: number; // スライダーボタンの座標の最小値
   protected _maxPosition: number; // スライダーボタンの座標の最大値
   readonly isHorizontal: boolean = true;
+  wheelSpeed: number = 0.0003;
 
   readonly canvas?: HTMLCanvasElement;
 
@@ -63,7 +65,7 @@ export class SliderView extends Container {
     this._slideButton = this.initSliderButton(initOption.button);
     this.buttonRootContainer = SliderViewUtil.getRootContainer(
       this.canvas,
-      this._slideButton
+      this._slideButton,
     );
 
     this._minPosition = initOption.minPosition;
@@ -88,7 +90,7 @@ export class SliderView extends Container {
 
     this.sliderEventEmitter.emit(
       "slider_change",
-      new SliderEventContext(this.rate)
+      new SliderEventContext(this.rate),
     );
   }
 
@@ -128,7 +130,7 @@ export class SliderView extends Container {
 
     this.sliderEventEmitter.emit(
       "slider_change",
-      new SliderEventContext(this.rate)
+      new SliderEventContext(this.rate),
     );
   }
 
@@ -141,7 +143,7 @@ export class SliderView extends Container {
       this,
       this.isHorizontal,
       this.dragStartPos,
-      evt
+      evt,
     );
     return SliderViewUtil.clamp(mousePos, this._maxPosition, this._minPosition);
   }
@@ -156,7 +158,7 @@ export class SliderView extends Container {
       SliderViewUtil.setSize(
         target,
         this.isHorizontal,
-        mousePos - SliderViewUtil.getPosition(target, this.isHorizontal)
+        mousePos - SliderViewUtil.getPosition(target, this.isHorizontal),
       );
     };
     //バーマスクがなければ、バー自体を伸縮する
@@ -178,13 +180,13 @@ export class SliderView extends Container {
     this.isDragging = false;
     this.buttonRootContainer.removeEventListener(
       "pointermove",
-      this.moveSlider
+      this.moveSlider,
     );
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
     this.sliderEventEmitter.emit(
       "slider_change_finished",
-      new SliderEventContext(this.rate)
+      new SliderEventContext(this.rate),
     );
   };
 
@@ -198,7 +200,7 @@ export class SliderView extends Container {
     this.moveSlider(evt);
     this.sliderEventEmitter.emit(
       "slider_change_finished",
-      new SliderEventContext(this.rate)
+      new SliderEventContext(this.rate),
     );
   }
 
@@ -211,7 +213,7 @@ export class SliderView extends Container {
     return SliderViewUtil.convertRateToPixel(
       rate,
       this._maxPosition,
-      this._minPosition
+      this._minPosition,
     );
   }
 
@@ -224,7 +226,7 @@ export class SliderView extends Container {
     return SliderViewUtil.convertPixelToRate(
       pixel,
       this._maxPosition,
-      this._minPosition
+      this._minPosition,
     );
   }
 
@@ -238,9 +240,19 @@ export class SliderView extends Container {
     value.on("pointertap", (e) => {
       this.onPressBase(e);
     });
+    value.on("wheel", this.onWheel);
     SliderViewUtil.addChildParts(this, value);
     return value;
   }
+
+  private onWheel = (e: FederatedWheelEvent) => {
+    const nextRate = SliderViewUtil.clamp(
+      this.rate + e.deltaY * this.wheelSpeed,
+      SliderView.MAX_RATE,
+      0.0,
+    );
+    this.changeRate(nextRate);
+  };
 
   private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
     if (value == null) return;
@@ -251,6 +263,7 @@ export class SliderView extends Container {
 
   private initSliderButton(value: DisplayObject): DisplayObject {
     value.on("pointerdown", this.startMove);
+    value.on("wheel", this.onWheel);
     value.eventMode = "static";
     SliderViewUtil.addChildParts(this, value);
     return value;
