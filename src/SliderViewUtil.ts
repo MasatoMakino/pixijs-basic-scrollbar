@@ -1,7 +1,7 @@
 import { Container, DisplayObject } from "@pixi/display";
 import { IPoint, Rectangle } from "@pixi/math";
 import { FederatedPointerEvent, Point } from "pixi.js";
-import { SliderView } from "./";
+import { SliderView } from "./index.js";
 
 export class SliderViewUtil {
   /**
@@ -10,7 +10,7 @@ export class SliderViewUtil {
   public static convertPixelToRate(
     pixel: number,
     max: number,
-    min: number
+    min: number,
   ): number {
     if (max <= min) {
       return 0.0;
@@ -22,7 +22,7 @@ export class SliderViewUtil {
   public static convertRateToPixel(
     rate: number,
     max: number,
-    min: number
+    min: number,
   ): number {
     const pix: number = ((max - min) * rate) / SliderView.MAX_RATE + min;
     return SliderViewUtil.clamp(pix, max, min);
@@ -34,7 +34,7 @@ export class SliderViewUtil {
    */
   public static getPosition(
     displayObj: DisplayObject | IPoint,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ): number {
     if (isHorizontal) {
       return displayObj.x;
@@ -44,14 +44,14 @@ export class SliderViewUtil {
 
   public static getPointerEventPosition(
     e: PointerEvent,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ) {
     if (e instanceof FederatedPointerEvent) {
       return SliderViewUtil.getPosition(e.global, isHorizontal);
     } else {
       return SliderViewUtil.getPosition(
         new Point(e.offsetX, e.offsetY),
-        isHorizontal
+        isHorizontal,
       );
     }
   }
@@ -62,7 +62,7 @@ export class SliderViewUtil {
   public static setPosition(
     displayObj: DisplayObject,
     isHorizontal: boolean,
-    position: number
+    position: number,
   ): void {
     if (!displayObj) return;
 
@@ -78,7 +78,7 @@ export class SliderViewUtil {
    */
   public static getSize(
     displayObj: DisplayObject,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ): number {
     const size = SliderViewUtil.getContentsBounds(displayObj);
     if (isHorizontal) {
@@ -97,7 +97,7 @@ export class SliderViewUtil {
   public static setSize(
     displayObj: DisplayObject,
     isHorizontal: boolean,
-    amount: number
+    amount: number,
   ): void {
     const size = SliderViewUtil.getContentsBounds(displayObj);
 
@@ -121,7 +121,7 @@ export class SliderViewUtil {
 
   static getRootContainer(
     canvas: HTMLCanvasElement | undefined,
-    button: DisplayObject
+    button: DisplayObject,
   ): Container | HTMLCanvasElement {
     if (canvas) {
       return canvas;
@@ -144,7 +144,7 @@ export class SliderViewUtil {
     displayObj: DisplayObject,
     isHorizontal: boolean,
     dragStartPos: Point,
-    evt: PointerEvent
+    evt: PointerEvent,
   ): number {
     const getLocalPos = () => {
       if (evt instanceof FederatedPointerEvent) {

@@ -1,6 +1,10 @@
 import { EventEmitter } from "@pixi/utils";
-import { SliderViewUtil } from "../";
-import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
+import { SliderViewUtil } from "../index.js";
+import {
+  ScrollBarEventTypes,
+  ScrollBarView,
+  ScrollBarViewUtil,
+} from "./index.js";
 
 /**
  * ScrollBarViewを受け取り、マウスホイールによる操作を行うクラス

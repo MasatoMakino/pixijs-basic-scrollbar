@@ -6,8 +6,12 @@ import {
   FederatedPointerEvent,
   Ticker,
 } from "pixi.js";
-import { SliderViewUtil } from "../";
-import { ScrollBarEventTypes, ScrollBarView, ScrollBarViewUtil } from "./";
+import { SliderViewUtil } from "../index.js";
+import {
+  ScrollBarEventTypes,
+  ScrollBarView,
+  ScrollBarViewUtil,
+} from "./index.js";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
@@ -32,7 +36,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this.scrollBarView = scrollBarView;
     scrollBarView.scrollBarEventEmitter.on(
       "stop_inertial_tween",
-      this.stopInertial
+      this.stopInertial,
     );
 
     const target = this.scrollBarView.contents.target;
@@ -86,7 +90,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
       isOn: boolean,
       dragTarget: DisplayObject | HTMLCanvasElement,
       event: keyof DisplayObjectEvents,
-      listener: EventEmitter.ListenerFn
+      listener: EventEmitter.ListenerFn,
     ) => {
       if (isOn) {
         dragTarget.addEventListener(event, listener);
@@ -102,7 +106,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   private getDragPos(e: PointerEvent): number {
     return SliderViewUtil.getPointerEventPosition(
       e,
-      this.scrollBarView.isHorizontal
+      this.scrollBarView.isHorizontal,
     );
   }
 
@@ -204,7 +208,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     return ScrollBarViewUtil.getClampedTargetPosition(
       target,
       this.scrollBarView.contents.mask,
-      isHorizontal
+      isHorizontal,
     );
   }
 }

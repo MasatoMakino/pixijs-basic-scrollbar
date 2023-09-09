@@ -6,14 +6,14 @@ import {
   SliderViewOption,
   SliderViewOptionUtil,
   SliderViewUtil,
-} from "../";
+} from "../index.js";
 import {
   InertialScrollManager,
   MouseWheelScrollManager,
   ScrollBarContents,
   ScrollBarEventTypes,
   ScrollBarViewUtil,
-} from "./";
+} from "./index.js";
 
 /**
  * スクロールバーを表すクラスです。
@@ -67,13 +67,13 @@ export class ScrollBarView extends SliderView {
    * @return 制限で切り落とされたスライダーボタンの座標値
    */
   protected override limitSliderButtonPosition(
-    evt: FederatedPointerEvent
+    evt: FederatedPointerEvent,
   ): number {
     const mousePos: number = SliderViewUtil.getPointerLocalPosition(
       this,
       this.isHorizontal,
       this.dragStartPos,
-      evt
+      evt,
     );
     const range = this.getRangeOfSliderButtonPosition();
     return SliderViewUtil.clamp(mousePos, range.max, range.min);
@@ -106,7 +106,7 @@ export class ScrollBarView extends SliderView {
     const buttonSize: number = this.slideButtonSize;
     const ratio = ScrollBarViewUtil.getRatioOfOrigin(
       this._slideButton,
-      this.isHorizontal
+      this.isHorizontal,
     );
 
     const max: number = this._maxPosition - (1.0 + ratio) * buttonSize;

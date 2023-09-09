@@ -1,9 +1,14 @@
-const { defaults } = require("jest-config");
+import { defaults } from "jest-config";
 
-module.exports = {
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+const jestConfig = {
   testEnvironment: "jsdom",
+  extensionsToTreatAsEsm: [".ts"],
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
   transform: {
-    "^.+\\.(t|j)sx?$": "ts-jest",
+    "^.+\\.[tj]sx?$": ["ts-jest", { useESM: true }],
   },
   coveragePathIgnorePatterns: [
     ...defaults.coveragePathIgnorePatterns,
@@ -11,3 +16,5 @@ module.exports = {
   ],
   setupFilesAfterEnv: ["<rootDir>/__test__/SetupFile.ts"],
 };
+
+export default jestConfig;

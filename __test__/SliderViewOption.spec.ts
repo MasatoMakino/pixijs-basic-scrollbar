@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
-import { SliderViewOption, SliderViewOptionUtil } from "../src";
-import { SliderOptionGenerator } from "./SliderOptionGenerator";
+import { SliderViewOptionUtil } from "../src/index.js";
+import { SliderOptionGenerator } from "./SliderOptionGenerator.js";
 
 describe("SliderViewOption", () => {
   const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => x);
@@ -25,7 +25,7 @@ describe("SliderViewOption", () => {
     expect(() => {
       SliderViewOptionUtil.init(option);
     }).toThrowError(
-      "初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません"
+      "初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません",
     );
   });
 

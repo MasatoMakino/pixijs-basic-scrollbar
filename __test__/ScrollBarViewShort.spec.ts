@@ -1,8 +1,8 @@
 import TWEEN from "@tweenjs/tween.js";
 import { Ticker } from "pixi.js";
-import { DummyPointerEvent } from "./DummpyPointerEvent";
-import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator";
-import { SliderViewTester } from "./SliderViewTester";
+import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator.js";
+import { SliderViewTester } from "./SliderViewTester.js";
 
 describe("ScrollBarView with content shorter than the mask", () => {
   const W = 100;
@@ -16,7 +16,7 @@ describe("ScrollBarView with content shorter than the mask", () => {
       H,
       SCROLL_BAR_W,
       CONTENTS_SCALE,
-      "TestScrollBar_ScrollBarView with autoHide"
+      "TestScrollBar_ScrollBarView with autoHide",
     );
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe("ScrollBarView with content shorter than the mask", () => {
       isHorizontal,
       base,
       H - barH / 2,
-      "pointertap"
+      "pointertap",
     );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(isHorizontal, base, H, "pointertap");
@@ -85,21 +85,21 @@ describe("ScrollBarView with content shorter than the mask", () => {
       isHorizontal,
       button,
       (H - barH) / 4,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(
       isHorizontal,
       button,
       (H - barH) / 2,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(
       isHorizontal,
       button,
       H - barH,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(isHorizontal, button, H, "pointermove");

@@ -1,5 +1,5 @@
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { SliderViewOption } from "../src";
+import { SliderViewOption } from "../src/index.js";
 
 export class SliderGeneratorOption {
   hasHitArea?: boolean;
@@ -35,7 +35,7 @@ export class SliderOptionGenerator {
   public static generateMinimalOption(
     w: number,
     h: number,
-    option?: SliderGeneratorOption
+    option?: SliderGeneratorOption,
   ): SliderViewOption {
     option = SliderGeneratorOption.init(option);
 
@@ -49,7 +49,7 @@ export class SliderOptionGenerator {
   public static generateOption(
     w: number,
     h: number,
-    option?: SliderGeneratorOption
+    option?: SliderGeneratorOption,
   ): SliderViewOption {
     option = SliderGeneratorOption.init(option);
 
@@ -69,7 +69,7 @@ export class SliderOptionGenerator {
   public static generateScrollBarOption(
     w: number,
     h: number,
-    option?: SliderGeneratorOption
+    option?: SliderGeneratorOption,
   ): SliderViewOption {
     option = SliderGeneratorOption.init(option);
     const maxPos = option.isHorizontal ? w : h;
@@ -87,7 +87,7 @@ export class SliderOptionGenerator {
     w: number,
     h: number,
     color: number,
-    hasHitArea: boolean = true
+    hasHitArea: boolean = true,
   ): Graphics {
     const g = new Graphics();
     g.beginFill(color);
@@ -102,7 +102,7 @@ export class SliderOptionGenerator {
     w: number,
     h: number,
     color: number,
-    hasHitArea: boolean = true
+    hasHitArea: boolean = true,
   ): Graphics {
     const size = 16;
     const g = new Graphics();
@@ -117,7 +117,7 @@ export class SliderOptionGenerator {
   private static getScrollBarButton(
     size: number,
     color: number,
-    hasHitArea: boolean = true
+    hasHitArea: boolean = true,
   ): Graphics {
     const g = new Graphics();
     g.beginFill(color, 0);

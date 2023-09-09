@@ -9,7 +9,7 @@ import {
   SliderViewOption,
   SliderViewOptionUtil,
   SliderViewUtil,
-} from "./";
+} from "./index.js";
 import { FederatedWheelEvent } from "pixi.js";
 
 /**

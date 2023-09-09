@@ -1,9 +1,8 @@
 import { Ticker } from "@pixi/ticker";
 import TWEEN from "@tweenjs/tween.js";
-import { ScrollBarView } from "../src";
-import { DummyPointerEvent } from "./DummpyPointerEvent";
-import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator";
-import { SliderViewTester } from "./SliderViewTester";
+import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator.js";
+import { SliderViewTester } from "./SliderViewTester.js";
 
 describe("ScrollBarView", () => {
   const W = 100;
@@ -16,7 +15,7 @@ describe("ScrollBarView", () => {
       H,
       SCROLL_BAR_W,
       CONTENTS_SCALE,
-      "TestScrollBar_ScrollBarView"
+      "TestScrollBar_ScrollBarView",
     );
 
   beforeEach(() => {
@@ -65,7 +64,7 @@ describe("ScrollBarView", () => {
       isHorizontal,
       base,
       H - barH / 2,
-      "pointertap"
+      "pointertap",
     );
     expect(scrollbar.rate).toBe(1.0);
     SliderViewTester.controlButton(isHorizontal, base, H, "pointertap");
@@ -83,35 +82,35 @@ describe("ScrollBarView", () => {
       isHorizontal,
       scrollbar.buttonRootContainer,
       0.0,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.0);
     SliderViewTester.controlButton(
       isHorizontal,
       scrollbar.buttonRootContainer,
       (H - barH) / 4,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.25);
     SliderViewTester.controlButton(
       isHorizontal,
       scrollbar.buttonRootContainer,
       (H - barH) / 2,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(0.5);
     SliderViewTester.controlButton(
       isHorizontal,
       scrollbar.buttonRootContainer,
       H - barH,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(1.0);
     SliderViewTester.controlButton(
       isHorizontal,
       scrollbar.buttonRootContainer,
       H,
-      "pointermove"
+      "pointermove",
     );
     expect(scrollbar.rate).toBe(1.0);
     SliderViewTester.controlButton(isHorizontal, button, H, "pointerup");
@@ -181,7 +180,7 @@ describe("ScrollBarView", () => {
       expect(scrollbar.rate).toBe(1.0);
       controlButton(isHorizontal, target, maxPos, "pointerup");
       expect(scrollbar.rate).toBe(
-        1.0 + scrollbar.inertialManager.decelerationRate
+        1.0 + scrollbar.inertialManager.decelerationRate,
       );
       expect(inertial.speed).toBe(-97.5);
 
@@ -212,7 +211,7 @@ describe("ScrollBarView", () => {
 
   test("dispose", () => {
     expect(scrollbar.contents.listeners("changed_contents_size")).not.toEqual(
-      []
+      [],
     );
     scrollbar.dispose();
     expect(scrollbar.contents.listeners("changed_contents_size")).toEqual([]);
@@ -230,7 +229,7 @@ describe("ScrollBarView with autoHide", () => {
       H,
       SCROLL_BAR_W,
       CONTENTS_SCALE,
-      "TestScrollBar_ScrollBarView with autoHide"
+      "TestScrollBar_ScrollBarView with autoHide",
     );
   scrollbar.autoHide = true;
 

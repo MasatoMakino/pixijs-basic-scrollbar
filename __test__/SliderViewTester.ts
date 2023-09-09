@@ -1,6 +1,6 @@
 import { DisplayObject, DisplayObjectEvents, Point } from "pixi.js";
-import { DummyPointerEvent } from "./DummpyPointerEvent";
-import { SliderSet } from "./SliderGenerator";
+import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { SliderSet } from "./SliderGenerator.js";
 
 export class TestRateOption {
   hasChangedEvent?: boolean;
@@ -16,7 +16,7 @@ export class SliderViewTester {
   public static generateInteractionEvent(
     target: DisplayObject,
     globalX: number,
-    globalY: number
+    globalY: number,
   ) {
     return {
       currentTarget: target,
@@ -32,14 +32,14 @@ export class SliderViewTester {
     isHorizontal: boolean,
     target: DisplayObject | HTMLCanvasElement,
     pos: number,
-    type: keyof DisplayObjectEvents
+    type: keyof DisplayObjectEvents,
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
     const e = SliderViewTester.generateInteractionEvent(
       target as DisplayObject,
       globalX,
-      globalY
+      globalY,
     );
     DummyPointerEvent.emit(target, type, e);
   }
@@ -47,7 +47,7 @@ export class SliderViewTester {
   public static testRate(
     targets: SliderSet,
     rate: number,
-    option?: TestRateOption
+    option?: TestRateOption,
   ) {
     option = TestRateOption.initOption(option);
     expect(targets.slider.rate).toBe(rate);
@@ -79,7 +79,7 @@ export class SliderViewTester {
   public static changeRate(
     sliders: SliderSet,
     rate: number,
-    option?: TestRateOption
+    option?: TestRateOption,
   ) {
     sliders.slider.changeRate(rate);
     SliderViewTester.testRate(sliders, rate, option);
@@ -88,13 +88,13 @@ export class SliderViewTester {
   public static tapBase(
     sliders: SliderSet,
     pos: number,
-    option?: TestRateOption
+    option?: TestRateOption,
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
       sliders.sliderBase,
       pos,
-      "pointertap"
+      "pointertap",
     );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
@@ -103,7 +103,7 @@ export class SliderViewTester {
     sliders: SliderSet,
     pos: number,
     type: keyof DisplayObjectEvents,
-    option?: TestRateOption
+    option?: TestRateOption,
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
@@ -111,7 +111,7 @@ export class SliderViewTester {
         ? sliders.slider.buttonRootContainer
         : sliders.sliderButton,
       pos,
-      type
+      type,
     );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
