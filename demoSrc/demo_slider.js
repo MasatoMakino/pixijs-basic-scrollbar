@@ -1,5 +1,5 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
-import { SliderView } from "..";
+import { SliderView } from "../esm/index.js";
 
 const onDomContentsLoaded = () => {
   const app = new Application({ width: 800, height: 600 });

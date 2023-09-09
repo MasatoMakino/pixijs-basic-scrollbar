@@ -1,5 +1,5 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
-import { ScrollBarView, ScrollBarContents } from "..";
+import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
 import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = () => {
@@ -62,7 +62,7 @@ const initScrollBar = (stage, view) => {
       isHorizontal: false,
       canvas: view,
     },
-    contents
+    contents,
   );
 
   stage.addChild(scrollbar);
@@ -119,7 +119,7 @@ const overrideContents = (g, difHeight) => {
     hitArea.x,
     hitArea.y,
     hitArea.width,
-    hitArea.height
+    hitArea.height,
   );
 };
 
@@ -128,14 +128,14 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
     0xff00ff,
     contentsW,
     scrollBarH * 2,
-    container
+    container,
   );
   const contentsMask = getScrollBarContents(
     0x0000ff,
     contentsW,
     scrollBarH,
     container,
-    0.3
+    0.3,
   );
   return new ScrollBarContents(targetContents, contentsMask, container);
 };

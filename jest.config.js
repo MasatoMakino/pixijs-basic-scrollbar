@@ -1,4 +1,5 @@
-const { defaults } = require("jest-config");
+import { defaults } from "jest-config";
+
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 const jestConfig = {
   testEnvironment: "jsdom",
