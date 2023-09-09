@@ -1,5 +1,5 @@
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
+import { ScrollBarContents } from "../src/index.js";
 
 export class ScrollBarContentsGenerator {
   /**
@@ -11,18 +11,18 @@ export class ScrollBarContentsGenerator {
   public static generate(
     contentsW: number,
     scrollBarH: number,
-    contentsScale: number
+    contentsScale: number,
   ): ScrollBarContents {
     const container = new Container();
     const targetContents = this.getScrollBarContents(
       0xff00ff,
       contentsW,
-      scrollBarH * contentsScale
+      scrollBarH * contentsScale,
     );
     const contentsMask = this.getScrollBarContents(
       0x0000ff,
       contentsW,
-      scrollBarH
+      scrollBarH,
     );
     return new ScrollBarContents(targetContents, contentsMask, container);
   }

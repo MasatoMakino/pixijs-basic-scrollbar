@@ -1,5 +1,5 @@
 import { DisplayObject } from "pixi.js";
-import { SliderView, SliderViewOption } from "../src";
+import { SliderView, SliderViewOption } from "../src/index.js";
 import SpyInstance = jest.SpyInstance;
 
 export interface SliderSet {

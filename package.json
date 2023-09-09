@@ -2,11 +2,17 @@
   "name": "@masatomakino/pixijs-basic-scrollbar",
   "version": "0.7.1",
   "description": "Scrollbar modules for pixi.js",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
-  "module": "./esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./esm/index.d.ts",
+        "default": "./esm/index.js"
+      }
+    }
+  },
+  "types": "./esm/index.d.ts",
   "files": [
-    "lib",
     "esm"
   ],
   "repository": {

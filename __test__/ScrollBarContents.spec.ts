@@ -1,5 +1,4 @@
-import { ScrollBarContents } from "../src/scrollBar/ScrollBarContents";
-import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
+import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator.js";
 
 describe("ScrollBarContents", function () {
   test("init", () => {

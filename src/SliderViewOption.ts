@@ -2,7 +2,7 @@
  * スライダーを初期化する際のオプション
  */
 import { DisplayObject, Graphics, SHAPES } from "pixi.js";
-import { SliderView, SliderViewUtil } from "./";
+import { SliderView, SliderViewUtil } from "./index.js";
 
 export interface SliderViewOption {
   /**
@@ -62,7 +62,7 @@ export class SliderViewOptionUtil {
 
   private static checkParts(
     obj: DisplayObject | undefined,
-    targetName: string
+    targetName: string,
   ): void {
     if (obj == null) return;
 
@@ -73,13 +73,13 @@ export class SliderViewOptionUtil {
       bounds.type === SHAPES.RECT
     ) {
       throw new Error(
-        `SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。Containerを利用する場合はhitAreaを利用してバウンディングボックスを手動で設定してください。`
+        `SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。Containerを利用する場合はhitAreaを利用してバウンディングボックスを手動で設定してください。`,
       );
     }
 
     if (obj.parent) {
       console.warn(
-        `初期化オプションで指定されたパーツがすでに別の親にaddChildされています。SliderViewおよびScrollBarViewの構成パーツは同一のコンテナにaddChildされることを前提としています。`
+        `初期化オプションで指定されたパーツがすでに別の親にaddChildされています。SliderViewおよびScrollBarViewの構成パーツは同一のコンテナにaddChildされることを前提としています。`,
       );
     }
   }

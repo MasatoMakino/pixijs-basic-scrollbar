@@ -1,8 +1,8 @@
 import { Graphics } from "@pixi/graphics";
 import { EventEmitter } from "@pixi/utils";
 import { Container, DisplayObject } from "pixi.js";
-import { SliderView, SliderViewUtil } from "../";
-import { ScrollBarContentsEventType } from "./";
+import { SliderView, SliderViewUtil } from "../index.js";
+import { ScrollBarContentsEventType } from "./index.js";
 
 /**
  * スクロールバーで操作するコンテンツ
@@ -36,7 +36,7 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
   constructor(
     target: DisplayObject,
     mask: Graphics,
-    public container: Container
+    public container: Container,
   ) {
     super();
     this._target = target;
@@ -126,7 +126,7 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
     return SliderViewUtil.clamp(
       maskSize / contentsSize,
       SliderView.MAX_RATE,
-      0.0
+      0.0,
     );
   }
 

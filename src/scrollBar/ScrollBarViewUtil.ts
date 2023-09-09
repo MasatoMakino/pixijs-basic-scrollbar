@@ -1,5 +1,5 @@
 import { DisplayObject } from "pixi.js";
-import { SliderViewUtil } from "../";
+import { SliderViewUtil } from "../index.js";
 
 export class ScrollBarViewUtil {
   /**
@@ -11,7 +11,7 @@ export class ScrollBarViewUtil {
   public static getClampedTargetPosition(
     target: DisplayObject,
     mask: DisplayObject,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ): number {
     const getSize = SliderViewUtil.getSize;
     const targetSize = getSize(target, isHorizontal);
@@ -33,20 +33,20 @@ export class ScrollBarViewUtil {
     target: DisplayObject,
     mask: DisplayObject,
     position: number,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ): void {
     SliderViewUtil.setPosition(target, isHorizontal, position);
     const clampedPos = this.getClampedTargetPosition(
       target,
       mask,
-      isHorizontal
+      isHorizontal,
     );
     SliderViewUtil.setPosition(target, isHorizontal, clampedPos);
   }
 
   public static getRatioOfOrigin(
     displayObj: DisplayObject,
-    isHorizontal: boolean
+    isHorizontal: boolean,
   ) {
     const bounds = SliderViewUtil.getContentsBounds(displayObj);
     const size = isHorizontal ? bounds.width : bounds.height;
@@ -55,7 +55,7 @@ export class ScrollBarViewUtil {
     const ratio = position / size;
     if (ratio > 0) {
       console.warn(
-        `${displayObj.name} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`
+        `${displayObj.name} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`,
       );
     }
     return ratio;

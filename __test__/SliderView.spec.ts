@@ -1,8 +1,7 @@
-import { SliderView } from "../src";
-import { DummyPointerEvent } from "./DummpyPointerEvent";
-import { SliderGenerator } from "./SliderGenerator";
-import { SliderOptionGenerator } from "./SliderOptionGenerator";
-import { SliderViewTester } from "./SliderViewTester";
+import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { SliderGenerator } from "./SliderGenerator.js";
+import { SliderOptionGenerator } from "./SliderOptionGenerator.js";
+import { SliderViewTester } from "./SliderViewTester.js";
 
 describe("SliderView", () => {
   const sliderSize = 100;

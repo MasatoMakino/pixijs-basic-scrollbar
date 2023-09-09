@@ -1,6 +1,6 @@
-import { ScrollBarView } from "../src";
-import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator";
-import { SliderOptionGenerator } from "./SliderOptionGenerator";
+import { ScrollBarView } from "../src/index.js";
+import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator.js";
+import { SliderOptionGenerator } from "./SliderOptionGenerator.js";
 
 export class ScrollBarViewGenerator {
   public static generateScrollBarSet(
@@ -8,7 +8,7 @@ export class ScrollBarViewGenerator {
     h: number,
     scrollBarW: number,
     contentsScale: number,
-    name?: string
+    name?: string,
   ) {
     name ??= "name";
 
@@ -16,12 +16,12 @@ export class ScrollBarViewGenerator {
     const sliderOption = SliderOptionGenerator.generateScrollBarOption(
       scrollBarW,
       h,
-      { isHorizontal: false }
+      { isHorizontal: false },
     );
     const scrollBarContents = ScrollBarContentsGenerator.generate(
       w,
       h,
-      contentsScale
+      contentsScale,
     );
     const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
     scrollbar.name = name;
