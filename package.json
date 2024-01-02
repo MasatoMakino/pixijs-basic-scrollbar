@@ -32,7 +32,7 @@
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.8.0",
     "@types/jest": "^29.4.0",
-    "browser-sync": "^2.28.3",
+    "browser-sync": "^3.0.2",
     "canvas": "^2.11.2",
     "husky": "^8.0.3",
     "jest": "^29.4.3",
