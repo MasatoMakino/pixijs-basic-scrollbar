@@ -93,9 +93,9 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
       listener: EventEmitter.ListenerFn,
     ) => {
       if (isOn) {
-        dragTarget.addEventListener(event, listener);
+        dragTarget.addEventListener(event as string, listener);
       } else {
-        dragTarget.removeEventListener(event, listener);
+        dragTarget.removeEventListener(event as string, listener);
       }
     };
     switchListener(isOn, dragTarget, "pointermove", this.onMouseMove);
