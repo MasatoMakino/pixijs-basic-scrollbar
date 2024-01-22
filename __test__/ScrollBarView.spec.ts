@@ -1,5 +1,13 @@
 import { Ticker } from "@pixi/ticker";
 import TWEEN from "@tweenjs/tween.js";
+import {
+  afterAll,
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  test,
+} from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator.js";
 import { SliderViewTester } from "./SliderViewTester.js";

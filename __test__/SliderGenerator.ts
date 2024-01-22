@@ -1,6 +1,6 @@
 import { DisplayObject } from "pixi.js";
+import { Mock, vi } from "vitest";
 import { SliderView, SliderViewOption } from "../src/index.js";
-import SpyInstance = jest.SpyInstance;
 
 export interface SliderSet {
   slider: SliderView;
@@ -8,14 +8,14 @@ export interface SliderSet {
   sliderBase: DisplayObject;
   sliderBar?: DisplayObject;
   sliderBarMask?: DisplayObject;
-  spyLog: SpyInstance;
+  spyLog: Mock;
   size: number;
 }
 
 export class SliderGenerator {
   public static initSlider(option: SliderViewOption): SliderSet {
     const slider = new SliderView(option);
-    const spyLog = jest.fn((rate) => {
+    const spyLog = vi.fn((rate) => {
       return rate;
     });
     slider.sliderEventEmitter.on("slider_change", (e) => {

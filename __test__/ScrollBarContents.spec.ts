@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { ScrollBarContentsGenerator } from "./ScrollBarContentsGenerator.js";
 
 describe("ScrollBarContents", function () {
