@@ -1,9 +1,10 @@
 import { Container } from "pixi.js";
+import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { SliderViewOptionUtil } from "../src/index.js";
 import { SliderOptionGenerator } from "./SliderOptionGenerator.js";
 
 describe("SliderViewOption", () => {
-  const spyWarn = jest.spyOn(console, "warn").mockImplementation((x) => x);
+  const spyWarn = vi.spyOn(console, "warn").mockImplementation((x) => x);
   beforeEach(() => {
     spyWarn.mockClear();
   });

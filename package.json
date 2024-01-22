@@ -31,26 +31,24 @@
   },
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.8.0",
-    "@types/jest": "^29.4.0",
+    "@vitest/coverage-istanbul": "^1.2.1",
     "browser-sync": "^3.0.2",
     "canvas": "^2.11.2",
     "husky": "^8.0.3",
-    "jest": "^29.4.3",
-    "jest-environment-jsdom": "^29.4.3",
+    "jsdom": "^24.0.0",
     "lil-gui": "^0.19.0",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.1",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
     "typedoc": "^0.25.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "vitest": "^1.2.1"
   },
   "overrides": {
     "@types/css-font-loading-module": "^0.0.8"
   },
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "vitest --run",
+    "coverage": "vitest --coverage --run",
     "prepare": "husky install",
     "preversion": "git checkout main && git pull && npm ci && npm run test",
     "postversion": "git add package.json package-lock.json && git checkout -b version/$(git describe --tags --abbrev=0)",

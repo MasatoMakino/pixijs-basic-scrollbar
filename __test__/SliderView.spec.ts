@@ -1,3 +1,4 @@
+import { describe, beforeEach, test, expect } from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 import { SliderGenerator } from "./SliderGenerator.js";
 import { SliderOptionGenerator } from "./SliderOptionGenerator.js";

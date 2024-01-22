@@ -1,4 +1,5 @@
 import { DisplayObject, DisplayObjectEvents, Point } from "pixi.js";
+import { expect } from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 import { SliderSet } from "./SliderGenerator.js";
 
