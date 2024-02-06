@@ -35,7 +35,7 @@
     "@vitest/web-worker": "^1.2.2",
     "browser-sync": "^3.0.2",
     "canvas": "^2.11.2",
-    "husky": "^8.0.3",
+    "husky": "^9.0.10",
     "jsdom": "^24.0.0",
     "lil-gui": "^0.19.0",
     "lint-staged": "^15.0.2",
@@ -50,7 +50,7 @@
   "scripts": {
     "test": "vitest --run",
     "coverage": "vitest --coverage --run",
-    "prepare": "husky install",
+    "prepare": "husky",
     "preversion": "git checkout main && git pull && npm ci && npm test && npm run build",
     "postversion": "git add package.json package-lock.json && git checkout -b version/$(git describe --tags --abbrev=0)",
     "start:dev": "npm run server & npm run watch:tsc & npm run watch:demo",
