@@ -32,6 +32,7 @@
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.8.0",
     "@vitest/coverage-istanbul": "^1.2.1",
+    "@vitest/web-worker": "^1.2.2",
     "browser-sync": "^3.0.2",
     "canvas": "^2.11.2",
     "husky": "^8.0.3",

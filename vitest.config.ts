@@ -15,5 +15,6 @@ export default defineConfig({
       reporter: ["text", "lcov"],
       include: ["src/**/*.ts"],
     },
+    setupFiles: ["@vitest/web-worker"],
   },
 });
