@@ -6,25 +6,12 @@ import { ScrollBarContentsEventType } from "./index.js";
 
 /**
  * スクロールバーで操作するコンテンツ
+ *
+ * コンテンツのサイズを変更した場合"changed_contents_size"イベントをemitすると、スクロールバーが再描画される。
  */
 export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> {
-  get target(): DisplayObject {
-    return this._target;
-  }
-  set target(value: DisplayObject) {
-    this._target = value;
-    this.emit("changed_contents_size");
-  }
-  private _target: DisplayObject;
-
-  get mask(): Graphics {
-    return this._mask as Graphics;
-  }
-  set mask(value: Graphics) {
-    this._mask = value;
-    this.emit("changed_contents_size");
-  }
-  private _mask: Graphics;
+  readonly target: DisplayObject;
+  readonly mask: Graphics;
 
   /**
    * コンストラクタ
@@ -39,14 +26,14 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
     public container: Container,
   ) {
     super();
-    this._target = target;
-    this._mask = mask;
+    this.target = target;
+    this.mask = mask;
     ScrollBarContents.init(this);
   }
 
   private static init(scrollBarContents: ScrollBarContents): void {
-    if (scrollBarContents._target.mask !== scrollBarContents._mask) {
-      scrollBarContents._target.mask = scrollBarContents._mask;
+    if (scrollBarContents.target.mask !== scrollBarContents.mask) {
+      scrollBarContents.target.mask = scrollBarContents.mask;
     }
 
     const addToContainer = (displayObject: DisplayObject) => {
@@ -55,8 +42,8 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
       displayObject.parent?.removeChild(displayObject);
       scrollBarContents.container.addChild(displayObject);
     };
-    addToContainer(scrollBarContents._target);
-    addToContainer(scrollBarContents._mask);
+    addToContainer(scrollBarContents.target);
+    addToContainer(scrollBarContents.mask);
   }
 
   /**
@@ -85,8 +72,8 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
    */
   private getMovableRange(isHorizontal: boolean): number {
     const getSize = SliderViewUtil.getSize;
-    const targetSize = getSize(this._target, isHorizontal);
-    const maskSize = getSize(this._mask, isHorizontal);
+    const targetSize = getSize(this.target, isHorizontal);
+    const maskSize = getSize(this.mask, isHorizontal);
     const dif = targetSize - maskSize;
     if (dif <= 0.0) {
       return 1e-128;
@@ -102,11 +89,11 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
    */
   public scroll(rate: number, isHorizontal: boolean): void {
     const getPos = SliderViewUtil.getPosition;
-    const zeroPos: number = getPos(this._mask, isHorizontal);
+    const zeroPos: number = getPos(this.mask, isHorizontal);
     const movableRange = this.getMovableRange(isHorizontal);
     const contentsPos = zeroPos - movableRange * (rate / SliderView.MAX_RATE);
 
-    SliderViewUtil.setPosition(this._target, isHorizontal, contentsPos);
+    SliderViewUtil.setPosition(this.target, isHorizontal, contentsPos);
   }
 
   /**
