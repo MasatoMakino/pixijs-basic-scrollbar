@@ -1,8 +1,10 @@
-import { Container, DisplayObject } from "@pixi/display";
-import { FederatedPointerEvent } from "@pixi/events";
-import { Graphics } from "@pixi/graphics";
-import { Point } from "@pixi/math";
-import { EventEmitter } from "@pixi/utils";
+import {
+  Container,
+  FederatedPointerEvent,
+  Graphics,
+  Point,
+  EventEmitter,
+} from "pixi.js";
 import {
   SliderEventContext,
   SliderEventTypes,
@@ -21,11 +23,11 @@ import { FederatedWheelEvent } from "pixi.js";
  */
 
 export class SliderView extends Container {
-  protected readonly _base: DisplayObject; // スライダーの地
-  protected readonly _bar?: DisplayObject; // スライドにあわせて表示されるバー
+  protected readonly _base: Container; // スライダーの地
+  protected readonly _bar?: Container; // スライドにあわせて表示されるバー
 
   protected readonly _barMask?: Graphics; // バーのマスク
-  protected readonly _slideButton: DisplayObject; // スライドボタン
+  protected readonly _slideButton: Container; // スライドボタン
   readonly buttonRootContainer: Container | HTMLCanvasElement;
 
   protected _minPosition: number; // スライダーボタンの座標の最小値
@@ -104,7 +106,7 @@ export class SliderView extends Container {
 
   protected onPressedSliderButton(e: FederatedPointerEvent): void {
     this.isDragging = true;
-    const target: DisplayObject = e.currentTarget as DisplayObject;
+    const target: Container = e.currentTarget as Container;
 
     const localPos = this.toLocal(e.global);
     this.dragStartPos.set(localPos.x - target.x, localPos.y - target.y);
@@ -154,7 +156,7 @@ export class SliderView extends Container {
    * @param	mousePos SliderViewを原点としたローカルのマウス座標、limitSliderButtonPosition関数で可動範囲に制限済み。
    */
   private updateParts(mousePos: number): void {
-    const stretch = (target: DisplayObject) => {
+    const stretch = (target: Container) => {
       SliderViewUtil.setSize(
         target,
         this.isHorizontal,
@@ -235,7 +237,7 @@ export class SliderView extends Container {
    * limitSliderButtonPosition内の処理。
    */
 
-  private initBase(value: DisplayObject): DisplayObject {
+  private initBase(value: Container): Container {
     value.eventMode = "static";
     value.on("pointertap", (e) => {
       this.onPressBase(e);
@@ -254,14 +256,14 @@ export class SliderView extends Container {
     this.changeRate(nextRate);
   };
 
-  private initBarAndMask(value?: DisplayObject): DisplayObject | undefined {
+  private initBarAndMask(value?: Container): Container | undefined {
     if (value == null) return;
     value.eventMode = "none";
     SliderViewUtil.addChildParts(this, value);
     return value;
   }
 
-  private initSliderButton(value: DisplayObject): DisplayObject {
+  private initSliderButton(value: Container): Container {
     value.on("pointerdown", this.startMove);
     value.on("wheel", this.onWheel);
     value.eventMode = "static";

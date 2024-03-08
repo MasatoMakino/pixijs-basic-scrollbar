@@ -1,4 +1,4 @@
-import { EventEmitter } from "@pixi/utils";
+import { EventEmitter } from "pixi.js";
 import { SliderViewUtil } from "../index.js";
 import {
   ScrollBarEventTypes,
