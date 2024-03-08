@@ -2,15 +2,17 @@ import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
 import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
 import TWEEN from "@tweenjs/tween.js";
 
-const onDomContentsLoaded = () => {
-  const app = new Application({ width: 800, height: 800 });
-  document.body.appendChild(app.view);
+const onDomContentsLoaded = async () => {
+  const app = new Application();
+  await app.init({ width: 800, height: 800 });
+
+  document.body.appendChild(app.canvas);
 
   Ticker.shared.add((e) => {
     TWEEN.update(performance.now());
   });
 
-  const scrollbar = initScrollBar(app.stage, app.view);
+  const scrollbar = initScrollBar(app.stage, app.canvas);
 
   const addButton = (label) => {
     const btnPlus = document.createElement("button");
@@ -82,8 +84,7 @@ const initScrollBar = (stage, view) => {
 
 const getScrollBarBase = (w, h, color) => {
   const g = new Graphics();
-  g.beginFill(color);
-  g.drawRect(0, 0, w, h);
+  g.rect(0, 0, w, h).fill(color);
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
 };
@@ -91,8 +92,8 @@ const getScrollBarBase = (w, h, color) => {
 const getScrollBarButton = (width, color) => {
   const ratio = 0.5;
   const g = new Graphics();
-  g.beginFill(color);
-  g.drawRect(-width / 2, -width * ratio, width, width);
+  g.rect(-width / 2, -width * ratio, width, width).fill(color);
+
   g.hitArea = new Rectangle(-width / 2, -width * ratio, width, width);
   g.x = width / 2;
   return g;
@@ -100,21 +101,28 @@ const getScrollBarButton = (width, color) => {
 
 const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
   const g = new Graphics();
-  g.beginFill(color, alpha);
-  g.drawRect(0, 0, w, h);
+  g.rect(0, 0, w, h).fill({ color, alpha });
+
   g.hitArea = new Rectangle(0, 0, w, h);
   container.addChild(g);
   return g;
 };
 
+/**
+ *
+ * @param {Graphics} g
+ * @param {number} difHeight
+ */
 const overrideContents = (g, difHeight) => {
-  const fill = g.fill.clone();
+  const fill = g.fillStyle;
   console.log(fill);
   const hitArea = g.hitArea.clone();
   hitArea.height += difHeight;
   g.clear();
-  g.beginFill(fill.color, fill.alpha);
-  g.drawRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+  g.rect(hitArea.x, hitArea.y, hitArea.width, hitArea.height).fill({
+    color: fill.color,
+    alpha: fill.alpha,
+  });
   g.hitArea = new Rectangle(
     hitArea.x,
     hitArea.y,
