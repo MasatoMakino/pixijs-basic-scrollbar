@@ -64,14 +64,14 @@ const getSliderBase = (w, h, color) => {
 
 const getSliderMask = (w, h) => {
   const g = new Graphics();
-  g.rect(0, 0, w, h).fill(0xff00ff, 0.1);
+  g.rect(0, 0, w, h).fill({ color: 0xff00ff, alpha: 0.1 });
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
 };
 
 const getSliderButton = (w, h, color) => {
   const g = new Graphics();
-  g.rect(-8, 0, 16, h).fill(color, 0.5);
+  g.rect(-8, 0, 16, h).fill({ color, alpha: 0.5 });
   g.hitArea = new Rectangle(-8, 0, 16, h);
   return g;
 };
