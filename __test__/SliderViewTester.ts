@@ -1,4 +1,4 @@
-import { DisplayObject, DisplayObjectEvents, Point } from "pixi.js";
+import { Container, ContainerEvents, Point } from "pixi.js";
 import { expect } from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 import { SliderSet } from "./SliderGenerator.js";
@@ -15,7 +15,7 @@ export class TestRateOption {
 
 export class SliderViewTester {
   public static generateInteractionEvent(
-    target: DisplayObject,
+    target: Container,
     globalX: number,
     globalY: number,
   ) {
@@ -31,14 +31,14 @@ export class SliderViewTester {
 
   public static controlButton(
     isHorizontal: boolean,
-    target: DisplayObject | HTMLCanvasElement,
+    target: Container | HTMLCanvasElement,
     pos: number,
-    type: keyof DisplayObjectEvents,
+    type: keyof ContainerEvents,
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
     const e = SliderViewTester.generateInteractionEvent(
-      target as DisplayObject,
+      target as Container,
       globalX,
       globalY,
     );
@@ -103,7 +103,7 @@ export class SliderViewTester {
   public static dragButton(
     sliders: SliderSet,
     pos: number,
-    type: keyof DisplayObjectEvents,
+    type: keyof ContainerEvents,
     option?: TestRateOption,
   ) {
     SliderViewTester.controlButton(

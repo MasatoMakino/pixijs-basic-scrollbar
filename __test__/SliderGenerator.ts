@@ -1,13 +1,13 @@
-import { DisplayObject } from "pixi.js";
+import { Container } from "pixi.js";
 import { Mock, vi } from "vitest";
 import { SliderView, SliderViewOption } from "../src/index.js";
 
 export interface SliderSet {
   slider: SliderView;
-  sliderButton: DisplayObject;
-  sliderBase: DisplayObject;
-  sliderBar?: DisplayObject;
-  sliderBarMask?: DisplayObject;
+  sliderButton: Container;
+  sliderBase: Container;
+  sliderBar?: Container;
+  sliderBarMask?: Container;
   spyLog: Mock;
   size: number;
 }

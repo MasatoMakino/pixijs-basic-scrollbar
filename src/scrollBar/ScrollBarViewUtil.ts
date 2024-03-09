@@ -52,7 +52,7 @@ export class ScrollBarViewUtil {
     const ratio = position / size;
     if (ratio > 0) {
       console.warn(
-        `${displayObj.name} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`,
+        `${displayObj.label} : ボタンサイズが不適切です。ボタンの矩形内に原点が収まっていません。スクロールバーボタンは原点を囲む矩形としてください。`,
       );
     }
     return ratio;
