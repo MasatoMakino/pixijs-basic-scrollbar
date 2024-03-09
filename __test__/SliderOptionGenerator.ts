@@ -89,9 +89,7 @@ export class SliderOptionGenerator {
     color: number,
     hasHitArea: boolean = true,
   ): Graphics {
-    const g = new Graphics();
-    g.beginFill(color);
-    g.drawRect(0, 0, w, h);
+    const g = new Graphics().rect(0, 0, w, h).fill(color);
     if (hasHitArea) {
       g.hitArea = new Rectangle(0, 0, w, h);
     }
@@ -105,9 +103,9 @@ export class SliderOptionGenerator {
     hasHitArea: boolean = true,
   ): Graphics {
     const size = 16;
-    const g = new Graphics();
-    g.beginFill(color, 0.5);
-    g.drawRect(-size / 2, 0, size, h);
+    const g = new Graphics()
+      .rect(-size / 2, 0, size, h)
+      .fill({ color, alpha: 0.5 });
     if (hasHitArea) {
       g.hitArea = new Rectangle(-size / 2, 0, size, h);
     }
@@ -119,9 +117,9 @@ export class SliderOptionGenerator {
     color: number,
     hasHitArea: boolean = true,
   ): Graphics {
-    const g = new Graphics();
-    g.beginFill(color, 0);
-    g.drawRect(-size / 2, -size / 2, size, size);
+    const g = new Graphics()
+      .rect(-size / 2, -size / 2, size, size)
+      .fill({ color, alpha: 0 });
     if (hasHitArea) {
       g.hitArea = new Rectangle(-size / 2, -size / 2, size, size);
     }

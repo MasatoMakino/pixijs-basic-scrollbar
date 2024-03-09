@@ -1,6 +1,4 @@
-import { Graphics } from "@pixi/graphics";
-import { EventEmitter } from "@pixi/utils";
-import { Container, DisplayObject } from "pixi.js";
+import { Container, EventEmitter, Graphics } from "pixi.js";
 import { SliderView, SliderViewUtil } from "../index.js";
 import { ScrollBarContentsEventType } from "./index.js";
 
@@ -10,7 +8,7 @@ import { ScrollBarContentsEventType } from "./index.js";
  * コンテンツのサイズを変更した場合"changed_contents_size"イベントをemitすると、スクロールバーが再描画される。
  */
 export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> {
-  readonly target: DisplayObject;
+  readonly target: Container;
   readonly mask: Graphics;
 
   /**
@@ -21,7 +19,7 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
    * @param container targetおよびmaskを格納する親コンテナ
    */
   constructor(
-    target: DisplayObject,
+    target: Container,
     mask: Graphics,
     public container: Container,
   ) {
@@ -36,7 +34,7 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
       scrollBarContents.target.mask = scrollBarContents.mask;
     }
 
-    const addToContainer = (displayObject: DisplayObject) => {
+    const addToContainer = (displayObject: Container) => {
       if (displayObject.parent === scrollBarContents.container) return;
 
       displayObject.parent?.removeChild(displayObject);

@@ -1,4 +1,4 @@
-import { Ticker } from "@pixi/ticker";
+import { Ticker } from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
 import {
   afterAll,

@@ -9,9 +9,9 @@ export class ScrollBarViewGenerator {
     h: number,
     scrollBarW: number,
     contentsScale: number,
-    name?: string,
+    label?: string,
   ) {
-    name ??= "name";
+    label ??= "name";
 
     const spyWarn = vi.spyOn(console, "warn").mockImplementation((x) => x);
     const sliderOption = SliderOptionGenerator.generateScrollBarOption(
@@ -25,7 +25,7 @@ export class ScrollBarViewGenerator {
       contentsScale,
     );
     const scrollbar = new ScrollBarView(sliderOption, scrollBarContents);
-    scrollbar.name = name;
+    scrollbar.label = label;
     const spyLog = vi.spyOn(console, "log").mockImplementation((x) => x);
     return {
       sliderOption,

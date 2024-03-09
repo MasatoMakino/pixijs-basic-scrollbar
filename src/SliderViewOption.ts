@@ -1,7 +1,7 @@
 /**
  * スライダーを初期化する際のオプション
  */
-import { DisplayObject, Graphics, SHAPES } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
 import { SliderView, SliderViewUtil } from "./index.js";
 
 export interface SliderViewOption {
@@ -15,13 +15,13 @@ export interface SliderViewOption {
    * @default 0.0
    */
   rate?: number;
-  base: DisplayObject; //スライダーの地
+  base: Container; //スライダーの地
   /**
    * スライドボタン
    */
-  button: DisplayObject;
+  button: Container;
   mask?: Graphics; //バーのマスク
-  bar?: DisplayObject; //スライドにあわせて表示されるバー
+  bar?: Container; //スライドにあわせて表示されるバー
   /**
    * 水平スクロールか否か
    * @default true
@@ -61,17 +61,13 @@ export class SliderViewOptionUtil {
   }
 
   private static checkParts(
-    obj: DisplayObject | undefined,
+    obj: Container | undefined,
     targetName: string,
   ): void {
     if (obj == null) return;
 
     const bounds = SliderViewUtil.getContentsBounds(obj);
-    if (
-      bounds.width === 0 &&
-      bounds.height === 0 &&
-      bounds.type === SHAPES.RECT
-    ) {
+    if (bounds.width === 0 && bounds.height === 0) {
       throw new Error(
         `SliderView : ${targetName} 初期化オプションで指定されたDisplayObjectにバウンディングボックスが存在しません。Containerを利用する場合はhitAreaを利用してバウンディングボックスを手動で設定してください。`,
       );

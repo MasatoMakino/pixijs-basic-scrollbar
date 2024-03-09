@@ -1,10 +1,10 @@
-import { EventEmitter } from "@pixi/utils";
 import { Easing, Tween } from "@tweenjs/tween.js";
 import {
-  DisplayObject,
-  DisplayObjectEvents,
+  Container,
   FederatedPointerEvent,
   Ticker,
+  EventEmitter,
+  ContainerEvents,
 } from "pixi.js";
 import { SliderViewUtil } from "../index.js";
 import {
@@ -28,7 +28,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   protected isDragging: boolean = false;
   protected dragPos?: number;
 
-  private tween?: Tween<DisplayObject>;
+  private tween?: Tween<Container>;
   private _isStart: boolean = false;
 
   constructor(scrollBarView: ScrollBarView) {
@@ -88,14 +88,22 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     const dragTarget = this.scrollBarView.canvas ?? target;
     const switchListener = (
       isOn: boolean,
-      dragTarget: DisplayObject | HTMLCanvasElement,
-      event: keyof DisplayObjectEvents,
+      dragTarget: Container | HTMLCanvasElement,
+      event: keyof ContainerEvents,
       listener: EventEmitter.ListenerFn,
     ) => {
-      if (isOn) {
-        dragTarget.addEventListener(event as string, listener);
+      if (dragTarget instanceof HTMLCanvasElement) {
+        if (isOn) {
+          dragTarget.addEventListener(event as string, listener);
+        } else {
+          dragTarget.removeEventListener(event as string, listener);
+        }
       } else {
-        dragTarget.removeEventListener(event as string, listener);
+        if (isOn) {
+          dragTarget.on(event, listener);
+        } else {
+          dragTarget.off(event, listener);
+        }
       }
     };
     switchListener(isOn, dragTarget, "pointermove", this.onMouseMove);

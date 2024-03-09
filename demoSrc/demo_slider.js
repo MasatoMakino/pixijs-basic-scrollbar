@@ -1,12 +1,13 @@
 import { Application, Graphics, Rectangle } from "pixi.js";
 import { SliderView } from "../esm/index.js";
 
-const onDomContentsLoaded = () => {
-  const app = new Application({ width: 800, height: 600 });
-  document.body.appendChild(app.view);
+const onDomContentsLoaded = async () => {
+  const app = new Application();
+  await app.init({ width: 800, height: 600 });
+  document.body.appendChild(app.canvas);
 
-  initSlider(app.stage, app.view);
-  initNonMaskSlider(app.stage, app.view);
+  initSlider(app.stage, app.canvas);
+  initNonMaskSlider(app.stage, app.canvas);
 };
 const SLIDER_W = 200;
 const SLIDER_H = 64;
@@ -55,8 +56,7 @@ const initNonMaskSlider = (stage, view) => {
 
 const getSliderBase = (w, h, color) => {
   const g = new Graphics();
-  g.beginFill(color);
-  g.moveTo(0, 0).lineTo(w, 0).lineTo(w, h).lineTo(0, 0).endFill();
+  g.moveTo(0, 0).lineTo(w, 0).lineTo(w, h).lineTo(0, 0).fill(color);
 
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
@@ -64,16 +64,14 @@ const getSliderBase = (w, h, color) => {
 
 const getSliderMask = (w, h) => {
   const g = new Graphics();
-  g.beginFill(0xff00ff, 0.1);
-  g.drawRect(0, 0, w, h);
+  g.rect(0, 0, w, h).fill({ color: 0xff00ff, alpha: 0.1 });
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
 };
 
 const getSliderButton = (w, h, color) => {
   const g = new Graphics();
-  g.beginFill(color, 0.5);
-  g.drawRect(-8, 0, 16, h);
+  g.rect(-8, 0, 16, h).fill({ color, alpha: 0.5 });
   g.hitArea = new Rectangle(-8, 0, 16, h);
   return g;
 };
