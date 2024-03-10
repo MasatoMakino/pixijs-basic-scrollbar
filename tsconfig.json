@@ -12,8 +12,7 @@
       "mini-signals": ["./node_modules/resource-loader/typings/mini-signals.d.ts"]
     },
     "strict": true,
-    "noImplicitOverride": true,
-    "skipLibCheck": true
+    "noImplicitOverride": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "__test__"]
