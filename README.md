@@ -42,9 +42,9 @@ const slider = new SliderView({
   button: new Graphics(...),
   mask: new Graphics(...),
   minPosition: 0,
-  maxPosition: SLIDER_W,
+  maxPosition: 320, //slider width
   rate: 0.0,
-  canvas : app.view // Option : global drag on canvas element
+  canvas : app.canvas // Option : global drag on canvas element
 });
 
 slider.on("slider_change", e => {
@@ -72,6 +72,6 @@ Since v7, pixi.js does not get pointer events where nothing is drawn. Give a can
 ```js
 const slider = new SliderView(
   ...,
-  canvas: app.view
+  canvas: app.canvas
 });
 ```
