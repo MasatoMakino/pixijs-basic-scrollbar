@@ -4,6 +4,8 @@ import {
   Rectangle,
   Container,
   Bounds,
+  EventEmitter,
+  ContainerEvents,
 } from "pixi.js";
 import { SliderView } from "./index.js";
 
@@ -160,5 +162,45 @@ export class SliderViewUtil {
     } else {
       return localPos.y - dragStartPos.y;
     }
+  }
+
+  /**
+   * リスナー関数を切り替える。
+   *
+   * @param shouldAdd リスナーを有効にするか否か
+   * @param target ターゲットオブジェクト
+   * @param event イベント名
+   * @param listener リスナー関数
+   * @returns
+   */
+  static toggleEventListener(
+    shouldAdd: boolean,
+    target: Container | HTMLCanvasElement,
+    event: keyof ContainerEvents,
+    listener: EventEmitter.ListenerFn,
+  ): void {
+    if (target instanceof HTMLCanvasElement) {
+      const method = shouldAdd ? "addEventListener" : "removeEventListener";
+      target[method](event as string, listener);
+      return;
+    }
+    const pixiMethod = shouldAdd ? "on" : "off";
+    target[pixiMethod](event, listener);
+  }
+
+  static addEventListenerToTarget(
+    target: Container | HTMLCanvasElement,
+    event: keyof ContainerEvents,
+    listener: EventEmitter.ListenerFn,
+  ) {
+    this.toggleEventListener(true, target, event, listener);
+  }
+
+  static removeEventListenerFromTarget(
+    target: Container | HTMLCanvasElement,
+    event: keyof ContainerEvents,
+    listener: EventEmitter.ListenerFn,
+  ) {
+    this.toggleEventListener(false, target, event, listener);
   }
 }
