@@ -162,7 +162,10 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
 
     //back ease
     this._speed = 0.0;
-    const toObj = { y: this.getClampedPos() };
+
+    const toObj = {
+      [this.scrollBarView.isHorizontal ? "x" : "y"]: this.getClampedPos(),
+    };
 
     this.disposeTween();
     this.tween = new Tween(this.scrollBarView.contents.target)
