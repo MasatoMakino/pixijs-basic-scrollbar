@@ -83,32 +83,13 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this.switchDragListener(false);
   }
 
-  private switchDragListener(isOn: boolean): void {
+  private switchDragListener(shouldAdd: boolean): void {
     const target = this.scrollBarView.contents.target;
     const dragTarget = this.scrollBarView.canvas ?? target;
-    const switchListener = (
-      isOn: boolean,
-      dragTarget: Container | HTMLCanvasElement,
-      event: keyof ContainerEvents,
-      listener: EventEmitter.ListenerFn,
-    ) => {
-      if (dragTarget instanceof HTMLCanvasElement) {
-        if (isOn) {
-          dragTarget.addEventListener(event as string, listener);
-        } else {
-          dragTarget.removeEventListener(event as string, listener);
-        }
-      } else {
-        if (isOn) {
-          dragTarget.on(event, listener);
-        } else {
-          dragTarget.off(event, listener);
-        }
-      }
-    };
-    switchListener(isOn, dragTarget, "pointermove", this.onMouseMove);
-    switchListener(isOn, target, "pointerup", this.onMouseUp);
-    switchListener(isOn, target, "pointerupoutside", this.onMouseUp);
+    const switchListener = SliderViewUtil.toggleEventListener;
+    switchListener(shouldAdd, dragTarget, "pointermove", this.onMouseMove);
+    switchListener(shouldAdd, target, "pointerup", this.onMouseUp);
+    switchListener(shouldAdd, target, "pointerupoutside", this.onMouseUp);
   }
 
   private getDragPos(e: PointerEvent): number {

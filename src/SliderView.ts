@@ -6,6 +6,7 @@ import {
   EventEmitter,
 } from "pixi.js";
 import {
+  ScrollBarViewUtil,
   SliderEventContext,
   SliderEventTypes,
   SliderViewOption,
@@ -111,11 +112,11 @@ export class SliderView extends Container {
     const localPos = this.toLocal(e.global);
     this.dragStartPos.set(localPos.x - target.x, localPos.y - target.y);
 
-    if (this.buttonRootContainer instanceof HTMLCanvasElement) {
-      this.buttonRootContainer.addEventListener("pointermove", this.moveSlider);
-    } else {
-      this.buttonRootContainer.on("pointermove", this.moveSlider);
-    }
+    SliderViewUtil.addEventListenerToTarget(
+      this.buttonRootContainer,
+      "pointermove",
+      this.moveSlider,
+    );
 
     this._slideButton.on("pointerup", this.moveSliderFinish);
     this._slideButton.on("pointerupoutside", this.moveSliderFinish);
@@ -185,14 +186,12 @@ export class SliderView extends Container {
    */
   private moveSliderFinish = () => {
     this.isDragging = false;
-    if (this.buttonRootContainer instanceof HTMLCanvasElement) {
-      this.buttonRootContainer.removeEventListener(
-        "pointermove",
-        this.moveSlider,
-      );
-    } else {
-      this.buttonRootContainer.off("pointermove", this.moveSlider);
-    }
+
+    SliderViewUtil.removeEventListenerFromTarget(
+      this.buttonRootContainer,
+      "pointermove",
+      this.moveSlider,
+    );
 
     this._slideButton.off("pointerup", this.moveSliderFinish);
     this._slideButton.off("pointerupoutside", this.moveSliderFinish);
