@@ -42,13 +42,11 @@ export class ScrollBarView extends SliderView {
   constructor(option: SliderViewOption, scrollContents: ScrollBarContents) {
     super(option);
 
-    const initOption = SliderViewOptionUtil.init(option);
-
     this.contents = scrollContents;
     this.contents.on("changed_contents_size", this.updateSlider);
     this.sliderEventEmitter.on("slider_change", this.updateContentsPosition);
 
-    this.changeRate(initOption.rate);
+    this.changeRate(this.rate);
 
     this.wheelManager = new MouseWheelScrollManager(this);
     this.wheelManager.on("update_target_position", () => {
