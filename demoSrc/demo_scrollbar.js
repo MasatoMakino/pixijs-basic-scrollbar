@@ -78,7 +78,7 @@ const initScrollBar = (stage, view) => {
   /**
    * スクロール動作を確認するために、故意にマスクを外しています。
    */
-  contents.target.mask = null;
+  // contents.target.mask = null;
   return scrollbar;
 };
 
@@ -99,11 +99,11 @@ const getScrollBarButton = (width, color) => {
   return g;
 };
 
-const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
+const getScrollBarContents = (w, h, container, fillStyle) => {
   const g = new Graphics();
-  g.rect(0, 0, w, h).fill({ color, alpha });
+  g.rect(0, 0, w, h).fill(fillStyle);
 
-  g.hitArea = new Rectangle(0, 0, w, h);
+  g.boundsArea = new Rectangle(0, 0, w, h);
   container.addChild(g);
   return g;
 };
@@ -115,36 +115,31 @@ const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
  */
 const overrideContents = (g, difHeight) => {
   const fill = g.fillStyle;
+  console.log(g);
   console.log(fill);
-  const hitArea = g.hitArea.clone();
-  hitArea.height += difHeight;
+
+  const area = g.boundsArea.clone();
+  area.height += difHeight;
+
   g.clear();
-  g.rect(hitArea.x, hitArea.y, hitArea.width, hitArea.height).fill({
+  g.rect(area.x, area.y, area.width, area.height).fill({
     color: fill.color,
     alpha: fill.alpha,
   });
-  g.hitArea = new Rectangle(
-    hitArea.x,
-    hitArea.y,
-    hitArea.width,
-    hitArea.height,
-  );
+  g.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
 };
 
 const getScrollBarOption = (contentsW, scrollBarH, container) => {
   const targetContents = getScrollBarContents(
-    0xff00ff,
     contentsW,
     scrollBarH * 2,
     container,
+    { color: 0xff00ff },
   );
-  const contentsMask = getScrollBarContents(
-    0x0000ff,
-    contentsW,
-    scrollBarH,
-    container,
-    0.3,
-  );
+  const contentsMask = getScrollBarContents(contentsW, scrollBarH, container, {
+    color: 0x0000ff,
+    alpha: 0.3,
+  });
   return new ScrollBarContents(targetContents, contentsMask, container);
 };
 

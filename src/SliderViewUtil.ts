@@ -118,7 +118,12 @@ export class SliderViewUtil {
   }
 
   public static getContentsBounds(displayObj: Container): Bounds | Rectangle {
-    if (displayObj.hitArea) return displayObj.hitArea as Rectangle;
+    if (displayObj.boundsArea) {
+      return displayObj.boundsArea;
+    }
+    if (displayObj.hitArea) {
+      return displayObj.hitArea as Rectangle;
+    }
     return displayObj.getLocalBounds();
   }
 
