@@ -1,11 +1,4 @@
-import {
-  Application,
-  Container,
-  Graphics,
-  Rectangle,
-  Ticker,
-  color32BitToUniform,
-} from "pixi.js";
+import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
 import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
 import TWEEN from "@tweenjs/tween.js";
 
