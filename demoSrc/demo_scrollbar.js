@@ -1,10 +1,19 @@
-import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
+import {
+  Application,
+  Container,
+  Graphics,
+  Rectangle,
+  Ticker,
+  sayHello,
+  RendererType,
+} from "pixi.js";
 import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
 import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = async () => {
   const app = new Application();
   await app.init({ width: 800, height: 800 });
+  sayHello(RendererType[app.renderer.type]);
 
   document.body.appendChild(app.canvas);
 
