@@ -35,6 +35,14 @@ export class InertialScrollManager extends EventEmitter {
     this.start();
   }
 
+  /**
+   * 慣性スクロールのレンダリングループを開始する。
+   *
+   * コンストラクタ内で自動的に呼び出されるため、通常は直接呼び出す必要はありません。
+   * 停止した場合に、再度呼び出すことで慣性スクロールを再開できます。
+   *
+   * @returns
+   */
   public start(): void {
     if (this._isStart) return;
     this._isStart = true;
@@ -44,6 +52,10 @@ export class InertialScrollManager extends EventEmitter {
     Ticker.shared.add(this.onTick);
   }
 
+  /**
+   * 慣性スクロールのレンダリングループを停止する。
+   * @returns
+   */
   public stop(): void {
     if (!this._isStart) return;
     this._isStart = false;

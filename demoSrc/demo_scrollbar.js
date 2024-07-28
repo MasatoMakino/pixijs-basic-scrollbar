@@ -8,7 +8,6 @@ import {
   RendererType,
 } from "pixi.js";
 import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
-import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = async () => {
   const app = new Application();
@@ -16,10 +15,6 @@ const onDomContentsLoaded = async () => {
   sayHello(RendererType[app.renderer.type]);
 
   document.body.appendChild(app.canvas);
-
-  Ticker.shared.add((e) => {
-    TWEEN.update(performance.now());
-  });
 
   const scrollbar = initScrollBar(app.stage, app.canvas);
 

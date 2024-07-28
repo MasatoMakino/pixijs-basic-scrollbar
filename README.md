@@ -55,15 +55,13 @@ stage.addChild(slider);
 
 [API documents](https://masatomakino.github.io/pixijs-basic-scrollbar/api/)
 
-### Option : Scroll bar and Tween
-
-Tween.js needs update in rendering loop.
+### remove from stage
 
 ```js
-PIXI.Ticker.shared.add((e) => {
-  TWEEN.update(performance.now());
-});
+slider.dispose();
 ```
+
+If you want to remove the slider, call the dispose method. SliderView has a reference to PixiJS's ticker, so it is necessary to call the dispose method to remove the reference.
 
 ### Option : global drag on canvas element
 
