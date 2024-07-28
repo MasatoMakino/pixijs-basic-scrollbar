@@ -1,6 +1,6 @@
 {
   "name": "@masatomakino/pixijs-basic-scrollbar",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Scrollbar modules for pixi.js",
   "type": "module",
   "exports": {
