@@ -3,7 +3,6 @@ import {
   SliderEventContext,
   SliderView,
   SliderViewOption,
-  SliderViewOptionUtil,
   SliderViewUtil,
 } from "../index.js";
 import {
@@ -211,8 +210,9 @@ export class ScrollBarView extends SliderView {
     this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
-  protected override onDisposeFunction(e?: Event): void {
+  protected override onDisposeFunction(): void {
     this.contents.dispose();
-    super.onDisposeFunction(e);
+    this.inertialManager.dispose();
+    super.onDisposeFunction();
   }
 }

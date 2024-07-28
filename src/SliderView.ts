@@ -6,7 +6,6 @@ import {
   EventEmitter,
 } from "pixi.js";
 import {
-  ScrollBarViewUtil,
   SliderEventContext,
   SliderEventTypes,
   SliderViewOption,
@@ -284,14 +283,14 @@ export class SliderView extends Container {
    * このインスタンスを破棄する。
    * @param	e
    */
-  public dispose = (e?: Event) => {
-    this.onDisposeFunction(e as Event);
-  };
+  public dispose(): void {
+    this.onDisposeFunction();
+  }
 
   /**
    * 全てのDisplayObjectとEventListenerを解除する。
    */
-  protected onDisposeFunction(e?: Event): void {
+  protected onDisposeFunction(): void {
     this.removeAllListeners();
     this._base.removeAllListeners();
     this._slideButton.removeAllListeners();
