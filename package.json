@@ -26,11 +26,12 @@
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@tweenjs/tween.js": "18.6.4 - 23.x.x",
+    "@tweenjs/tween.js": "^25.0.0",
     "pixi.js": "^8.0.4"
   },
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.8.3",
+    "@tweenjs/tween.js": "^25.0.0",
     "@vitest/browser": "^2.0.4",
     "@vitest/coverage-istanbul": "^2.0.4",
     "browser-sync": "^3.0.2",
@@ -38,6 +39,7 @@
     "lil-gui": "^0.19.2",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.3",
+    "pixi.js": "^8.2.5",
     "typedoc": "^0.26.5",
     "typescript": "^5.5.4",
     "webdriverio": "^8.39.1"

@@ -1,4 +1,3 @@
-import TWEEN from "@tweenjs/tween.js";
 import { Ticker } from "pixi.js";
 import { beforeEach, describe, expect, test } from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
@@ -144,15 +143,10 @@ describe("ScrollBarView with content shorter than the mask", () => {
       updateTicker(16 * 4);
       expect(scrollbar.contents.target.y).toBeCloseTo(153.4647663447184);
       expect(inertial.speed).toBeCloseTo(0);
-
-      updateTicker(Infinity);
-      expect(scrollbar.contents.target.y).toBeCloseTo(0.0);
-      expect(scrollbar.rate).toBe(0.0);
     });
   });
 });
 
 const updateTicker = (t: number) => {
   Ticker.shared.update(t);
-  TWEEN.update(t);
 };

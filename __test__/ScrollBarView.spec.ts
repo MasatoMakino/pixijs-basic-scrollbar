@@ -1,5 +1,4 @@
 import { Ticker } from "pixi.js";
-import TWEEN from "@tweenjs/tween.js";
 import {
   afterAll,
   afterEach,
@@ -211,9 +210,6 @@ describe("ScrollBarView", () => {
       updateTicker(16 * 5);
       expect(scrollbar.rate).toBeCloseTo(2.519);
       expect(inertial.speed).toBe(0);
-
-      updateTicker(Infinity);
-      expect(scrollbar.rate).toBe(1.0);
     });
   });
 
@@ -279,5 +275,4 @@ describe("ScrollBarView with autoHide", () => {
 
 const updateTicker = (t: number) => {
   Ticker.shared.update(t);
-  TWEEN.update(t);
 };

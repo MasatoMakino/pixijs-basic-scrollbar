@@ -6,6 +6,7 @@ import {
   Bounds,
   EventEmitter,
   ContainerEvents,
+  ContainerChild,
 } from "pixi.js";
 import { SliderView } from "./index.js";
 
@@ -181,7 +182,7 @@ export class SliderViewUtil {
   static toggleEventListener(
     shouldAdd: boolean,
     target: Container | HTMLCanvasElement,
-    event: keyof ContainerEvents,
+    event: keyof ContainerEvents<ContainerChild>,
     listener: EventEmitter.ListenerFn,
   ): void {
     if (target instanceof HTMLCanvasElement) {
@@ -195,7 +196,7 @@ export class SliderViewUtil {
 
   static addEventListenerToTarget(
     target: Container | HTMLCanvasElement,
-    event: keyof ContainerEvents,
+    event: keyof ContainerEvents<ContainerChild>,
     listener: EventEmitter.ListenerFn,
   ) {
     this.toggleEventListener(true, target, event, listener);
@@ -203,7 +204,7 @@ export class SliderViewUtil {
 
   static removeEventListenerFromTarget(
     target: Container | HTMLCanvasElement,
-    event: keyof ContainerEvents,
+    event: keyof ContainerEvents<ContainerChild>,
     listener: EventEmitter.ListenerFn,
   ) {
     this.toggleEventListener(false, target, event, listener);

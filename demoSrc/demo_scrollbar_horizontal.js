@@ -1,15 +1,10 @@
 import { Application, Container, Graphics, Rectangle, Ticker } from "pixi.js";
 import { ScrollBarView, ScrollBarContents } from "../esm/index.js";
-import TWEEN from "@tweenjs/tween.js";
 
 const onDomContentsLoaded = async () => {
   const app = new Application();
   await app.init({ width: 800, height: 800 });
   document.body.appendChild(app.canvas);
-
-  Ticker.shared.add((e) => {
-    TWEEN.update(performance.now());
-  });
 
   const scrollbar = initScrollBar(app.stage, app.canvas);
 };

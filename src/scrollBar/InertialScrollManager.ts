@@ -1,22 +1,12 @@
 import { Easing, Tween } from "@tweenjs/tween.js";
-import {
-  Container,
-  FederatedPointerEvent,
-  Ticker,
-  EventEmitter,
-  ContainerEvents,
-} from "pixi.js";
+import { FederatedPointerEvent, Ticker, EventEmitter } from "pixi.js";
 import { SliderViewUtil } from "../index.js";
-import {
-  ScrollBarEventTypes,
-  ScrollBarView,
-  ScrollBarViewUtil,
-} from "./index.js";
+import { ScrollBarView, ScrollBarViewUtil } from "./index.js";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
  */
-export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
+export class InertialScrollManager extends EventEmitter {
   get speed(): number {
     return this._speed;
   }
@@ -28,7 +18,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   protected isDragging: boolean = false;
   protected dragPos?: number;
 
-  private tween?: Tween<Container>;
+  private tween?: Tween;
   private _isStart: boolean = false;
 
   constructor(scrollBarView: ScrollBarView) {
@@ -45,6 +35,14 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this.start();
   }
 
+  /**
+   * 慣性スクロールのレンダリングループを開始する。
+   *
+   * コンストラクタ内で自動的に呼び出されるため、通常は直接呼び出す必要はありません。
+   * 停止した場合に、再度呼び出すことで慣性スクロールを再開できます。
+   *
+   * @returns
+   */
   public start(): void {
     if (this._isStart) return;
     this._isStart = true;
@@ -54,6 +52,10 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     Ticker.shared.add(this.onTick);
   }
 
+  /**
+   * 慣性スクロールのレンダリングループを停止する。
+   * @returns
+   */
   public stop(): void {
     if (!this._isStart) return;
     this._isStart = false;
@@ -129,6 +131,8 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
   };
 
   private onTick = () => {
+    this.tween?.update();
+
     if (this.isDragging) return;
     if (this._speed === 0.0 && this.getLeaveRangeFromMask() === 0.0) return;
     if (this.tween?.isPlaying()) return;
@@ -162,6 +166,7 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
     this._speed = 0.0;
     this.disposeTween();
   };
+
   private disposeTween = () => {
     if (this.tween) {
       this.tween.stop();
@@ -202,5 +207,10 @@ export class InertialScrollManager extends EventEmitter<ScrollBarEventTypes> {
       this.scrollBarView.contents.mask,
       isHorizontal,
     );
+  }
+
+  dispose() {
+    this.stop();
+    this.disposeTween();
   }
 }
