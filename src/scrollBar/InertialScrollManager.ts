@@ -94,18 +94,18 @@ export class InertialScrollManager extends EventEmitter {
     switchListener(shouldAdd, target, "pointerupoutside", this.onMouseUp);
   }
 
-  private getDragPos(e: PointerEvent): number {
+  private getDragPos(e: FederatedPointerEvent | PointerEvent): number {
     return SliderViewUtil.getPointerEventPosition(
       e,
       this.scrollBarView.isHorizontal,
     );
   }
 
-  private updateDragPos(e: PointerEvent): void {
+  private updateDragPos(e: FederatedPointerEvent | PointerEvent): void {
     this.dragPos = this.getDragPos(e);
   }
 
-  private onMouseMove = (e: FederatedPointerEvent) => {
+  private onMouseMove = (e: FederatedPointerEvent | PointerEvent) => {
     if (this.dragPos == null) return;
     const delta = this.getDragPos(e) - this.dragPos;
 

@@ -50,7 +50,7 @@ export class SliderViewUtil {
   }
 
   public static getPointerEventPosition(
-    e: PointerEvent,
+    e: FederatedPointerEvent | PointerEvent,
     isHorizontal: boolean,
   ) {
     if (e instanceof FederatedPointerEvent) {
@@ -153,7 +153,7 @@ export class SliderViewUtil {
     displayObj: Container,
     isHorizontal: boolean,
     dragStartPos: Point,
-    evt: PointerEvent,
+    evt: FederatedPointerEvent | PointerEvent,
   ): number {
     const getLocalPos = () => {
       if (evt instanceof FederatedPointerEvent) {

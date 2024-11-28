@@ -125,11 +125,11 @@ export class SliderView extends Container {
    * スライダーのドラッグ中の処理
    * @param e
    */
-  private moveSlider = (e: Event): void => {
-    this.onMoveSlider(e as PointerEvent);
+  private moveSlider = (e: FederatedPointerEvent | PointerEvent): void => {
+    this.onMoveSlider(e);
   };
 
-  protected onMoveSlider(e: PointerEvent): void {
+  protected onMoveSlider(e: FederatedPointerEvent | PointerEvent): void {
     const mousePos: number = this.limitSliderButtonPosition(e);
 
     this.updateParts(mousePos);
@@ -145,7 +145,9 @@ export class SliderView extends Container {
    * スライダーボタンの位置を制限する関数
    * @return 制限で切り落とされたスライダーボタンの座標値 座標の原点はSliderViewであり、ボタンやバーではない。
    */
-  protected limitSliderButtonPosition(evt: PointerEvent): number {
+  protected limitSliderButtonPosition(
+    evt: FederatedPointerEvent | PointerEvent,
+  ): number {
     const mousePos: number = SliderViewUtil.getPointerLocalPosition(
       this,
       this.isHorizontal,
@@ -205,7 +207,7 @@ export class SliderView extends Container {
    * その位置までスライダーをジャンプする
    * @param evt
    */
-  protected onPressBase(evt: PointerEvent): void {
+  protected onPressBase(evt: FederatedPointerEvent): void {
     this.dragStartPos.set(0, 0);
     this.moveSlider(evt);
     this.sliderEventEmitter.emit(
