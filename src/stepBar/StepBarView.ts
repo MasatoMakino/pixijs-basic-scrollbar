@@ -117,6 +117,7 @@ export class StepBarView extends Container {
     this.option.base.interactiveChildren = false;
     this.option.base.eventMode = "static";
     this.option.base.cursor = "pointer";
+    this.option.base.alpha = 0;
     this.option.base.on("pointertap", this.updateValueOnBaseClick);
 
     // ドラッグ中の処理
