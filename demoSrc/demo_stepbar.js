@@ -19,9 +19,10 @@ const initStepBar = (stage, view) => {
   const spriteBar = getSpriteBar(SLIDER_W, SLIDER_H, 0x00ff00, 10);
   spriteBar.eventMode = "none";
 
-  const base = getSliderBase(SLIDER_W + 32, SLIDER_H * 2, 0xff00ff);
+  const margin = 8;
+  const base = getSliderBase(SLIDER_W + margin * 2, SLIDER_H * 2, 0xff00ff);
   base.y = -SLIDER_H / 2;
-  base.x = SLIDER_X - 16;
+  base.x = SLIDER_X - margin;
   spriteBar.x = SLIDER_X;
 
   const sliderButton = getSliderButton(16, 16, 0xffff00);

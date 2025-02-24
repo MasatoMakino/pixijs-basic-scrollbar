@@ -145,18 +145,30 @@ export class StepBarView extends Container {
     const rate = (diff / range) * valueRange;
     const newValue = minValue + rate;
 
-    const roundedValue =
-      Math.round((newValue - minValue) / step) * step + minValue;
-
+    const roundedValue = StepBarView.snap(newValue, step, minValue);
     this.value = roundedValue;
   };
 
+  private static snap(value: number, step: number, minValue: number): number {
+    return Math.round((value - minValue) / step) * step + minValue;
+  }
+
   stepUp = () => {
-    this.value += this.option.step;
+    const nextValue = this.value + this.option.step;
+    this.value = StepBarView.snap(
+      nextValue,
+      this.option.step,
+      this.option.minValue,
+    );
   };
 
   stepDown = () => {
-    this.value -= this.option.step;
+    const nextValue = this.value - this.option.step;
+    this.value = StepBarView.snap(
+      nextValue,
+      this.option.step,
+      this.option.minValue,
+    );
   };
 
   private updateSliderPosition = (): void => {
