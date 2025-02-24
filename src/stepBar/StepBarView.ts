@@ -6,8 +6,8 @@ import { SliderViewUtil } from "../SliderViewUtil.js";
  */
 export interface StepBarOption {
   base: Container; // 操作を受け付ける範囲
-  maxPosition: number;
-  minPosition: number;
+  leftTop: number;
+  rightBottom: number;
   maxValue: number;
   minValue?: number; // default : 0
   initialValue?: number; //default : 0
@@ -133,14 +133,14 @@ export class StepBarView extends Container {
   }
 
   protected updateValueOnBaseClick = (e: FederatedPointerEvent) => {
-    const { minValue, maxValue, minPosition, maxPosition, isHorizontal, step } =
+    const { minValue, maxValue, leftTop, rightBottom, isHorizontal, step } =
       this.option;
     const localPosition = e.getLocalPosition(this);
     const positionKey = isHorizontal ? "x" : "y";
     const valueRange = maxValue - minValue;
 
-    const range = maxPosition - minPosition;
-    const diff = localPosition[positionKey] - minPosition;
+    const range = rightBottom - leftTop;
+    const diff = localPosition[positionKey] - leftTop;
 
     const rate = (diff / range) * valueRange;
     const newValue = minValue + rate;
@@ -168,9 +168,9 @@ export class StepBarView extends Container {
   };
 
   private getSliderButtonPosition = (): number => {
-    const { maxPosition, minPosition, maxValue, minValue } = this.option;
+    const { leftTop, rightBottom, maxValue, minValue } = this.option;
     const value = this._value;
     const rate = (value - minValue) / (maxValue - minValue);
-    return minPosition + (maxPosition - minPosition) * rate;
+    return leftTop + (rightBottom - leftTop) * rate;
   };
 }
