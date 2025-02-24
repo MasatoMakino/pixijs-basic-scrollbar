@@ -1,4 +1,5 @@
 import { FederatedPointerEvent, EventEmitter, Container } from "pixi.js";
+import { SliderViewUtil } from "../SliderViewUtil.js";
 
 /**
  * ステップバーの初期化オプションです。
@@ -42,9 +43,10 @@ export class StepBarView extends Container {
   protected _value: number;
   set value(value: number) {
     const prev = this._value;
-    const next = Math.max(
+    const next = SliderViewUtil.clamp(
+      value,
+      this.option.maxValue,
       this.option.minValue,
-      Math.min(this.option.maxValue, value),
     );
     this._value = next;
 
@@ -104,6 +106,7 @@ export class StepBarView extends Container {
         button.interactive = true;
         button.interactiveChildren = false;
         button.eventMode = "static";
+        button.cursor = "pointer";
         button.on("pointertap", listener);
       }
     };
@@ -113,7 +116,19 @@ export class StepBarView extends Container {
     this.option.base.interactive = true;
     this.option.base.interactiveChildren = false;
     this.option.base.eventMode = "static";
+    this.option.base.cursor = "pointer";
     this.option.base.on("pointertap", this.updateValueOnBaseClick);
+
+    // ドラッグ中の処理
+    this.option.base.on("pointerdown", () => {
+      this.option.base.on("pointermove", this.updateValueOnBaseClick);
+    });
+    this.option.base.on("pointerup", () => {
+      this.option.base.off("pointermove", this.updateValueOnBaseClick);
+    });
+    this.option.base.on("pointerupoutside", () => {
+      this.option.base.off("pointermove", this.updateValueOnBaseClick);
+    });
   }
 
   protected updateValueOnBaseClick = (e: FederatedPointerEvent) => {

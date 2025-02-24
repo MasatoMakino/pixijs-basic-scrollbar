@@ -10,12 +10,21 @@ const onDomContentsLoaded = async () => {
 };
 const SLIDER_W = 200;
 const SLIDER_H = 16;
+const SLIDER_X = 0;
 /**
  * スライダーの実装サンプル
  * @param stage
  */
 const initStepBar = (stage, view) => {
-  const sliderButton = getSliderButton(16, 16, 0xff0000);
+  const spriteBar = getSpriteBar(SLIDER_W, SLIDER_H, 0x00ff00, 10);
+  spriteBar.eventMode = "none";
+
+  const base = getSliderBase(SLIDER_W + 32, SLIDER_H * 2, 0xff00ff);
+  base.y = -SLIDER_H / 2;
+  base.x = SLIDER_X - 16;
+  spriteBar.x = SLIDER_X;
+
+  const sliderButton = getSliderButton(16, 16, 0xffff00);
   sliderButton.y = SLIDER_H;
   const stepUpButton = getUpDonwButton(16, 0x00ff00);
   const stepDownButton = getUpDonwButton(16, 0x00ff00);
@@ -24,9 +33,9 @@ const initStepBar = (stage, view) => {
   stepUpButton.y = stepDownButton.y = SLIDER_H / 2;
 
   const stepBar = new StepBarView({
-    base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff, 10),
-    minPosition: 0,
-    maxPosition: SLIDER_W,
+    base,
+    minPosition: SLIDER_X,
+    maxPosition: SLIDER_X + SLIDER_W,
     minValue: 0,
     maxValue: 10,
     step: 1,
@@ -35,6 +44,7 @@ const initStepBar = (stage, view) => {
     sliderButton: sliderButton,
     canvas: view,
   });
+  stepBar.addChild(spriteBar);
 
   stepBar.stepBarEventEmitter.on("changed", (e) => {
     console.log(e);
@@ -46,7 +56,7 @@ const initStepBar = (stage, view) => {
   stepBar.value = 9;
 };
 
-const getSliderBase = (w, h, color, step) => {
+const getSpriteBar = (w, h, color, step) => {
   const g = new Graphics();
   const stepW = w / step;
   for (let i = 0; i < step; i++) {
@@ -55,6 +65,12 @@ const getSliderBase = (w, h, color, step) => {
       alpha: i % 2 === 0 ? 0.5 : 1,
     });
   }
+  return g;
+};
+
+const getSliderBase = (w, h, color) => {
+  const g = new Graphics();
+  g.rect(0, 0, w, h).fill(color);
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
 };
