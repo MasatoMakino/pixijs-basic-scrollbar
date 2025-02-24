@@ -153,23 +153,59 @@ export class StepBarView extends Container {
     return Math.round((value - minValue) / step) * step + minValue;
   }
 
+  /**
+   * stepUpButtonをクリックしたときに呼び出される関数です。
+   * 現在の値から最も近い、stepにスナップした値に更新します。
+   */
   stepUp = () => {
-    const nextValue = this.value + this.option.step;
-    this.value = StepBarView.snap(
-      nextValue,
+    this.value = StepBarView.snapUp(
+      this.value,
       this.option.step,
       this.option.minValue,
     );
   };
 
+  /**
+   * stepDownButtonをクリックしたときに呼び出される関数です。
+   * 現在の値から最も近い、stepにスナップした値に更新します。
+   */
   stepDown = () => {
-    const nextValue = this.value - this.option.step;
-    this.value = StepBarView.snap(
-      nextValue,
+    this.value = StepBarView.snapDown(
+      this.value,
       this.option.step,
       this.option.minValue,
     );
   };
+
+  /**
+   * Returns the next snapped value above the current value.
+   */
+  private static snapUp(value: number, step: number, minValue: number): number {
+    const diff = value - minValue;
+    // すでにスナップ済みなら次のスナップ値へ
+    if (diff % step === 0) {
+      return value + step;
+    }
+    // スナップ値に合わせて切り上げ
+    return Math.ceil(diff / step) * step + minValue;
+  }
+
+  /**
+   * Returns the next snapped value below the current value.
+   */
+  private static snapDown(
+    value: number,
+    step: number,
+    minValue: number,
+  ): number {
+    const diff = value - minValue;
+    // すでにスナップ済みなら前のスナップ値へ
+    if (diff % step === 0) {
+      return value - step;
+    }
+    // スナップ値に合わせて切り捨て
+    return Math.floor(diff / step) * step + minValue;
+  }
 
   private updateSliderPosition = (): void => {
     const slider = this.option.sliderButton;

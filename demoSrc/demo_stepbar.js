@@ -39,7 +39,7 @@ const initStepBar = (stage, view) => {
     rightBottom: SLIDER_X + SLIDER_W,
     minValue: 0,
     maxValue: 10,
-    step: 0.5,
+    step: 4,
     stepUpButton: stepUpButton,
     stepDownButton: stepDownButton,
     sliderButton: sliderButton,
