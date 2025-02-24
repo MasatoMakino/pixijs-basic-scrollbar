@@ -96,7 +96,10 @@ export class StepBarView extends Container {
       this.option.sliderButton.interactiveChildren = false;
     }
 
-    const initStepButton = (listener: () => void, button?: Container) => {
+    const listenStepButtonInteraction = (
+      listener: () => void,
+      button?: Container,
+    ) => {
       if (button) {
         button.interactive = true;
         button.interactiveChildren = false;
@@ -104,9 +107,33 @@ export class StepBarView extends Container {
         button.on("pointertap", listener);
       }
     };
-    initStepButton(this.stepUp, this.option.stepUpButton);
-    initStepButton(this.stepDown, this.option.stepDownButton);
+    listenStepButtonInteraction(this.stepUp, this.option.stepUpButton);
+    listenStepButtonInteraction(this.stepDown, this.option.stepDownButton);
+
+    this.option.base.interactive = true;
+    this.option.base.interactiveChildren = false;
+    this.option.base.eventMode = "static";
+    this.option.base.on("pointertap", this.updateValueOnBaseClick);
   }
+
+  protected updateValueOnBaseClick = (e: FederatedPointerEvent) => {
+    const { minValue, maxValue, minPosition, maxPosition, isHorizontal, step } =
+      this.option;
+    const localPosition = e.getLocalPosition(this);
+    const positionKey = isHorizontal ? "x" : "y";
+    const valueRange = maxValue - minValue;
+
+    const range = maxPosition - minPosition;
+    const diff = localPosition[positionKey] - minPosition;
+
+    const rate = (diff / range) * valueRange;
+    const newValue = minValue + rate;
+
+    const roundedValue =
+      Math.round((newValue - minValue) / step) * step + minValue;
+
+    this.value = roundedValue;
+  };
 
   stepUp = () => {
     this.value += this.option.step;

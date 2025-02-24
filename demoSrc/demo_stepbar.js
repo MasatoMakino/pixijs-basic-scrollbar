@@ -24,7 +24,7 @@ const initStepBar = (stage, view) => {
   stepUpButton.y = stepDownButton.y = SLIDER_H / 2;
 
   const stepBar = new StepBarView({
-    base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff),
+    base: getSliderBase(SLIDER_W, SLIDER_H, 0x0000ff, 10),
     minPosition: 0,
     maxPosition: SLIDER_W,
     minValue: 0,
@@ -46,9 +46,15 @@ const initStepBar = (stage, view) => {
   stepBar.value = 9;
 };
 
-const getSliderBase = (w, h, color) => {
+const getSliderBase = (w, h, color, step) => {
   const g = new Graphics();
-  g.rect(0, 0, w, h).fill(color);
+  const stepW = w / step;
+  for (let i = 0; i < step; i++) {
+    g.rect(i * stepW, 0, stepW, h).fill({
+      color: color,
+      alpha: i % 2 === 0 ? 0.5 : 1,
+    });
+  }
   g.hitArea = new Rectangle(0, 0, w, h);
   return g;
 };
