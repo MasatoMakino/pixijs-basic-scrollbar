@@ -48,19 +48,7 @@ export class StepBarView extends Container {
   }
 
   protected init() {
-    const addParts = (target: Container | undefined) => {
-      if (target) {
-        if (target.parent) {
-          console.log("target.parent", target.parent);
-          target.parent.removeChild(target);
-        }
-        this.addChild(target);
-      }
-    };
-    addParts(this.option.base);
-    addParts(this.option.sliderButton);
-    addParts(this.option.stepUpButton);
-    addParts(this.option.stepDownButton);
+    this.initParts();
     this.updateSliderPosition();
 
     this.initSliderButton();
@@ -83,6 +71,13 @@ export class StepBarView extends Container {
     this.initBaseEventHandlers();
   }
 
+  protected initParts = (): void => {
+    const { base, sliderButton, stepUpButton, stepDownButton } = this.option;
+    SliderViewUtil.addChildParts(this, base);
+    SliderViewUtil.addChildParts(this, sliderButton);
+    SliderViewUtil.addChildParts(this, stepUpButton);
+    SliderViewUtil.addChildParts(this, stepDownButton);
+  };
   /**
    * Initializes the slider button properties.
    * @returns void
