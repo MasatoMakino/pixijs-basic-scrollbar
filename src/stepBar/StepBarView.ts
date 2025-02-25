@@ -71,6 +71,9 @@ export class StepBarView extends Container {
     this.initBaseEventHandlers();
   }
 
+  /**
+   * ステップバーのパーツを初期化します。
+   */
   protected initParts = (): void => {
     const { base, sliderButton, stepUpButton, stepDownButton } = this.option;
     SliderViewUtil.addChildParts(this, base);
@@ -78,6 +81,7 @@ export class StepBarView extends Container {
     SliderViewUtil.addChildParts(this, stepUpButton);
     SliderViewUtil.addChildParts(this, stepDownButton);
   };
+
   /**
    * Initializes the slider button properties.
    * @returns void
