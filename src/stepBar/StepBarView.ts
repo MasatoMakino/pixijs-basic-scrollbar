@@ -63,11 +63,7 @@ export class StepBarView extends Container {
     addParts(this.option.stepDownButton);
     this.updateSliderPosition();
 
-    if (this.option.sliderButton) {
-      this.option.sliderButton.eventMode = "none";
-      this.option.sliderButton.interactive = false;
-      this.option.sliderButton.interactiveChildren = false;
-    }
+    this.initSliderButton();
 
     const listenStepButtonInteraction = (
       listener: () => void,
@@ -84,45 +80,71 @@ export class StepBarView extends Container {
     listenStepButtonInteraction(this.stepUp, this.option.stepUpButton);
     listenStepButtonInteraction(this.stepDown, this.option.stepDownButton);
 
-    this.option.base.interactive = true;
-    this.option.base.interactiveChildren = false;
-    this.option.base.eventMode = "static";
-    this.option.base.cursor = "pointer";
-    this.option.base.alpha = 0;
-    this.option.base.on("pointertap", this.updateValueOnBaseClick);
+    this.initBaseEventHandlers();
+  }
 
-    const dragTarget = this.option.canvas || this.option.base;
-    const addEventListenerToTarget = () => {
+  /**
+   * Initializes the slider button properties.
+   * @returns void
+   */
+  protected initSliderButton = (): void => {
+    const { sliderButton } = this.option;
+    if (!sliderButton) return;
+
+    sliderButton.eventMode = "none";
+    sliderButton.interactive = false;
+    sliderButton.interactiveChildren = false;
+  };
+
+  /**
+   * ステップバーの地のポインターイベントハンドラを初期化します。
+   */
+  protected initBaseEventHandlers = (): void => {
+    const { canvas, base } = this.option;
+
+    base.interactive = true;
+    base.interactiveChildren = false;
+    base.eventMode = "static";
+    base.cursor = "pointer";
+    base.alpha = 0;
+    base.on("pointertap", this.updateValueFromPointerEvent);
+
+    const dragTarget = canvas || base;
+    const addEventListenerToTarget = (): void => {
       SliderViewUtil.addEventListenerToTarget(
         dragTarget,
         "pointermove",
-        this.updateValueOnBaseClick,
+        this.updateValueFromPointerEvent,
       );
     };
-    const removeEventListenerFromTarget = () => {
+    const removeEventListenerFromTarget = (): void => {
       SliderViewUtil.removeEventListenerFromTarget(
         dragTarget,
         "pointermove",
-        this.updateValueOnBaseClick,
+        this.updateValueFromPointerEvent,
       );
     };
 
     // ドラッグ中の処理
-    this.option.base.on("pointerdown", () => {
+    base.on("pointerdown", () => {
       addEventListenerToTarget();
     });
-    this.option.base.on("pointerup", () => {
+    base.on("pointerup", () => {
       removeEventListenerFromTarget();
     });
-    this.option.base.on("pointerupoutside", () => {
+    base.on("pointerupoutside", () => {
       removeEventListenerFromTarget();
     });
-    this.option.base.on("pointercancel", () => {
+    base.on("pointercancel", () => {
       removeEventListenerFromTarget();
     });
-  }
+  };
 
-  protected updateValueOnBaseClick = (
+  /**
+   * ポインターイベントから座標を取得し、valueを更新します。
+   * @param e ポインターイベント
+   */
+  protected updateValueFromPointerEvent = (
     e: FederatedPointerEvent | PointerEvent,
   ) => {
     const {
