@@ -1,4 +1,4 @@
-import { FederatedPointerEvent, EventEmitter, Container } from "pixi.js";
+import { FederatedPointerEvent, EventEmitter, Container, Point } from "pixi.js";
 import { SliderViewUtil } from "../SliderViewUtil.js";
 import {
   StepBarOption,
@@ -91,19 +91,40 @@ export class StepBarView extends Container {
     this.option.base.alpha = 0;
     this.option.base.on("pointertap", this.updateValueOnBaseClick);
 
+    const dragTarget = this.option.canvas || this.option.base;
+    const addEventListenerToTarget = () => {
+      SliderViewUtil.addEventListenerToTarget(
+        dragTarget,
+        "pointermove",
+        this.updateValueOnBaseClick,
+      );
+    };
+    const removeEventListenerFromTarget = () => {
+      SliderViewUtil.removeEventListenerFromTarget(
+        dragTarget,
+        "pointermove",
+        this.updateValueOnBaseClick,
+      );
+    };
+
     // ドラッグ中の処理
     this.option.base.on("pointerdown", () => {
-      this.option.base.on("pointermove", this.updateValueOnBaseClick);
+      addEventListenerToTarget();
     });
     this.option.base.on("pointerup", () => {
-      this.option.base.off("pointermove", this.updateValueOnBaseClick);
+      removeEventListenerFromTarget();
     });
     this.option.base.on("pointerupoutside", () => {
-      this.option.base.off("pointermove", this.updateValueOnBaseClick);
+      removeEventListenerFromTarget();
+    });
+    this.option.base.on("pointercancel", () => {
+      removeEventListenerFromTarget();
     });
   }
 
-  protected updateValueOnBaseClick = (e: FederatedPointerEvent) => {
+  protected updateValueOnBaseClick = (
+    e: FederatedPointerEvent | PointerEvent,
+  ) => {
     const {
       minValue,
       maxValue,
@@ -112,7 +133,8 @@ export class StepBarView extends Container {
       isHorizontal,
       step,
     } = this.option;
-    const localPosition = e.getLocalPosition(this);
+
+    const localPosition = SliderViewUtil.getPointerLocalPoint(e, this);
     const positionKey = isHorizontal ? "x" : "y";
     const valueRange = maxValue - minValue;
 
