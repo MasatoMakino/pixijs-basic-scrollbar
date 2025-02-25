@@ -35,14 +35,14 @@ const initStepBar = (stage, view) => {
 
   const stepBar = new StepBarView({
     base,
-    leftTop: SLIDER_X,
-    rightBottom: SLIDER_X + SLIDER_W,
+    sliderStartPoint: SLIDER_X,
+    sliderMaxPoint: SLIDER_X + SLIDER_W,
     minValue: 0,
     maxValue: 10,
     step: 4,
-    stepUpButton: stepUpButton,
-    stepDownButton: stepDownButton,
-    sliderButton: sliderButton,
+    stepUpButton,
+    stepDownButton,
+    sliderButton,
     canvas: view,
   });
   stepBar.addChild(spriteBar);

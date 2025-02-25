@@ -6,8 +6,8 @@ import { SliderViewUtil } from "../SliderViewUtil.js";
  */
 export interface StepBarOption {
   base: Container; // 操作を受け付ける範囲
-  leftTop: number;
-  rightBottom: number;
+  sliderStartPoint: number;
+  sliderMaxPoint: number;
   maxValue: number;
   minValue?: number; // default : 0
   initialValue?: number; //default : 0
@@ -133,8 +133,14 @@ export class StepBarView extends Container {
   }
 
   protected updateValueOnBaseClick = (e: FederatedPointerEvent) => {
-    const { minValue, maxValue, leftTop, rightBottom, isHorizontal, step } =
-      this.option;
+    const {
+      minValue,
+      maxValue,
+      sliderStartPoint: leftTop,
+      sliderMaxPoint: rightBottom,
+      isHorizontal,
+      step,
+    } = this.option;
     const localPosition = e.getLocalPosition(this);
     const positionKey = isHorizontal ? "x" : "y";
     const valueRange = maxValue - minValue;
@@ -207,6 +213,9 @@ export class StepBarView extends Container {
     return Math.floor(diff / step) * step + minValue;
   }
 
+  /**
+   * スライダーボタンの位置を、valueに合わせて更新する
+   */
   private updateSliderPosition = (): void => {
     const slider = this.option.sliderButton;
     if (slider) {
@@ -215,10 +224,15 @@ export class StepBarView extends Container {
     }
   };
 
+  /**
+   * valueから、現在のスライダーボタンの位置を取得します。
+   * @returns スライダーボタンの位置
+   */
   private getSliderButtonPosition = (): number => {
-    const { leftTop, rightBottom, maxValue, minValue } = this.option;
+    const { sliderStartPoint, sliderMaxPoint, maxValue, minValue } =
+      this.option;
     const value = this._value;
     const rate = (value - minValue) / (maxValue - minValue);
-    return leftTop + (rightBottom - leftTop) * rate;
+    return sliderStartPoint + (sliderMaxPoint - sliderStartPoint) * rate;
   };
 }
