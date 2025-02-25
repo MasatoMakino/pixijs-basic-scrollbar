@@ -1,33 +1,10 @@
 import { FederatedPointerEvent, EventEmitter, Container } from "pixi.js";
 import { SliderViewUtil } from "../SliderViewUtil.js";
-
-/**
- * ステップバーの初期化オプションです。
- */
-export interface StepBarOption {
-  base: Container; // 操作を受け付ける範囲
-  sliderStartPoint: number;
-  sliderMaxPoint: number;
-  maxValue: number;
-  minValue?: number; // default : 0
-  initialValue?: number; //default : 0
-  step?: number; // default : 1
-  sliderButton?: Container;
-  stepUpButton?: Container;
-  stepDownButton?: Container;
-  isHorizontal?: boolean; // default : true
-  canvas?: HTMLCanvasElement;
-}
-
-/**
- * 初期化済みステップバーの初期化オプションです。
- */
-export interface InitializedStepBarOption extends StepBarOption {
-  step: number;
-  minValue: number;
-  isHorizontal: boolean;
-  initialValue: number;
-}
+import {
+  StepBarOption,
+  InitializedStepBarOption,
+  initializeStepBarOption,
+} from "./StepBarOption.js";
 
 export interface StepBarEventTypes {
   changed: (newValue: number) => void;
@@ -60,18 +37,12 @@ export class StepBarView extends Container {
   }
 
   /**
-   *
-   * @param option ステップバーの初期化オプション
+   * コンストラクタ
+   * @param option ステップバーオプション
    */
   constructor(option: StepBarOption) {
     super();
-    this.option = {
-      ...option,
-      initialValue: option.initialValue ?? 0,
-      minValue: option.minValue ?? 0,
-      step: option.step ?? 1,
-      isHorizontal: option.isHorizontal ?? true,
-    };
+    this.option = initializeStepBarOption(option);
     this._value = this.option.initialValue;
     this.init();
   }
@@ -136,8 +107,8 @@ export class StepBarView extends Container {
     const {
       minValue,
       maxValue,
-      sliderStartPoint: leftTop,
-      sliderMaxPoint: rightBottom,
+      sliderStartPoint,
+      sliderMaxPoint,
       isHorizontal,
       step,
     } = this.option;
@@ -145,8 +116,8 @@ export class StepBarView extends Container {
     const positionKey = isHorizontal ? "x" : "y";
     const valueRange = maxValue - minValue;
 
-    const range = rightBottom - leftTop;
-    const diff = localPosition[positionKey] - leftTop;
+    const range = sliderMaxPoint - sliderStartPoint;
+    const diff = localPosition[positionKey] - sliderStartPoint;
 
     const rate = (diff / range) * valueRange;
     const newValue = minValue + rate;
@@ -186,7 +157,11 @@ export class StepBarView extends Container {
   /**
    * Returns the next snapped value above the current value.
    */
-  private static snapUp(value: number, step: number, minValue: number): number {
+  protected static snapUp(
+    value: number,
+    step: number,
+    minValue: number,
+  ): number {
     const diff = value - minValue;
     // すでにスナップ済みなら次のスナップ値へ
     if (diff % step === 0) {
@@ -199,7 +174,7 @@ export class StepBarView extends Container {
   /**
    * Returns the next snapped value below the current value.
    */
-  private static snapDown(
+  protected static snapDown(
     value: number,
     step: number,
     minValue: number,
@@ -216,7 +191,7 @@ export class StepBarView extends Container {
   /**
    * スライダーボタンの位置を、valueに合わせて更新する
    */
-  private updateSliderPosition = (): void => {
+  protected updateSliderPosition = (): void => {
     const slider = this.option.sliderButton;
     if (slider) {
       const positionKey = this.option.isHorizontal ? "x" : "y";
@@ -231,8 +206,7 @@ export class StepBarView extends Container {
   private getSliderButtonPosition = (): number => {
     const { sliderStartPoint, sliderMaxPoint, maxValue, minValue } =
       this.option;
-    const value = this._value;
-    const rate = (value - minValue) / (maxValue - minValue);
+    const rate = (this.value - minValue) / (maxValue - minValue);
     return sliderStartPoint + (sliderMaxPoint - sliderStartPoint) * rate;
   };
 }

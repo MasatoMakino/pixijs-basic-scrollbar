@@ -12,7 +12,7 @@ const SLIDER_W = 200;
 const SLIDER_H = 16;
 const SLIDER_X = 0;
 /**
- * スライダーの実装サンプル
+ * ステップバーの実装サンプル
  * @param stage
  */
 const initStepBar = (stage, view) => {
@@ -39,7 +39,7 @@ const initStepBar = (stage, view) => {
     sliderMaxPoint: SLIDER_X + SLIDER_W,
     minValue: 0,
     maxValue: 10,
-    step: 4,
+    step: 1,
     stepUpButton,
     stepDownButton,
     sliderButton,
