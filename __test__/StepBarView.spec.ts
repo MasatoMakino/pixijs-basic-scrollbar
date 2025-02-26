@@ -31,7 +31,7 @@ describe("StepBarView", () => {
     expect(stepBar.value).toBe(20);
   });
 
-  it("should increase value on stepUp", () => {
+  it("should increase value on incrementValue", () => {
     const stepBar = new StepBarView({
       base,
       sliderStartPoint: 0,
@@ -44,11 +44,11 @@ describe("StepBarView", () => {
       stepDownButton,
       isHorizontal: true,
     });
-    stepBar.stepUp();
+    stepBar.incrementValue();
     expect(stepBar.value).toBe(30);
   });
 
-  it("should decrease value on stepDown", () => {
+  it("should decrease value on decrementValue", () => {
     const stepBar = new StepBarView({
       base,
       sliderStartPoint: 0,
@@ -61,7 +61,7 @@ describe("StepBarView", () => {
       stepDownButton,
       isHorizontal: true,
     });
-    stepBar.stepDown();
+    stepBar.decrementValue();
     expect(stepBar.value).toBe(10);
   });
 });

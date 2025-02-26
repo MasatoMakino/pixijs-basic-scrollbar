@@ -86,8 +86,11 @@ export class StepBarView extends Container {
         button.on("pointertap", listener);
       }
     };
-    listenStepButtonInteraction(this.stepUp, this.option.stepUpButton);
-    listenStepButtonInteraction(this.stepDown, this.option.stepDownButton);
+    listenStepButtonInteraction(this.incrementValue, this.option.stepUpButton);
+    listenStepButtonInteraction(
+      this.decrementValue,
+      this.option.stepDownButton,
+    );
   };
 
   /**
@@ -185,8 +188,8 @@ export class StepBarView extends Container {
    * stepUpButtonをクリックしたときに呼び出される関数です。
    * 現在の値から最も近い、stepにスナップした値に更新します。
    */
-  stepUp = () => {
-    this.value = StepBarView.snapUp(
+  incrementValue = () => {
+    this.value = StepBarView.getNextStepValue(
       this.value,
       this.option.step,
       this.option.minValue,
@@ -197,8 +200,8 @@ export class StepBarView extends Container {
    * stepDownButtonをクリックしたときに呼び出される関数です。
    * 現在の値から最も近い、stepにスナップした値に更新します。
    */
-  stepDown = () => {
-    this.value = StepBarView.snapDown(
+  decrementValue = () => {
+    this.value = StepBarView.getPreviousStepValue(
       this.value,
       this.option.step,
       this.option.minValue,
@@ -208,7 +211,7 @@ export class StepBarView extends Container {
   /**
    * Returns the next snapped value above the current value.
    */
-  protected static snapUp(
+  protected static getNextStepValue(
     value: number,
     step: number,
     minValue: number,
@@ -223,9 +226,9 @@ export class StepBarView extends Container {
   }
 
   /**
-   * Returns the next snapped value below the current value.
+   * Returns the previous snapped value below the current value.
    */
-  protected static snapDown(
+  protected static getPreviousStepValue(
     value: number,
     step: number,
     minValue: number,
