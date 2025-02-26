@@ -63,7 +63,12 @@ export class StepBarView extends Container {
    * ステップバーのパーツを初期化します。
    */
   protected initParts = (): void => {
-    const { base, sliderButton, stepUpButton, stepDownButton } = this.option;
+    const {
+      base,
+      sliderButton,
+      incrementButton: stepUpButton,
+      decrementButton: stepDownButton,
+    } = this.option;
     SliderViewUtil.addChildParts(this, base);
     SliderViewUtil.addChildParts(this, sliderButton);
     SliderViewUtil.addChildParts(this, stepUpButton);
@@ -86,10 +91,13 @@ export class StepBarView extends Container {
         button.on("pointertap", listener);
       }
     };
-    listenStepButtonInteraction(this.incrementValue, this.option.stepUpButton);
+    listenStepButtonInteraction(
+      this.incrementValue,
+      this.option.incrementButton,
+    );
     listenStepButtonInteraction(
       this.decrementValue,
-      this.option.stepDownButton,
+      this.option.decrementButton,
     );
   };
 

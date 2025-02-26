@@ -12,8 +12,8 @@ export interface StepBarOption {
   initialValue?: number; //default : 0
   step?: number; // default : 1
   sliderButton?: Container;
-  stepUpButton?: Container;
-  stepDownButton?: Container;
+  incrementButton?: Container;
+  decrementButton?: Container;
   isHorizontal?: boolean; // default : true
   canvas?: HTMLCanvasElement;
 }

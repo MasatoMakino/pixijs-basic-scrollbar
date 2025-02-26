@@ -5,14 +5,14 @@ import { StepBarView } from "../src/index.js";
 describe("StepBarView", () => {
   let base: Container,
     sliderButton: Container,
-    stepUpButton: Container,
-    stepDownButton: Container;
+    incrementButton: Container,
+    decrementButton: Container;
 
   beforeEach(() => {
     base = new Container();
     sliderButton = new Container();
-    stepUpButton = new Container();
-    stepDownButton = new Container();
+    incrementButton = new Container();
+    decrementButton = new Container();
   });
 
   it("should set initial value", () => {
@@ -24,8 +24,8 @@ describe("StepBarView", () => {
       initialValue: 20,
       step: 10,
       sliderButton,
-      stepUpButton,
-      stepDownButton,
+      incrementButton,
+      decrementButton,
       isHorizontal: true,
     });
     expect(stepBar.value).toBe(20);
@@ -40,8 +40,8 @@ describe("StepBarView", () => {
       initialValue: 20,
       step: 10,
       sliderButton,
-      stepUpButton,
-      stepDownButton,
+      incrementButton,
+      decrementButton,
       isHorizontal: true,
     });
     stepBar.incrementValue();
@@ -57,8 +57,8 @@ describe("StepBarView", () => {
       initialValue: 20,
       step: 10,
       sliderButton,
-      stepUpButton,
-      stepDownButton,
+      incrementButton,
+      decrementButton,
       isHorizontal: true,
     });
     stepBar.decrementValue();

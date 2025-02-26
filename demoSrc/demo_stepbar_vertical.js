@@ -28,12 +28,12 @@ const initStepBar = (stage, view) => {
   const sliderButton = getSliderButton(16, 16, 0xffff00);
   sliderButton.x = SLIDER_W;
 
-  const stepUpButton = getUpDonwButton(16, 0x00ff00);
-  const stepDownButton = getUpDonwButton(16, 0x00ff00);
+  const incrementButton = getUpDonwButton(16, 0x00ff00);
+  const decrementButton = getUpDonwButton(16, 0x00ff00);
 
-  stepDownButton.y = -32;
-  stepUpButton.y = SLIDER_H + 32;
-  stepUpButton.x = stepDownButton.x = SLIDER_W / 2;
+  decrementButton.y = -32;
+  incrementButton.y = SLIDER_H + 32;
+  incrementButton.x = decrementButton.x = SLIDER_W / 2;
 
   const stepBar = new StepBarView({
     base,
@@ -42,8 +42,8 @@ const initStepBar = (stage, view) => {
     minValue: 0,
     maxValue: 10,
     step: 1,
-    stepUpButton,
-    stepDownButton,
+    incrementButton,
+    decrementButton,
     sliderButton,
     isHorizontal: false,
     canvas: view,
