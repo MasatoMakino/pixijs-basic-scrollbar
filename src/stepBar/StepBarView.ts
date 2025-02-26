@@ -47,12 +47,33 @@ export class StepBarView extends Container {
     this.init();
   }
 
+  /**
+   * パーツの初期化を行います。
+   */
   protected init() {
     this.initParts();
     this.updateSliderPosition();
 
     this.initSliderButton();
+    this.initStepButtons();
+    this.initBaseEventHandlers();
+  }
 
+  /**
+   * ステップバーのパーツを初期化します。
+   */
+  protected initParts = (): void => {
+    const { base, sliderButton, stepUpButton, stepDownButton } = this.option;
+    SliderViewUtil.addChildParts(this, base);
+    SliderViewUtil.addChildParts(this, sliderButton);
+    SliderViewUtil.addChildParts(this, stepUpButton);
+    SliderViewUtil.addChildParts(this, stepDownButton);
+  };
+
+  /**
+   * ステップアップボタン、ステップダウンボタンのイベントリスナーを初期化します。
+   */
+  protected initStepButtons = (): void => {
     const listenStepButtonInteraction = (
       listener: () => void,
       button?: Container,
@@ -67,19 +88,6 @@ export class StepBarView extends Container {
     };
     listenStepButtonInteraction(this.stepUp, this.option.stepUpButton);
     listenStepButtonInteraction(this.stepDown, this.option.stepDownButton);
-
-    this.initBaseEventHandlers();
-  }
-
-  /**
-   * ステップバーのパーツを初期化します。
-   */
-  protected initParts = (): void => {
-    const { base, sliderButton, stepUpButton, stepDownButton } = this.option;
-    SliderViewUtil.addChildParts(this, base);
-    SliderViewUtil.addChildParts(this, sliderButton);
-    SliderViewUtil.addChildParts(this, stepUpButton);
-    SliderViewUtil.addChildParts(this, stepDownButton);
   };
 
   /**
