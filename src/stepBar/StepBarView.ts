@@ -1,9 +1,9 @@
-import { FederatedPointerEvent, EventEmitter, Container, Point } from "pixi.js";
+import { Container, EventEmitter, FederatedPointerEvent } from "pixi.js";
 import { SliderViewUtil } from "../SliderViewUtil.js";
 import {
-  StepBarOption,
   InitializedStepBarOption,
   initializeStepBarOption,
+  StepBarOption,
 } from "./StepBarOption.js";
 
 export interface StepBarEventTypes {
