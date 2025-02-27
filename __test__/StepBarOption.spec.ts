@@ -12,7 +12,6 @@ describe("StepBarOption", () => {
       sliderButton: new Container(),
       incrementButton: new Container(),
       decrementButton: new Container(),
-      isHorizontal: true,
       canvas: document.createElement("canvas"),
     };
     const initializedOption = initializeStepBarOption(option);
