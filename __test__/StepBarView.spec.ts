@@ -1,5 +1,5 @@
 import { describe, beforeEach, expect, it, vi } from "vitest";
-import { Container } from "pixi.js";
+import { Container, Graphics, Rectangle } from "pixi.js";
 import { StepBarView } from "../src/index.js";
 import { SliderViewTester } from "./SliderViewTester.js";
 
@@ -201,5 +201,111 @@ describe("StepBarView increment/decrement button", () => {
     });
     SliderViewTester.controlButton(true, decrementButton, 0, "pointertap");
     expect(stepBar.value).toBe(40);
+  });
+});
+
+describe("StepBarView.base", () => {
+  let base: Graphics;
+
+  beforeEach(() => {
+    base?.removeFromParent();
+    base = new Graphics();
+    base.hitArea = new Rectangle(0, 0, 100, 20);
+    vi.restoreAllMocks();
+  });
+
+  const getDefaultValue = () => {
+    return {
+      base,
+      sliderStartPoint: 0,
+      sliderMaxPoint: 100,
+      maxValue: 100,
+      step: 10,
+    };
+  };
+
+  it("should correctly increase value on base tap", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 0, "pointertap");
+    expect(stepBar.value).toBe(0);
+
+    SliderViewTester.controlButton(true, base, 50, "pointertap");
+    expect(stepBar.value).toBe(50);
+
+    SliderViewTester.controlButton(true, base, 100, "pointertap");
+    expect(stepBar.value).toBe(100);
+  });
+
+  it("should not go beyond the maximum value", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 120, "pointertap");
+    expect(stepBar.value).toBe(100);
+  });
+
+  it("should not go below the minimum value", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, -10, "pointertap");
+    expect(stepBar.value).toBe(0);
+  });
+
+  it("should snap to the nearest step value", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 57.37, "pointertap");
+    expect(stepBar.value).toBe(60);
+
+    SliderViewTester.controlButton(true, base, 52.63, "pointertap");
+    expect(stepBar.value).toBe(50);
+
+    SliderViewTester.controlButton(true, base, 55, "pointertap");
+    expect(stepBar.value).toBe(60);
+  });
+
+  it("should correctly increase value on base drag", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 0, "pointerdown");
+    expect(stepBar.value).toBe(0);
+    SliderViewTester.controlButton(true, base, 50, "pointermove");
+    expect(stepBar.value).toBe(50);
+    // should not change value when pointerup
+    SliderViewTester.controlButton(true, base, 100, "pointerup");
+    expect(stepBar.value).toBe(50);
+
+    // should not change value when not dragging
+    SliderViewTester.controlButton(true, base, 0, "pointermove");
+    expect(stepBar.value).toBe(50);
+    SliderViewTester.controlButton(true, base, 100, "pointermove");
+    expect(stepBar.value).toBe(50);
+  });
+
+  it("shoud stop dragging when pointerupoutside", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 0, "pointerdown");
+    expect(stepBar.value).toBe(0);
+    SliderViewTester.controlButton(true, base, 50, "pointermove");
+    expect(stepBar.value).toBe(50);
+    SliderViewTester.controlButton(true, base, 100, "pointerupoutside");
+    expect(stepBar.value).toBe(50);
+
+    // should not change value when not dragging
+    SliderViewTester.controlButton(true, base, 0, "pointermove");
+    expect(stepBar.value).toBe(50);
+    SliderViewTester.controlButton(true, base, 100, "pointermove");
+    expect(stepBar.value).toBe(50);
+  });
+
+  it("should stop dragging when pointercancel", () => {
+    const stepBar = new StepBarView(getDefaultValue());
+    SliderViewTester.controlButton(true, base, 0, "pointerdown");
+    expect(stepBar.value).toBe(0);
+    SliderViewTester.controlButton(true, base, 50, "pointermove");
+    expect(stepBar.value).toBe(50);
+    SliderViewTester.controlButton(true, base, 100, "pointercancel");
+    expect(stepBar.value).toBe(50);
+
+    // should not change value when not dragging
+    SliderViewTester.controlButton(true, base, 0, "pointermove");
+    expect(stepBar.value).toBe(50);
+    SliderViewTester.controlButton(true, base, 100, "pointermove");
+    expect(stepBar.value).toBe(50);
   });
 });
