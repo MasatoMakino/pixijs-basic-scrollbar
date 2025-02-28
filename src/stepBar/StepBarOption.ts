@@ -1,45 +1,50 @@
 import { Container } from "pixi.js";
 
 /**
- * ステップバーのオプションです。
+ * Step bar options.
  *
- * ステップバーは、Pixi.jsの座標系に合わせてスクリーン座標系を使用します。
- * 従って値が加算されると、スライダーの位置は右か下に移動します。
+ * The step bar uses the screen coordinate system according to Pixi.js.
+ * Therefore, when the value is incremented, the slider's position moves to the right or down.
  *
- * 移動方向を逆転させたい場合は、以下のように設定してください。
- * - sliderStartPointとsliderMaxPointを逆に指定する
- * - incrementButtonとdecrementButtonを入れ替えて指定する。
+ * To invert the movement direction, configure as follows:
+ * - Specify sliderStartPoint and sliderMaxPoint in reverse order.
+ * - Swap the incrementButton and decrementButton.
  *
- * @param base ドラッグ操作を受け付ける範囲
- * @param sliderStartPoint minValueに対応するスライダーの座標
- * @param sliderMaxPoint maxValueに対応するスライダーの座標
- * @param maxValue 最大値
- * @param minValue 最小値
- * @param initialValue 初期値
- * @param step ステップ
- * @param sliderButton スライダーボタン
- * @param incrementButton ステップアップボタン
- * @param decrementButton ステップダウンボタン
- * @param isHorizontal 水平方向かどうか
- * @param canvas キャンバス
+ * @param base The area for receiving drag operations.
+ * @param sliderStartPoint The slider position corresponding to minValue.
+ * @param sliderMaxPoint The slider position corresponding to maxValue.
+ * @param maxValue Maximum value.
+ * @param minValue Minimum value.
+ * @param initialValue Initial value.
+ * @param step Step value.
+ * @param sliderButton Slider button.
+ * @param incrementButton Increment button.
+ * @param decrementButton Decrement button.
+ * @param isHorizontal Whether the orientation is horizontal.
+ * @param canvas Canvas element.
  */
 export interface StepBarOption {
-  base: Container; // 操作を受け付ける範囲
+  base: Container;
   sliderStartPoint: number;
   sliderMaxPoint: number;
   maxValue: number;
-  minValue?: number; // default : 0
-  initialValue?: number; //default : 0
-  step?: number; // default : 1
+  minValue?: number;
+  initialValue?: number;
+  step?: number;
   sliderButton?: Container;
   incrementButton?: Container;
   decrementButton?: Container;
-  isHorizontal?: boolean; // default : true
+  isHorizontal?: boolean;
   canvas?: HTMLCanvasElement;
 }
 
 /**
- * 初期化済みステップバーオプションです。
+ * Initialized step bar options.
+ *
+ * @default minValue 0
+ * @default step 1
+ * @default isHorizontal true
+ * @default initialValue 0
  */
 export interface InitializedStepBarOption extends StepBarOption {
   step: number;
@@ -49,9 +54,9 @@ export interface InitializedStepBarOption extends StepBarOption {
 }
 
 /**
- * ステップバーオプションを初期化します。
- * @param option ステップバーオプション
- * @returns 初期化済みステップバーオプション
+ * Initializes the step bar options.
+ * @param option Step bar options.
+ * @returns Initialized step bar options.
  */
 export function initializeStepBarOption(
   option: StepBarOption,

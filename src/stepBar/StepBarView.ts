@@ -11,7 +11,7 @@ export interface StepBarEventTypes {
 }
 
 /**
- * ステップバーを表すクラスです。
+ * Class representing a step bar component.
  */
 export class StepBarView extends Container {
   private option: InitializedStepBarOption;
@@ -37,8 +37,8 @@ export class StepBarView extends Container {
   }
 
   /**
-   * コンストラクタ
-   * @param option ステップバーオプション
+   * Constructor.
+   * @param option StepBar option configuration.
    */
   constructor(option: StepBarOption) {
     super();
@@ -48,7 +48,7 @@ export class StepBarView extends Container {
   }
 
   /**
-   * パーツの初期化を行います。
+   * Initializes the component parts.
    */
   protected init() {
     this.initParts();
@@ -60,7 +60,7 @@ export class StepBarView extends Container {
   }
 
   /**
-   * ステップバーのパーツを初期化します。
+   * Initializes the step bar's parts.
    */
   protected initParts = (): void => {
     const {
@@ -76,7 +76,7 @@ export class StepBarView extends Container {
   };
 
   /**
-   * ステップアップボタン、ステップダウンボタンのイベントリスナーを初期化します。
+   * Initializes event listeners for the increment and decrement buttons.
    */
   protected initStepButtons = (): void => {
     const listenStepButtonInteraction = (
@@ -115,7 +115,7 @@ export class StepBarView extends Container {
   };
 
   /**
-   * ステップバーの地のポインターイベントハンドラを初期化します。
+   * Initializes pointer event handlers for the base component.
    */
   protected initBaseEventHandlers = (): void => {
     const { canvas, base } = this.option;
@@ -159,8 +159,8 @@ export class StepBarView extends Container {
   };
 
   /**
-   * ポインターイベントから座標を取得し、valueを更新します。
-   * @param e ポインターイベント
+   * Retrieves coordinates from the pointer event and updates the value.
+   * @param e Pointer event.
    */
   protected updateValueFromPointerEvent = (
     e: FederatedPointerEvent | PointerEvent,
@@ -193,8 +193,8 @@ export class StepBarView extends Container {
   }
 
   /**
-   * stepUpButtonをクリックしたときに呼び出される関数です。
-   * 現在の値から最も近い、stepにスナップした値に更新します。
+   * Called when the increment button is clicked.
+   * Updates the value by snapping to the next step.
    */
   incrementValue = () => {
     this.value = StepBarView.getNextStepValue(
@@ -205,8 +205,8 @@ export class StepBarView extends Container {
   };
 
   /**
-   * stepDownButtonをクリックしたときに呼び出される関数です。
-   * 現在の値から最も近い、stepにスナップした値に更新します。
+   * Called when the decrement button is clicked.
+   * Updates the value by snapping to the previous step.
    */
   decrementValue = () => {
     this.value = StepBarView.getPreviousStepValue(
@@ -251,7 +251,7 @@ export class StepBarView extends Container {
   }
 
   /**
-   * スライダーボタンの位置を、valueに合わせて更新する
+   * Updates the slider button position based on the current value.
    */
   protected updateSliderPosition = (): void => {
     const slider = this.option.sliderButton;
@@ -262,8 +262,8 @@ export class StepBarView extends Container {
   };
 
   /**
-   * valueから、現在のスライダーボタンの位置を取得します。
-   * @returns スライダーボタンの位置
+   * Calculates the slider button's position based on the current value.
+   * @returns Slider button position.
    */
   private getSliderButtonPosition = (): number => {
     const { sliderStartPoint, sliderMaxPoint, maxValue, minValue } =
