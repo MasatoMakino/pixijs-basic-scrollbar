@@ -1,9 +1,9 @@
-import { Container, ContainerEvents } from "pixi.js";
+import { Container, ContainerChild, ContainerEvents } from "pixi.js";
 
 export class DummyPointerEvent {
   static emit(
     button: Container | EventTarget,
-    type: keyof ContainerEvents,
+    type: keyof ContainerEvents<ContainerChild>,
     args?: any,
   ): void {
     if (button instanceof Container) {

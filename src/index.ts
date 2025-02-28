@@ -3,3 +3,5 @@ export * from "./SliderView.js";
 export * from "./SliderViewOption.js";
 export * from "./scrollBar/index.js";
 export * from "./SliderViewUtil.js";
+
+export * from "./stepBar/index.js";

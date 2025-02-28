@@ -149,19 +149,23 @@ export class SliderViewUtil {
     parent.addChild(obj);
   }
 
+  static getPointerLocalPoint(
+    evt: FederatedPointerEvent | PointerEvent,
+    container: Container,
+  ): Point {
+    if (evt instanceof FederatedPointerEvent) {
+      return container.toLocal(evt.global);
+    }
+    return container.toLocal(new Point(evt.offsetX, evt.offsetY));
+  }
+
   static getPointerLocalPosition(
     displayObj: Container,
     isHorizontal: boolean,
     dragStartPos: Point,
     evt: FederatedPointerEvent | PointerEvent,
   ): number {
-    const getLocalPos = () => {
-      if (evt instanceof FederatedPointerEvent) {
-        return displayObj.toLocal(evt.global);
-      }
-      return displayObj.toLocal(new Point(evt.offsetX, evt.offsetY));
-    };
-    const localPos = getLocalPos();
+    const localPos = this.getPointerLocalPoint(evt, displayObj);
 
     if (isHorizontal) {
       return localPos.x - dragStartPos.x;
