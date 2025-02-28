@@ -1,6 +1,7 @@
 import { describe, beforeEach, expect, it, vi } from "vitest";
 import { Container } from "pixi.js";
 import { StepBarView } from "../src/index.js";
+import { SliderViewTester } from "./SliderViewTester.js";
 
 describe("StepBarView", () => {
   let base: Container,
@@ -160,5 +161,45 @@ describe("StepBarView (vertical)", () => {
     stepBar.incrementValue();
     expect(stepBar.value).toBe(10);
     expect(sliderButton.y).toBe(10);
+  });
+});
+
+describe("StepBarView increment/decrement button", () => {
+  let base: Container, incrementButton: Container, decrementButton: Container;
+
+  beforeEach(() => {
+    base = new Container();
+    incrementButton = new Container();
+    decrementButton = new Container();
+    vi.restoreAllMocks();
+  });
+
+  const getDefaultValue = () => {
+    return {
+      base,
+      sliderStartPoint: 0,
+      sliderMaxPoint: 100,
+      maxValue: 100,
+      step: 10,
+      incrementButton,
+      decrementButton,
+    };
+  };
+  it("should correctly increase value on incrementValue", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 30,
+    });
+    SliderViewTester.controlButton(true, incrementButton, 0, "pointertap");
+    expect(stepBar.value).toBe(40);
+  });
+
+  it("should correctly decrease value on decrementValue", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 50,
+    });
+    SliderViewTester.controlButton(true, decrementButton, 0, "pointertap");
+    expect(stepBar.value).toBe(40);
   });
 });
