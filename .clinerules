@@ -1,0 +1,81 @@
+# Project Context: pixijs-basic-scrollbar
+
+## Project Overview
+- Project Name: @masatomakino/pixijs-basic-scrollbar
+- Description: Scrollbar modules for pixi.js
+- Version: See package.json
+- License: MIT
+
+## Technology Stack
+### Core Technologies
+- TypeScript
+- PixiJS v8.x
+- TweenJS v25.x
+- ES Modules format
+
+### Development Tools
+- Vitest (Testing framework)
+- TypeDoc (API documentation generator)
+- Prettier (Code formatter)
+- Browser-Sync (Development server)
+
+## Project Structure
+```
+/
+├── src/               # Source code
+│   ├── scrollBar/     # Scrollbar implementations
+│   ├── stepBar/       # Step bar implementations
+│   └── index.ts       # Main entry point
+├── __test__/         # Test files
+├── demoSrc/          # Demo page sources
+├── docs/             # Documentation
+└── esm/              # Build output (ES Modules)
+```
+
+## Development Environment Setup
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run start:dev
+
+# Build project
+npm run build
+
+# Run tests
+npm run test
+
+# Generate coverage report
+npm run coverage
+```
+
+## Main Components
+1. SliderView
+   - Basic slider component
+   - Customizable graphics elements
+   - Event-based value change notification
+
+2. ScrollBarView
+   - UI component for scrollable content
+   - Supports inertial scrolling
+   - Mouse wheel support
+
+3. StepBarView
+   - UI component for step display
+   - Supports vertical and horizontal layouts
+
+## CI/CD
+- Automated testing with GitHub Actions
+- Code quality management with CodeClimate
+- Auto-generated API documentation
+
+## Important Notes
+1. For PixiJS v7 and later, canvas element reference is required as pointer events are not captured in non-drawn areas
+2. Always call dispose() method when removing components (to clean up Ticker references)
+3. All graphic elements are customizable
+
+## Resources
+- [Demo Page](https://masatomakino.github.io/pixijs-basic-scrollbar/demo/index.html)
+- [API Documentation](https://masatomakino.github.io/pixijs-basic-scrollbar/api/)
+- [GitHub Repository](https://github.com/MasatoMakino/pixijs-basic-scrollbar)
