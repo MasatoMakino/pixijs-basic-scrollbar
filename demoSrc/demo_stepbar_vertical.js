@@ -37,8 +37,8 @@ const initStepBar = (stage, view) => {
 
   const stepBar = new StepBarView({
     base,
-    sliderStartPoint: SLIDER_X + SLIDER_H,
-    sliderMaxPoint: SLIDER_X,
+    sliderStartPoint: SLIDER_X,
+    sliderMaxPoint: SLIDER_X + SLIDER_H,
     minValue: 0,
     maxValue: 10,
     step: 1,
