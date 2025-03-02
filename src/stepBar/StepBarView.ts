@@ -303,6 +303,8 @@ export class StepBarView extends Container {
   }
 
   private wheelHandler = (e: WheelEvent): void => {
+    if (e.deltaY === 0 || e.deltaY === undefined) return;
+
     const { isHorizontal, sliderStartPoint, sliderMaxPoint } = this.option;
     const isPositiveDelta = e.deltaY > 0;
     const isNormalDirection = sliderStartPoint < sliderMaxPoint;
