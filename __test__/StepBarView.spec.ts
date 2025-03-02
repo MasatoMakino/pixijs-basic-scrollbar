@@ -341,7 +341,7 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(30);
   });
 
-  it("should increase value on wheel up", () => {
+  it("should increase value on wheel up for reversed horizontal stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       sliderStartPoint: 100,
@@ -361,7 +361,7 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(10);
   });
 
-  it("should decrease value on wheel down", () => {
+  it("should decrease value on wheel down for reversed horizontal stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       sliderStartPoint: 100,
@@ -383,7 +383,7 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(20);
   });
 
-  it("should decrease value on wheel up with vertical orientation", () => {
+  it("should decrease value on wheel up with vertical stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       isHorizontal: false,
@@ -393,19 +393,19 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(10);
   });
 
-  it("should increase value on wheel down with vertical orientation", () => {
+  it("should increase value on wheel up for reversed vertical stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       isHorizontal: false,
-      initialValue: 20,
       sliderStartPoint: 100,
       sliderMaxPoint: 0,
+      initialValue: 20,
     });
     DummyPointerEvent.emit(base, "wheel", wheelUp);
     expect(stepBar.value).toBe(30);
   });
 
-  it("should increase value on wheel down with vertical orientation", () => {
+  it("should increase value on wheel down with vertical stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       isHorizontal: false,
@@ -415,7 +415,7 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(30);
   });
 
-  it("should increase value on wheel down with vertical orientation", () => {
+  it("should decrease value on wheel down for reversed vertical stepbar", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
       isHorizontal: false,
