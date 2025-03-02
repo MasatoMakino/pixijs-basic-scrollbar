@@ -338,9 +338,31 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(10);
   });
 
+  it("should decrease value on wheel up", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", { deltaY: 1 });
+    expect(stepBar.value).toBe(10);
+  });
+
   it("should increase value on wheel down", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", { deltaY: -1 });
+    expect(stepBar.value).toBe(30);
+  });
+
+  it("should decrease value on wheel down", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
       initialValue: 20,
     });
     DummyPointerEvent.emit(base, "wheel", { deltaY: -1 });
@@ -358,23 +380,23 @@ describe("StepBarView wheel", () => {
     expect(stepBar.value).toBe(20);
   });
 
-  it("should increase value on wheel up with horizontal orientation", () => {
+  it("should decrease value on wheel up with vertical orientation", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
-      isHorizontal: true,
+      isHorizontal: false,
       initialValue: 20,
     });
     DummyPointerEvent.emit(base, "wheel", { deltaY: -1 });
-    expect(stepBar.value).toBe(30);
+    expect(stepBar.value).toBe(10);
   });
 
-  it("should decrease value on wheel down with horizontal orientation", () => {
+  it("should increase value on wheel down with vertical orientation", () => {
     const stepBar = new StepBarView({
       ...getDefaultValue(),
-      isHorizontal: true,
-      initialValue: 30,
+      isHorizontal: false,
+      initialValue: 20,
     });
     DummyPointerEvent.emit(base, "wheel", { deltaY: 1 });
-    expect(stepBar.value).toBe(20);
+    expect(stepBar.value).toBe(30);
   });
 });

@@ -306,11 +306,14 @@ export class StepBarView extends Container {
     if (e.deltaY === 0 || e.deltaY === undefined) return;
 
     const { isHorizontal, sliderStartPoint, sliderMaxPoint } = this.option;
-    const isPositiveDelta = e.deltaY > 0;
-    const isNormalDirection = sliderStartPoint < sliderMaxPoint;
 
-    const shouldIncrement =
-      (isPositiveDelta !== !isHorizontal) !== isNormalDirection;
-    shouldIncrement ? this.incrementValue() : this.decrementValue();
+    const isPositiveDelta = e.deltaY > 0;
+    if (isHorizontal) {
+      isPositiveDelta ? this.decrementValue() : this.incrementValue();
+    } else {
+      const isNormalDirection = sliderStartPoint < sliderMaxPoint;
+      const shouldIncrement = isPositiveDelta === isNormalDirection;
+      shouldIncrement ? this.incrementValue() : this.decrementValue();
+    }
   };
 }
