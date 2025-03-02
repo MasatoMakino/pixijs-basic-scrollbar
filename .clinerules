@@ -65,6 +65,49 @@ npm run test
 npm run coverage
 ```
 
+## Version Control Strategy
+This project follows the GitHub Flow branching strategy:
+
+1. Create a branch from `main`
+2. Add commits
+3. Open a Pull Request
+4. Review and discuss changes
+5. Pass automated tests
+   - GitHub Actions automatically runs tests on each PR
+   - All tests must pass before merging is allowed
+   - The `main` branch is protected and requires passing CI checks
+6. Merge to `main`
+
+### Special Branches
+#### gh-pages
+- Purpose: Hosts demo page and API documentation
+- Updates automatically via GitHub Actions when main branch changes
+- Contains:
+  - Interactive demo pages
+  - Auto-generated API reference
+- **Important**: Manual updates to this branch are prohibited
+
+### Release and Deployment Process
+- This project is deployed to npm
+- Releases are managed by `@masatomakino/release-helper` CLI tool
+- The release process is triggered by npm version hooks:
+  1. The CLI tool creates a release Pull Request
+  2. After successful merge to main:
+     - Version tag is automatically generated
+     - Release notes draft is automatically created
+  3. Package is published to npm
+
+#### Important Restrictions
+**The following manual operations are strictly prohibited:**
+- Creating version tags manually
+- Creating release Pull Requests manually
+- Running `npm publish` command manually
+
+Use `@masatomakino/release-helper` CLI tool for all release operations.
+
+For detailed information about GitHub Flow, see:
+[GitHub Flow Guide](https://docs.github.com/en/get-started/using-github/github-flow)
+
 ## Main Components
 1. SliderView
    - Basic slider component
