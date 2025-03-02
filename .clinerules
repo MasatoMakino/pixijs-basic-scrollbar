@@ -6,6 +6,21 @@
 - Version: See package.json
 - License: MIT
 
+## Language Guidelines
+### Use English For
+- Source code and comments
+- Documentation (API docs, README, etc.)
+- Version control (branch names, commit messages)
+- Issue tracking and pull requests
+- Variable names and string literals
+- Type definitions and interfaces
+
+### Follow User's Language For
+- Chat interface interactions
+- Issue discussions and responses
+- Pull request discussions
+- Community communications
+
 ## Technology Stack
 ### Core Technologies
 - TypeScript
