@@ -57,6 +57,9 @@ export class StepBarView extends Container {
     this.initSliderButton();
     this.initStepButtons();
     this.initBaseEventHandlers();
+    if (this.option.enableMouseWheel) {
+      this.enableWheel();
+    }
   }
 
   /**
@@ -270,5 +273,49 @@ export class StepBarView extends Container {
       this.option;
     const rate = (this.value - minValue) / (maxValue - minValue);
     return sliderStartPoint + (sliderMaxPoint - sliderStartPoint) * rate;
+  };
+
+  private _isWheelEnabled: boolean = false;
+  /**
+   * マウスホイール操作の有効/無効を取得します。
+   */
+  get isWheelEnabled(): boolean {
+    return this._isWheelEnabled;
+  }
+
+  /**
+   * マウスホイール操作を有効化します。
+   */
+  public enableWheel(): void {
+    if (this._isWheelEnabled) return;
+    const { base } = this.option;
+    base.eventMode = "static";
+    base.on("wheel", this.wheelHandler);
+    this._isWheelEnabled = true;
+  }
+
+  /**
+   * マウスホイール操作を無効化します。
+   */
+  public disableWheel(): void {
+    if (!this._isWheelEnabled) return;
+    const { base } = this.option;
+    base.off("wheel", this.wheelHandler);
+    this._isWheelEnabled = false;
+  }
+
+  private wheelHandler = (e: WheelEvent): void => {
+    if (e.deltaY === 0 || e.deltaY === undefined) return;
+
+    const { isHorizontal, sliderStartPoint, sliderMaxPoint } = this.option;
+
+    const isPositiveDelta = e.deltaY > 0;
+    if (isHorizontal) {
+      isPositiveDelta ? this.decrementValue() : this.incrementValue();
+    } else {
+      const isNormalDirection = sliderStartPoint < sliderMaxPoint;
+      const shouldIncrement = isPositiveDelta === isNormalDirection;
+      shouldIncrement ? this.incrementValue() : this.decrementValue();
+    }
   };
 }
