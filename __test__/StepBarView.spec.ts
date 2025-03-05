@@ -426,4 +426,32 @@ describe("StepBarView wheel", () => {
     DummyPointerEvent.emit(base, "wheel", wheelDown);
     expect(stepBar.value).toBe(10);
   });
+
+  it("should not respond to wheel events when disabled", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    stepBar.disableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
+  });
+
+  it("should respond to wheel events after re-enabling", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    stepBar.disableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+
+    stepBar.enableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(30);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
+  });
 });
