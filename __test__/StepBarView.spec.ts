@@ -2,6 +2,7 @@ import { describe, beforeEach, expect, it, vi } from "vitest";
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { StepBarView } from "../src/index.js";
 import { SliderViewTester } from "./SliderViewTester.js";
+import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 
 describe("StepBarView", () => {
   let base: Container,
@@ -307,5 +308,162 @@ describe("StepBarView.base", () => {
     expect(stepBar.value).toBe(50);
     SliderViewTester.controlButton(true, base, 100, "pointermove");
     expect(stepBar.value).toBe(50);
+  });
+});
+
+describe("StepBarView wheel", () => {
+  let base: Container;
+
+  beforeEach(() => {
+    base = new Container();
+    vi.restoreAllMocks();
+  });
+
+  const getDefaultValue = () => {
+    return {
+      base,
+      sliderStartPoint: 0,
+      sliderMaxPoint: 100,
+      maxValue: 100,
+      step: 10,
+    };
+  };
+
+  const wheelUp = { deltaY: -1 };
+  const wheelDown = { deltaY: 1 };
+
+  it("should increase value on wheel up", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(30);
+  });
+
+  it("should increase value on wheel up for reversed horizontal stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(30);
+  });
+
+  it("should decrease value on wheel down", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(10);
+  });
+
+  it("should decrease value on wheel down for reversed horizontal stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(10);
+  });
+
+  it("should not change value when wheel event is not vertical", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", { deltaX: 1 });
+    expect(stepBar.value).toBe(20);
+    DummyPointerEvent.emit(base, "wheel", { deltaY: 0 });
+    expect(stepBar.value).toBe(20);
+  });
+
+  it("should decrease value on wheel up with vertical stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      isHorizontal: false,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(10);
+  });
+
+  it("should increase value on wheel up for reversed vertical stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      isHorizontal: false,
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(30);
+  });
+
+  it("should increase value on wheel down with vertical stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      isHorizontal: false,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(30);
+  });
+
+  it("should decrease value on wheel down for reversed vertical stepbar", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      isHorizontal: false,
+      sliderStartPoint: 100,
+      sliderMaxPoint: 0,
+      initialValue: 20,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(10);
+  });
+
+  it("should not respond to wheel events when disabled", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    stepBar.disableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
+  });
+
+  it("should respond to wheel events after re-enabling", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+    });
+    stepBar.disableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+
+    stepBar.enableWheel();
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(30);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
+  });
+
+  it("should initialize with mousewheel disabled when enableMouseWheel is false", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+      enableMouseWheel: false,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
   });
 });
