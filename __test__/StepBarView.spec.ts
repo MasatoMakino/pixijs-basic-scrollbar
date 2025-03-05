@@ -454,4 +454,16 @@ describe("StepBarView wheel", () => {
     DummyPointerEvent.emit(base, "wheel", wheelDown);
     expect(stepBar.value).toBe(20);
   });
+
+  it("should initialize with mousewheel disabled when enableMouseWheel is false", () => {
+    const stepBar = new StepBarView({
+      ...getDefaultValue(),
+      initialValue: 20,
+      enableMouseWheel: false,
+    });
+    DummyPointerEvent.emit(base, "wheel", wheelUp);
+    expect(stepBar.value).toBe(20);
+    DummyPointerEvent.emit(base, "wheel", wheelDown);
+    expect(stepBar.value).toBe(20);
+  });
 });

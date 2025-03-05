@@ -57,7 +57,9 @@ export class StepBarView extends Container {
     this.initSliderButton();
     this.initStepButtons();
     this.initBaseEventHandlers();
-    this.enableWheel();
+    if (this.option.enableMouseWheel) {
+      this.enableWheel();
+    }
   }
 
   /**

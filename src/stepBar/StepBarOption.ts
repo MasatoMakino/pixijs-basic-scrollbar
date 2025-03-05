@@ -36,6 +36,11 @@ export interface StepBarOption {
   decrementButton?: Container;
   isHorizontal?: boolean;
   canvas?: HTMLCanvasElement;
+  /**
+   * Whether to enable mouse wheel operation.
+   * @default true
+   */
+  enableMouseWheel?: boolean;
 }
 
 /**
@@ -51,6 +56,7 @@ export interface InitializedStepBarOption extends StepBarOption {
   minValue: number;
   isHorizontal: boolean;
   initialValue: number;
+  enableMouseWheel: boolean;
 }
 
 /**
@@ -67,5 +73,6 @@ export function initializeStepBarOption(
     minValue: option.minValue ?? 0,
     step: option.step ?? 1,
     isHorizontal: option.isHorizontal ?? true,
+    enableMouseWheel: option.enableMouseWheel ?? true,
   };
 }

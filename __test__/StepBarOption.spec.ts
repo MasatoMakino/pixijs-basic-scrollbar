@@ -21,6 +21,7 @@ describe("StepBarOption", () => {
       minValue: 0,
       step: 1,
       isHorizontal: true,
+      enableMouseWheel: true,
     });
   });
 });
