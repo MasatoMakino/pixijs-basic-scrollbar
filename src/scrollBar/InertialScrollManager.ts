@@ -46,6 +46,12 @@ export class InertialScrollManager extends EventEmitter {
     target.eventMode = "static";
     this.defaultScrollTargetChildrenInteractive = target.interactiveChildren;
 
+    if (target.hitArea === undefined) {
+      console.warn(
+        "ヒットエリアがスクロールバーコンテンツに設定されていません。ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。",
+      );
+    }
+
     this.start();
   }
 
@@ -83,14 +89,6 @@ export class InertialScrollManager extends EventEmitter {
 
   private onMouseDown = (e: FederatedPointerEvent) => {
     this.updateDragPos(e);
-
-    /**
-     * 慣性スクロール中にポインターダウンが発生した場合、子のインタラクティブを無効化する。
-     * コンテンツ内のボタンを誤操作させないため。
-     */
-    if (this.tween?.isPlaying() || this._speed !== 0.0) {
-      this.stopChildrenInteractive();
-    }
 
     this.isDragging = true;
     this._speed = 0.0;
@@ -164,9 +162,12 @@ export class InertialScrollManager extends EventEmitter {
   private onMouseUp = () => {
     this.removeDragListener();
     this.isDragging = false;
-
-    this.resumeChildrenInteractive();
     this.onTick();
+
+    //　ドラッグ終了かつ速度が0の場合、子への操作を再開する。
+    if (this._speed === 0.0) {
+      this.resumeChildrenInteractive();
+    }
   };
 
   private onTick = () => {
@@ -197,6 +198,9 @@ export class InertialScrollManager extends EventEmitter {
       .onUpdate(() => {
         this.emit("update_target_position");
       })
+      .onComplete(() => {
+        this.stopInertial();
+      })
       .easing(Easing.Cubic.Out)
       .start();
   };
@@ -204,6 +208,7 @@ export class InertialScrollManager extends EventEmitter {
   public stopInertial = () => {
     this._speed = 0.0;
     this.disposeTween();
+    this.resumeChildrenInteractive();
   };
 
   private disposeTween = () => {
