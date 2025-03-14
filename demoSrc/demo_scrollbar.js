@@ -64,7 +64,7 @@ const initScrollBar = (stage, view) => {
       button: getScrollBarButton(SCROLLBAR_W, 0xffff00),
       minPosition: 0,
       maxPosition: SCROLLBAR_H,
-      rate: 35.0,
+      rate: 0.0,
       isHorizontal: false,
       canvas: view,
     },
@@ -140,11 +140,37 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
     container,
     { color: 0xff00ff },
   );
+  const targetContainer = new Container();
+  targetContainer.boundsArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
+  targetContainer.addChild(targetContents);
+
   const contentsMask = getScrollBarContents(contentsW, scrollBarH, container, {
     color: 0x0000ff,
     alpha: 0.3,
   });
-  return new ScrollBarContents(targetContents, contentsMask, container);
+
+  const button = getTestButton();
+  targetContainer.addChild(button);
+  button.y = 64;
+  button.x = 64;
+
+  return new ScrollBarContents(targetContainer, contentsMask, container);
+};
+
+const getTestButton = () => {
+  const button = new Graphics().rect(0, 0, 128, 48).fill(0x00ff00);
+  button.cursor = "pointer";
+  button.eventMode = "static";
+  button.on("pointerdown", (e) => {
+    console.log("pointer down");
+  });
+  button.on("pointerup", (e) => {
+    console.log("pointer up");
+  });
+  button.on("pointertap", (e) => {
+    console.log("pointer tap");
+  });
+  return button;
 };
 
 /**
