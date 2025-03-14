@@ -76,12 +76,28 @@ export class InertialScrollManager extends EventEmitter {
   private onMouseDown = (e: FederatedPointerEvent) => {
     this.updateDragPos(e);
 
+    /**
+     * 慣性スクロール中にポインターダウンが発生した場合、子のインタラクティブを無効化する。
+     * コンテンツ内のボタンを誤操作させないため。
+     */
+    if (this.tween?.isPlaying() || this._speed !== 0.0) {
+      this.stopChildrenInteractive();
+    }
+
     this.isDragging = true;
     this._speed = 0.0;
     if (this.tween) this.disposeTween();
 
     this.addDragListener();
   };
+
+  private stopChildrenInteractive() {
+    this.scrollBarView.contents.target.interactiveChildren = false;
+  }
+  private resumeChildrenInteractive() {
+    this.scrollBarView.contents.target.interactiveChildren =
+      this.defaultScrollTargetChildrenInteractive;
+  }
 
   private addDragListener(): void {
     this.switchDragListener(true);
@@ -111,10 +127,15 @@ export class InertialScrollManager extends EventEmitter {
     this.dragPos = this.getDragPos(e);
   }
 
+  /**
+   * スクロールターゲットのドラッグ中処理
+   * @param e
+   * @returns void
+   */
   private onMouseMove = (e: FederatedPointerEvent | PointerEvent) => {
     if (this.dragPos == null) return;
 
-    this.scrollBarView.contents.target.interactiveChildren = false;
+    this.stopChildrenInteractive();
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
@@ -136,8 +157,7 @@ export class InertialScrollManager extends EventEmitter {
     this.removeDragListener();
     this.isDragging = false;
 
-    this.scrollBarView.contents.target.interactiveChildren =
-      this.defaultScrollTargetChildrenInteractive;
+    this.resumeChildrenInteractive();
     this.onTick();
   };
 

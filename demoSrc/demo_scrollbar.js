@@ -162,10 +162,10 @@ const getTestButton = () => {
   button.cursor = "pointer";
   button.eventMode = "static";
   button.on("pointerdown", (e) => {
-    console.log("pointer down");
+    console.log("  pointer down");
   });
   button.on("pointerup", (e) => {
-    console.log("pointer up");
+    console.log("  pointer up");
   });
   button.on("pointerout", (e) => {
     console.log("pointer out");
