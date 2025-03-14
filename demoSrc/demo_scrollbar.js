@@ -167,6 +167,12 @@ const getTestButton = () => {
   button.on("pointerup", (e) => {
     console.log("pointer up");
   });
+  button.on("pointerout", (e) => {
+    console.log("pointer out");
+  });
+  button.on("pointerover", (e) => {
+    console.log("pointerover");
+  });
   button.on("pointertap", (e) => {
     console.log("pointer tap");
   });

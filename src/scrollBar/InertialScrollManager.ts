@@ -11,6 +11,11 @@ export class InertialScrollManager extends EventEmitter {
     return this._speed;
   }
   private scrollBarView: ScrollBarView;
+  /**
+   * scrollBarView.contents.target.interactiveChildrenの初期値を保持する。
+   * ドラッグ中はfalseに設定し、ドラッグ終了時に元に戻す。
+   */
+  private defaultScrollTargetChildrenInteractive: boolean | undefined;
 
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
@@ -31,6 +36,7 @@ export class InertialScrollManager extends EventEmitter {
 
     const target = this.scrollBarView.contents.target;
     target.eventMode = "static";
+    this.defaultScrollTargetChildrenInteractive = target.interactiveChildren;
 
     this.start();
   }
@@ -107,6 +113,8 @@ export class InertialScrollManager extends EventEmitter {
 
   private onMouseMove = (e: FederatedPointerEvent | PointerEvent) => {
     if (this.dragPos == null) return;
+
+    this.scrollBarView.contents.target.interactiveChildren = false;
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
@@ -127,6 +135,9 @@ export class InertialScrollManager extends EventEmitter {
   private onMouseUp = () => {
     this.removeDragListener();
     this.isDragging = false;
+
+    this.scrollBarView.contents.target.interactiveChildren =
+      this.defaultScrollTargetChildrenInteractive;
     this.onTick();
   };
 
