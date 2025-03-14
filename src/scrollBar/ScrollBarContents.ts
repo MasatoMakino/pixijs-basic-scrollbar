@@ -43,9 +43,9 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
     addToContainer(scrollBarContents.target);
     addToContainer(scrollBarContents.mask);
 
-    if (scrollBarContents.target.hitArea) {
+    if (scrollBarContents.target.hitArea === undefined) {
       console.warn(
-        "Setting a custom hit area on scrollbar contents can lead to a mismatch between the visual area and the interactive area, potentially causing unexpected pointer interactions. Therefore, it is recommended not to set a custom hit area on scrollbar contents. / カスタムヒットエリアがスクロールバーコンテンツに設定されていると、視覚的エリアと操作エリアが一致せず、予期しないポインター操作を引き起こす可能性があります。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定しないことを推奨します。",
+        "ヒットエリアがスクロールバーコンテンツに設定されていません。ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。",
       );
     }
   }

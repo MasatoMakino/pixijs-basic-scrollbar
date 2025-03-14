@@ -46,12 +46,6 @@ export class InertialScrollManager extends EventEmitter {
     target.eventMode = "static";
     this.defaultScrollTargetChildrenInteractive = target.interactiveChildren;
 
-    if (target.hitArea === undefined) {
-      console.warn(
-        "ヒットエリアがスクロールバーコンテンツに設定されていません。ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。",
-      );
-    }
-
     this.start();
   }
 
