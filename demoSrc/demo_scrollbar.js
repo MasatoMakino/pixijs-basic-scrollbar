@@ -127,7 +127,7 @@ const overrideContents = (g, container, difHeight) => {
   console.log(g);
   console.log(fill);
 
-  const area = container.boundsArea.clone();
+  const area = container.hitArea.clone();
   area.height += difHeight;
 
   g.clear();
@@ -135,9 +135,7 @@ const overrideContents = (g, container, difHeight) => {
     color: fill.color,
     alpha: fill.alpha,
   });
-  container.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
-  container.hitArea = container.boundsArea;
-  // g.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
+  container.hitArea = new Rectangle(area.x, area.y, area.width, area.height);
 };
 
 const getScrollBarOption = (contentsW, scrollBarH, container) => {
@@ -145,8 +143,7 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
     color: 0xff00ff,
   });
   const targetContainer = new Container();
-  targetContainer.boundsArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
-  targetContainer.hitArea = targetContainer.boundsArea;
+  targetContainer.hitArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
   targetContainer.addChild(base);
 
   const contentsMask = getScrollBarContents(contentsW, scrollBarH, container, {
