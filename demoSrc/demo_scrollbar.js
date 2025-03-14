@@ -159,21 +159,31 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
 
 const getTestButton = () => {
   const button = new Graphics().rect(0, 0, 128, 48).fill(0x00ff00);
+  const redrawButton = (color) => {
+    button.clear();
+    button.rect(0, 0, 128, 48).fill(color);
+  };
+
   button.cursor = "pointer";
   button.eventMode = "dynamic"; // button.eventModeを "static" にすると、スクロールと中断時のpointeroutイベントが発生しません。
   button.on("pointerdown", (e) => {
+    redrawButton(0xffffff);
     console.log("  pointer down");
   });
   button.on("pointerup", (e) => {
+    redrawButton(0x00ff00);
     console.log("  pointer up");
   });
   button.on("pointerout", (e) => {
+    redrawButton(0x00ff00);
     console.log("pointer out");
   });
   button.on("pointerover", (e) => {
+    redrawButton(0x77ff77);
     console.log("pointerover");
   });
   button.on("pointertap", (e) => {
+    redrawButton(0xffff77);
     console.log("pointer tap");
   });
   return button;
