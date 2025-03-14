@@ -16,7 +16,7 @@ const onDomContentsLoaded = async () => {
 
   document.body.appendChild(app.canvas);
 
-  const scrollbar = initScrollBar(app.stage, app.canvas);
+  const { scrollbar, base } = initScrollBar(app.stage, app.canvas);
 
   const addButton = (label) => {
     const btnPlus = document.createElement("button");
@@ -28,10 +28,11 @@ const onDomContentsLoaded = async () => {
   const btnMinus = addButton("Contents Size -");
   const changeSize = (dif) => {
     const scrollPosition = scrollbar.rate;
-    overrideContents(scrollbar.contents.target, dif);
+    overrideContents(base, scrollbar.contents.target, dif);
     scrollbar.updateSlider();
     scrollbar.changeRate(scrollPosition);
   };
+
   const onPlus = () => {
     changeSize(64);
   };
@@ -57,7 +58,11 @@ const initScrollBar = (stage, view) => {
   container.x = 32;
   container.y = SCROLLBAR_Y;
 
-  const contents = getScrollBarOption(CONTENTS_W, SCROLLBAR_H, container);
+  const { contents, base } = getScrollBarOption(
+    CONTENTS_W,
+    SCROLLBAR_H,
+    container,
+  );
   const scrollbar = new ScrollBarView(
     {
       base: getScrollBarBase(SCROLLBAR_W, SCROLLBAR_H, 0x0000ff),
@@ -83,7 +88,7 @@ const initScrollBar = (stage, view) => {
    * スクロール動作を確認するために、故意にマスクを外しています。
    */
   // contents.target.mask = null;
-  return scrollbar;
+  return { scrollbar, base };
 };
 
 const getScrollBarBase = (w, h, color) => {
@@ -117,12 +122,12 @@ const getScrollBarContents = (w, h, container, fillStyle) => {
  * @param {Graphics} g
  * @param {number} difHeight
  */
-const overrideContents = (g, difHeight) => {
+const overrideContents = (g, container, difHeight) => {
   const fill = g.fillStyle;
   console.log(g);
   console.log(fill);
 
-  const area = g.boundsArea.clone();
+  const area = container.boundsArea.clone();
   area.height += difHeight;
 
   g.clear();
@@ -130,19 +135,19 @@ const overrideContents = (g, difHeight) => {
     color: fill.color,
     alpha: fill.alpha,
   });
-  g.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
+  container.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
+  container.hitArea = container.boundsArea;
+  // g.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
 };
 
 const getScrollBarOption = (contentsW, scrollBarH, container) => {
-  const targetContents = getScrollBarContents(
-    contentsW,
-    scrollBarH * 2,
-    container,
-    { color: 0xff00ff },
-  );
+  const base = getScrollBarContents(contentsW, scrollBarH * 2, container, {
+    color: 0xff00ff,
+  });
   const targetContainer = new Container();
   targetContainer.boundsArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
-  targetContainer.addChild(targetContents);
+  targetContainer.hitArea = targetContainer.boundsArea;
+  targetContainer.addChild(base);
 
   const contentsMask = getScrollBarContents(contentsW, scrollBarH, container, {
     color: 0x0000ff,
@@ -154,7 +159,10 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
   button.y = 64;
   button.x = 64;
 
-  return new ScrollBarContents(targetContainer, contentsMask, container);
+  return {
+    contents: new ScrollBarContents(targetContainer, contentsMask, container),
+    base,
+  };
 };
 
 const getTestButton = () => {
