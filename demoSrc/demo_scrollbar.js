@@ -160,7 +160,7 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
 const getTestButton = () => {
   const button = new Graphics().rect(0, 0, 128, 48).fill(0x00ff00);
   button.cursor = "pointer";
-  button.eventMode = "static";
+  button.eventMode = "dynamic"; // button.eventModeを "static" にすると、スクロールと中断時のpointeroutイベントが発生しません。
   button.on("pointerdown", (e) => {
     console.log("  pointer down");
   });

@@ -5,6 +5,14 @@ import { ScrollBarView, ScrollBarViewUtil } from "./index.js";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
+ *
+ * ** ドラッグ中の処理
+ * - ドラッグすると、慣性スクロールが停止し、子への操作を無効化します。
+ * - 慣性スクロール中にポインターダウンが発生した場合、子への操作を無効化します。
+ * - ドラッグ、慣性スクロールが終了すると、子への操作を再開します。
+ *
+ * 慣性スクロール中の操作中断を行う場合、子のボタンはeventMode="dynamic"を設定してください。
+ * "static"を設定すると、ポインターアウトイベントが正常に発生しません。
  */
 export class InertialScrollManager extends EventEmitter {
   get speed(): number {
