@@ -44,7 +44,7 @@ const onDomContentsLoaded = async () => {
 };
 
 /**
- * スクロールバーの実装サンプル
+ * Scrollbar implementation sample
  * @param stage
  */
 const initScrollBar = (stage, view) => {
@@ -85,7 +85,7 @@ const initScrollBar = (stage, view) => {
   });
 
   /**
-   * スクロール動作を確認するために、故意にマスクを外しています。
+   * Uncomment the following line to verify scrolling behavior outside the mask.
    */
   // contents.target.mask = null;
   return { scrollbar, base };
@@ -172,7 +172,7 @@ const getTestButton = () => {
   };
 
   button.cursor = "pointer";
-  button.eventMode = "dynamic"; // button.eventModeを "static" にすると、スクロールと中断時のpointeroutイベントが発生しません。
+  button.eventMode = "dynamic"; // If button.eventMode is set to "static", pointerout events will not be triggered during scrolling and interruption.
   button.on("pointerdown", (e) => {
     redrawButton(0xffffff);
     console.log("  pointer down");
@@ -197,7 +197,7 @@ const getTestButton = () => {
 };
 
 /**
- * DOMContentLoaded以降に初期化処理を実行する
+ * Execute initialization process after DOMContentLoaded
  */
 if (document.readyState !== "loading") {
   onDomContentsLoaded();
