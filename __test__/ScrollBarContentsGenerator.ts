@@ -14,11 +14,15 @@ export class ScrollBarContentsGenerator {
     contentsScale: number,
   ): ScrollBarContents {
     const container = new Container();
-    const targetContents = this.getScrollBarContents(
-      0xff00ff,
+
+    const targetContents = new Container();
+    targetContents.hitArea = new Rectangle(
+      0,
+      0,
       contentsW,
       scrollBarH * contentsScale,
     );
+
     const contentsMask = this.getScrollBarContents(
       0x0000ff,
       contentsW,
