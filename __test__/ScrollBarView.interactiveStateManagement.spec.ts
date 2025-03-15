@@ -23,7 +23,9 @@ describe("ScrollBarView interactive state management", () => {
     DummyPointerEvent.emit(scrollTarget, "pointermove");
     expect(scrollTarget.interactiveChildren).toBe(false);
 
+    // pointerup with velocity 0
     DummyPointerEvent.emit(scrollTarget, "pointerup");
+    // interactiveChildren returns to original value after pointerup
     expect(scrollTarget.interactiveChildren).toBe(undefined);
   });
 });
