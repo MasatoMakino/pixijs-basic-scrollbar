@@ -45,7 +45,13 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
 
     if (scrollBarContents.target.hitArea === undefined) {
       console.warn(
-        "ヒットエリアがスクロールバーコンテンツに設定されていません。ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。",
+        `A hit area has not been set for the scrollbar contents.
+        Without a hit area, drag operations cannot be properly detected.
+        Therefore, it is recommended to set a custom hit area for scrollbar contents.
+
+        ヒットエリアがスクロールバーコンテンツに設定されていません。
+        ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。
+        そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。`,
       );
     }
   }
