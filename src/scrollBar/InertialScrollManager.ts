@@ -158,8 +158,8 @@ export class InertialScrollManager extends EventEmitter {
     this.isDragging = false;
     this.onTick();
 
-    //　ドラッグ終了かつ速度が0の場合、子への操作を再開する。
-    if (this._speed === 0.0) {
+    //　ドラッグ終了かつ速度が0かつtweenが終了している場合、子への操作を再開する。
+    if (this._speed === 0.0 && !this.tween) {
       this.resumeChildrenInteractive();
     }
   };
@@ -182,14 +182,28 @@ export class InertialScrollManager extends EventEmitter {
     //back ease
     this._speed = 0.0;
 
+    const to = this.getClampedPos();
     const toObj = {
-      [this.scrollBarView.isHorizontal ? "x" : "y"]: this.getClampedPos(),
+      [this.scrollBarView.isHorizontal ? "x" : "y"]: to,
     };
 
     this.disposeTween();
     this.tween = new Tween(this.scrollBarView.contents.target)
       .to(toObj, 666)
       .onUpdate(() => {
+        // 位置がほぼ一致したら、tweenを停止し、interactiveChildrenを再開する。
+        const currentPosition = SliderViewUtil.getPosition(
+          this.scrollBarView.contents.target,
+          this.scrollBarView.isHorizontal,
+        );
+        if (Math.abs(currentPosition - to) < 1) {
+          this.stopInertial();
+          SliderViewUtil.setPosition(
+            this.scrollBarView.contents.target,
+            this.scrollBarView.isHorizontal,
+            to,
+          );
+        }
         this.emit("update_target_position");
       })
       .onComplete(() => {
