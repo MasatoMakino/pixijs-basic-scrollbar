@@ -142,6 +142,8 @@ const getScrollBarOption = (contentsW, scrollBarH, container) => {
   const base = getScrollBarContents(contentsW, scrollBarH * 2, container, {
     color: 0xff00ff,
   });
+  base.interactive = false;
+  base.eventMode = "none";
   const targetContainer = new Container();
   targetContainer.hitArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
   targetContainer.addChild(base);
