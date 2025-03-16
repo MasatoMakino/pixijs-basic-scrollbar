@@ -30,6 +30,18 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
   }
 
   private static init(scrollBarContents: ScrollBarContents): void {
+    if (scrollBarContents.target.hitArea == null) {
+      console.warn(
+        `A hit area has not been set for the scrollbar contents.
+Without a hit area, drag operations cannot be properly detected.
+Therefore, it is recommended to set a custom hit area for scrollbar contents.
+
+ヒットエリアがスクロールバーコンテンツに設定されていません。
+ヒットエリアが設定されていないと、ドラッグ中の操作が正常に判定できません。
+そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定するよう推奨します。`,
+      );
+    }
+
     if (scrollBarContents.target.mask !== scrollBarContents.mask) {
       scrollBarContents.target.mask = scrollBarContents.mask;
     }
@@ -42,12 +54,6 @@ export class ScrollBarContents extends EventEmitter<ScrollBarContentsEventType> 
     };
     addToContainer(scrollBarContents.target);
     addToContainer(scrollBarContents.mask);
-
-    if (scrollBarContents.target.hitArea) {
-      console.warn(
-        "Setting a custom hit area on scrollbar contents can lead to a mismatch between the visual area and the interactive area, potentially causing unexpected pointer interactions. Therefore, it is recommended not to set a custom hit area on scrollbar contents. / カスタムヒットエリアがスクロールバーコンテンツに設定されていると、視覚的エリアと操作エリアが一致せず、予期しないポインター操作を引き起こす可能性があります。そのため、スクロールバーコンテンツにはカスタムヒットエリアを設定しないことを推奨します。",
-      );
-    }
   }
 
   /**

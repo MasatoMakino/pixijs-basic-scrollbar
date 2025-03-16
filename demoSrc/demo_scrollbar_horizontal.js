@@ -68,7 +68,7 @@ const getScrollBarButton = (size, color) => {
 
 const getScrollBarContents = (color, w, h, container, alpha = 1.0) => {
   const g = new Graphics().rect(0, 0, w, h).fill({ color, alpha });
-  g.boundsArea = new Rectangle(0, 0, w, h);
+  g.hitArea = new Rectangle(0, 0, w, h);
   container.addChild(g);
   return g;
 };

@@ -5,12 +5,25 @@ import { ScrollBarView, ScrollBarViewUtil } from "./index.js";
 
 /**
  * スクロールバーエリアの慣性スクロールを処理するクラス。
+ *
+ * ** ドラッグ中の処理
+ * - ドラッグすると、慣性スクロールが停止し、子への操作を無効化します。
+ * - 慣性スクロール中にポインターダウンが発生した場合、子への操作を無効化します。
+ * - ドラッグ、慣性スクロールが終了すると、子への操作を再開します。
+ *
+ * 慣性スクロール中の操作中断を行う場合、子のボタンはeventMode="dynamic"を設定してください。
+ * "static"を設定すると、ポインターアウトイベントが正常に発生しません。
  */
 export class InertialScrollManager extends EventEmitter {
   get speed(): number {
     return this._speed;
   }
   private scrollBarView: ScrollBarView;
+  /**
+   * scrollBarView.contents.target.interactiveChildrenの初期値を保持する。
+   * ドラッグ中はfalseに設定し、ドラッグ終了時に元に戻す。
+   */
+  private defaultScrollTargetChildrenInteractive: boolean | undefined;
 
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
@@ -31,6 +44,7 @@ export class InertialScrollManager extends EventEmitter {
 
     const target = this.scrollBarView.contents.target;
     target.eventMode = "static";
+    this.defaultScrollTargetChildrenInteractive = target.interactiveChildren;
 
     this.start();
   }
@@ -77,6 +91,14 @@ export class InertialScrollManager extends EventEmitter {
     this.addDragListener();
   };
 
+  private stopChildrenInteractive() {
+    this.scrollBarView.contents.target.interactiveChildren = false;
+  }
+  private resumeChildrenInteractive() {
+    this.scrollBarView.contents.target.interactiveChildren =
+      this.defaultScrollTargetChildrenInteractive;
+  }
+
   private addDragListener(): void {
     this.switchDragListener(true);
   }
@@ -105,8 +127,15 @@ export class InertialScrollManager extends EventEmitter {
     this.dragPos = this.getDragPos(e);
   }
 
+  /**
+   * スクロールターゲットのドラッグ中処理
+   * @param e
+   * @returns void
+   */
   private onMouseMove = (e: FederatedPointerEvent | PointerEvent) => {
     if (this.dragPos == null) return;
+
+    this.stopChildrenInteractive();
     const delta = this.getDragPos(e) - this.dragPos;
 
     this._speed = delta;
@@ -128,6 +157,11 @@ export class InertialScrollManager extends EventEmitter {
     this.removeDragListener();
     this.isDragging = false;
     this.onTick();
+
+    //　ドラッグ終了かつ速度が0かつtweenが終了している場合、子への操作を再開する。
+    if (this._speed === 0.0 && !this.tween) {
+      this.resumeChildrenInteractive();
+    }
   };
 
   private onTick = () => {
@@ -148,15 +182,32 @@ export class InertialScrollManager extends EventEmitter {
     //back ease
     this._speed = 0.0;
 
+    const to = this.getClampedPos();
     const toObj = {
-      [this.scrollBarView.isHorizontal ? "x" : "y"]: this.getClampedPos(),
+      [this.scrollBarView.isHorizontal ? "x" : "y"]: to,
     };
 
     this.disposeTween();
     this.tween = new Tween(this.scrollBarView.contents.target)
       .to(toObj, 666)
       .onUpdate(() => {
+        // 位置がほぼ一致したら、tweenを停止し、interactiveChildrenを再開する。
+        const currentPosition = SliderViewUtil.getPosition(
+          this.scrollBarView.contents.target,
+          this.scrollBarView.isHorizontal,
+        );
+        if (Math.abs(currentPosition - to) < 1) {
+          this.stopInertial();
+          SliderViewUtil.setPosition(
+            this.scrollBarView.contents.target,
+            this.scrollBarView.isHorizontal,
+            to,
+          );
+        }
         this.emit("update_target_position");
+      })
+      .onComplete(() => {
+        this.stopInertial();
       })
       .easing(Easing.Cubic.Out)
       .start();
@@ -165,6 +216,7 @@ export class InertialScrollManager extends EventEmitter {
   public stopInertial = () => {
     this._speed = 0.0;
     this.disposeTween();
+    this.resumeChildrenInteractive();
   };
 
   private disposeTween = () => {

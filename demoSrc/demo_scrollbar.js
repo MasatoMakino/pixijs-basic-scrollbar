@@ -16,7 +16,7 @@ const onDomContentsLoaded = async () => {
 
   document.body.appendChild(app.canvas);
 
-  const scrollbar = initScrollBar(app.stage, app.canvas);
+  const { scrollbar, base } = initScrollBar(app.stage, app.canvas);
 
   const addButton = (label) => {
     const btnPlus = document.createElement("button");
@@ -28,10 +28,11 @@ const onDomContentsLoaded = async () => {
   const btnMinus = addButton("Contents Size -");
   const changeSize = (dif) => {
     const scrollPosition = scrollbar.rate;
-    overrideContents(scrollbar.contents.target, dif);
+    overrideContents(base, scrollbar.contents.target, dif);
     scrollbar.updateSlider();
     scrollbar.changeRate(scrollPosition);
   };
+
   const onPlus = () => {
     changeSize(64);
   };
@@ -43,7 +44,7 @@ const onDomContentsLoaded = async () => {
 };
 
 /**
- * スクロールバーの実装サンプル
+ * Scrollbar implementation sample
  * @param stage
  */
 const initScrollBar = (stage, view) => {
@@ -57,14 +58,18 @@ const initScrollBar = (stage, view) => {
   container.x = 32;
   container.y = SCROLLBAR_Y;
 
-  const contents = getScrollBarOption(CONTENTS_W, SCROLLBAR_H, container);
+  const { contents, base } = getScrollBarOption(
+    CONTENTS_W,
+    SCROLLBAR_H,
+    container,
+  );
   const scrollbar = new ScrollBarView(
     {
       base: getScrollBarBase(SCROLLBAR_W, SCROLLBAR_H, 0x0000ff),
       button: getScrollBarButton(SCROLLBAR_W, 0xffff00),
       minPosition: 0,
       maxPosition: SCROLLBAR_H,
-      rate: 35.0,
+      rate: 0.0,
       isHorizontal: false,
       canvas: view,
     },
@@ -80,10 +85,10 @@ const initScrollBar = (stage, view) => {
   });
 
   /**
-   * スクロール動作を確認するために、故意にマスクを外しています。
+   * Uncomment the following line to verify scrolling behavior outside the mask.
    */
   // contents.target.mask = null;
-  return scrollbar;
+  return { scrollbar, base };
 };
 
 const getScrollBarBase = (w, h, color) => {
@@ -117,12 +122,12 @@ const getScrollBarContents = (w, h, container, fillStyle) => {
  * @param {Graphics} g
  * @param {number} difHeight
  */
-const overrideContents = (g, difHeight) => {
+const overrideContents = (g, container, difHeight) => {
   const fill = g.fillStyle;
   console.log(g);
   console.log(fill);
 
-  const area = g.boundsArea.clone();
+  const area = container.hitArea.clone();
   area.height += difHeight;
 
   g.clear();
@@ -130,25 +135,69 @@ const overrideContents = (g, difHeight) => {
     color: fill.color,
     alpha: fill.alpha,
   });
-  g.boundsArea = new Rectangle(area.x, area.y, area.width, area.height);
+  container.hitArea = new Rectangle(area.x, area.y, area.width, area.height);
 };
 
 const getScrollBarOption = (contentsW, scrollBarH, container) => {
-  const targetContents = getScrollBarContents(
-    contentsW,
-    scrollBarH * 2,
-    container,
-    { color: 0xff00ff },
-  );
+  const base = getScrollBarContents(contentsW, scrollBarH * 2, container, {
+    color: 0xff00ff,
+  });
+  base.interactive = false;
+  base.eventMode = "none";
+  const targetContainer = new Container();
+  targetContainer.hitArea = new Rectangle(0, 0, contentsW, scrollBarH * 2);
+  targetContainer.addChild(base);
+
   const contentsMask = getScrollBarContents(contentsW, scrollBarH, container, {
     color: 0x0000ff,
     alpha: 0.3,
   });
-  return new ScrollBarContents(targetContents, contentsMask, container);
+
+  const button = getTestButton();
+  targetContainer.addChild(button);
+  button.y = 64;
+  button.x = 64;
+
+  return {
+    contents: new ScrollBarContents(targetContainer, contentsMask, container),
+    base,
+  };
+};
+
+const getTestButton = () => {
+  const button = new Graphics().rect(0, 0, 128, 48).fill(0x00ff00);
+  const redrawButton = (color) => {
+    button.clear();
+    button.rect(0, 0, 128, 48).fill(color);
+  };
+
+  button.cursor = "pointer";
+  button.eventMode = "dynamic"; // If button.eventMode is set to "static", pointerout events will not be triggered during scrolling and interruption.
+  button.on("pointerdown", (e) => {
+    redrawButton(0xffffff);
+    console.log("  pointer down");
+  });
+  button.on("pointerup", (e) => {
+    redrawButton(0x00ff00);
+    console.log("  pointer up");
+  });
+  button.on("pointerout", (e) => {
+    redrawButton(0x00ff00);
+    console.log("pointer out");
+  });
+  button.on("pointerover", (e) => {
+    redrawButton(0x77ff77);
+    console.log("pointerover");
+  });
+  button.on("pointertap", (e) => {
+    redrawButton(0xffff77);
+    console.log("pointer tap");
+  });
+  return button;
 };
 
 /**
- * DOMContentLoaded以降に初期化処理を実行する
+ * Execute initialization process after DOMContentLoaded
  */
 if (document.readyState !== "loading") {
   onDomContentsLoaded();
