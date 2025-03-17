@@ -41,7 +41,7 @@
     "lint-staged": "^15.2.7",
     "pixi.js": "^8.2.5",
     "prettier": "^3.3.3",
-    "typedoc": "^0.27.1",
+    "typedoc": "^0.28.0",
     "typescript": "^5.5.4",
     "webdriverio": "^9.0.1"
   },
