@@ -1,13 +1,16 @@
 # Project Context: pixijs-basic-scrollbar
 
 ## Project Overview
+
 - Project Name: @masatomakino/pixijs-basic-scrollbar
 - Description: Scrollbar modules for pixi.js
 - Version: See package.json
 - License: MIT
 
 ## Language Guidelines
+
 ### Use English For
+
 - Source code and comments
 - Documentation (API docs, README, etc.)
 - Version control (branch names, commit messages)
@@ -16,25 +19,30 @@
 - Type definitions and interfaces
 
 ### Follow User's Language For
+
 - Chat interface interactions
 - Issue discussions and responses
 - Pull request discussions
 - Community communications
 
 ## Technology Stack
+
 ### Core Technologies
+
 - TypeScript
 - PixiJS v8.x
 - TweenJS v25.x
 - ES Modules format
 
 ### Development Tools
+
 - Vitest (Testing framework)
 - TypeDoc (API documentation generator)
 - Prettier (Code formatter)
 - Browser-Sync (Development server)
 
 ## Project Structure
+
 ```
 /
 ├── src/               # Source code
@@ -48,6 +56,7 @@
 ```
 
 ## Development Environment Setup
+
 ```bash
 # Install dependencies
 npm install
@@ -66,6 +75,7 @@ npm run coverage
 ```
 
 ## Version Control Strategy
+
 This project follows the GitHub Flow branching strategy:
 
 1. Create a branch from `main`
@@ -79,7 +89,9 @@ This project follows the GitHub Flow branching strategy:
 6. Merge to `main`
 
 ### Special Branches
+
 #### gh-pages
+
 - Purpose: Hosts demo page and API documentation
 - Updates automatically via GitHub Actions when main branch changes
 - Contains:
@@ -88,6 +100,7 @@ This project follows the GitHub Flow branching strategy:
 - **Important**: Manual updates to this branch are prohibited
 
 ### Release and Deployment Process
+
 - This project is deployed to npm
 - Releases are managed by `@masatomakino/release-helper` CLI tool
 - The release process is triggered by npm version hooks:
@@ -98,7 +111,9 @@ This project follows the GitHub Flow branching strategy:
   3. Package is published to npm
 
 #### Important Restrictions
+
 **The following manual operations are strictly prohibited:**
+
 - Creating version tags manually
 - Creating release Pull Requests manually
 - Running `npm publish` command manually
@@ -109,12 +124,15 @@ For detailed information about GitHub Flow, see:
 [GitHub Flow Guide](https://docs.github.com/en/get-started/using-github/github-flow)
 
 ## Main Components
+
 1. SliderView
+
    - Basic slider component
    - Customizable graphics elements
    - Event-based value change notification
 
 2. ScrollBarView
+
    - UI component for scrollable content
    - Supports inertial scrolling
    - Mouse wheel support
@@ -124,16 +142,19 @@ For detailed information about GitHub Flow, see:
    - Supports vertical and horizontal layouts
 
 ## CI/CD
+
 - Automated testing with GitHub Actions
 - Code quality management with CodeClimate
 - Auto-generated API documentation
 
 ## Important Notes
+
 1. For PixiJS v7 and later, canvas element reference is required as pointer events are not captured in non-drawn areas
 2. Always call dispose() method when removing components (to clean up Ticker references)
 3. All graphic elements are customizable
 
 ## Resources
+
 - [Demo Page](https://masatomakino.github.io/pixijs-basic-scrollbar/demo/index.html)
 - [API Documentation](https://masatomakino.github.io/pixijs-basic-scrollbar/api/)
 - [GitHub Repository](https://github.com/MasatoMakino/pixijs-basic-scrollbar)
