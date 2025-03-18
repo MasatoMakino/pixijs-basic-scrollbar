@@ -99,7 +99,7 @@ git branch --show-current
 git log main...HEAD --pretty=format:"Commit: %H%nSubject: %s%nBody: %b" --name-status
 
 # 詳細な差分を確認
-git diff main...HEAD
+git --no-pager diff main...HEAD
 ```
 
 これらの情報を使用して：
@@ -270,3 +270,7 @@ git push origin <branch-name>
 - 特別な注意が必要な実装箇所
 - レビュー時の確認ポイント
 - 上記の必須項目では説明しきれない補足情報がある場合は、ここに記載する
+
+#### 3.3 PRの作成
+
+手順3.2で作成されたPR説明文を元に、ghコマンドでPRを作成します。
