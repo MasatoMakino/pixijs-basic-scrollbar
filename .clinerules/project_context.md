@@ -36,6 +36,15 @@
 
 ### Development Tools
 
+#### Required Tools
+
+- GitHub CLI (gh)
+  - Required for all development workflows
+  - Used for issue and PR management
+  - Required for release process
+
+#### Build and Development Tools
+
 - Vitest (Testing framework)
 - TypeDoc (API documentation generator)
 - Prettier (Code formatter)
