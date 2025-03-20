@@ -1,5 +1,12 @@
 # Pull Request Rules
 
+## 前提条件
+
+このドキュメントのすべてのルールは、GitHub CLI (gh) の使用を前提としています。
+ghコマンドはPull Request作成・管理の基本ツールとして必須です。
+ただし、プロジェクトコンテキストで別のGitホスティングサービスの使用が明記されている場合は、
+その指示を優先してください。
+
 ## Pull Requestの目的
 
 Pull Requestはコミュニティとのコミュニケーションツールであり、以下の2つの主要な目的があります：
@@ -273,4 +280,12 @@ git push origin <branch-name>
 
 #### 3.3 PRの作成
 
-手順3.2で作成されたPR説明文を元に、ghコマンドでPRを作成します。
+手順3.2で作成されたPR説明文を元に、次のghコマンドでPRを作成します：
+
+```bash
+# PR作成
+gh pr create --title "PRタイトル" --body "PR説明文"
+
+# 作成したPRの確認
+gh pr view
+```
