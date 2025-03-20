@@ -195,48 +195,56 @@ git switch -c タイプ/issue-番号-目的
    - `perf/` - パフォーマンス改善
    - `docs/` - ドキュメント更新
 
-2. Issue番号：`issue-番号`
+2. Issue番号（関連Issueが存在する場合のみ）：`issue-番号`
+
+   - 関連するIssueが存在する場合は必ずIssue番号を含める
+   - 関連するIssueが存在しない場合はIssue番号を含めない
+   - 変更の重要度や影響範囲に関係なく、Issueの存在有無のみで判断する
 
 3. 目的：ヒアリングで抽出した課題の解決方法を短く要約（ケバブケース）
 
 ### ヒアリング結果からブランチ名への変換例
 
-例1: スクロール操作の改善要望
+例1: 関連Issueが存在する場合
 
 ```
 ヒアリング結果：
 - 課題：スクロールがスムーズでない
 - 解決策：慣性スクロールの実装
 - 変更種類：Feature
+- 関連Issue：#123が存在
 → ブランチ名：feature/issue-123-add-inertial-scroll
 ```
 
-例2: メモリリーク対応
+例2: 関連Issueが存在する場合
 
 ```
 ヒアリング結果：
 - 課題：長時間使用でメモリ使用量が増加
 - 解決策：Tickerの解放処理の修正
 - 変更種類：Bug Fix
+- 関連Issue：#456が存在
 → ブランチ名：fix/issue-456-cleanup-ticker-refs
 ```
 
-例3: テストカバレッジ向上
+例3: 関連Issueが存在しない場合
 
 ```
 ヒアリング結果：
-- 課題：ScrollBarViewのテスト不足
-- 解決策：イベント発火のテスト追加
+- 課題：ブランチ命名規則の説明を改善
+- 解決策：ドキュメントの更新
+- 変更種類：Documentation
+- 関連Issue：なし
+→ ブランチ名：docs/update-branch-naming-rules
+```
+
+例4: 関連Issueが存在しない場合
+
+```
+ヒアリング結果：
+- 課題：テストケースの追加
+- 解決策：新しいテストの実装
 - 変更種類：Test
-→ ブランチ名：test/issue-789-add-event-tests
-```
-
-例4: パフォーマンス最適化
-
-```
-ヒアリング結果：
-- 課題：描画処理が重い
-- 解決策：キャッシュの活用
-- 変更種類：Performance
-→ ブランチ名：perf/issue-012-optimize-rendering
+- 関連Issue：なし
+→ ブランチ名：test/add-scrollbar-tests
 ```
