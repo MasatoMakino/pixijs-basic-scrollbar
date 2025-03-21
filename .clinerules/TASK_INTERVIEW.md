@@ -346,6 +346,38 @@ git switch -c タイプ/issue-番号-目的
 
 3. 目的：ヒアリングで抽出した課題の解決方法を短く要約（ケバブケース）
 
+   重要な注意事項：
+
+   - 「改善」「明確化」などの抽象的な表現を避ける
+   - 代わりに具体的な動詞を使用する
+
+   例）抽象的な表現とその具体的な代替案：
+
+   - 「改善する」の代わりに：
+
+     - add-xxx（追加する）
+     - update-xxx（更新する）
+     - extend-xxx（拡張する）
+     - optimize-xxx（最適化する）
+     - refactor-xxx（リファクタリングする）
+     - restructure-xxx（再構築する）
+
+   - 「明確化する」の代わりに：
+     - add-xxx-description（説明を追加する）
+     - update-xxx-definition（定義を更新する）
+     - split-xxx（分割する）
+     - separate-xxx（分離する）
+     - standardize-xxx（標準化する）
+
+   ブランチ名の例：
+
+   - 悪い例：improve-error-handling
+   - 良い例：add-error-retry-logic
+   - 悪い例：clarify-module-structure
+   - 良い例：separate-core-modules
+   - 悪い例：improve-performance
+   - 良い例：optimize-render-loop
+
 ### ヒアリング結果からブランチ名への変換例
 
 例1: 関連Issueが存在する場合
