@@ -72,14 +72,16 @@ graph TD
     F -->|不要| H[開発ブランチ作成]
     G --> H
 
-    H --> End[完了]
+    H --> I[ブランチdescriptionの設定]
+    I --> End[完了]
 ```
 
 **完了条件**：
-以下の2点が満たされた時点でタスクヒアリングプロセスは完了となります：
+以下の3点が満たされた時点でタスクヒアリングプロセスは完了となります：
 
 1. タスク定義が文章化されていること
 2. GitHub flowに従った作業ブランチが作成されていること
+3. ヒアリング結果がブランチdescriptionに保存されていること
 
 ## 1. 課題意識の抽出
 
@@ -330,12 +332,50 @@ gh issue create
 - 更新後の確認項目
 ```
 
-## 5. 開発ブランチの作成
+## 5. 開発ブランチの作成とヒアリング結果の保存
+
+ブランチの作成とヒアリング結果の保存は以下の順序で行います：
+
+1. ブランチの作成
 
 ```bash
 git switch main
 git pull origin main
 git switch -c タイプ/issue-番号-目的
+```
+
+2. ヒアリング結果の保存
+
+```bash
+# ブランチdescriptionを設定
+git config branch.<ブランチ名>.description "# タスクヒアリング結果
+
+## 変更種類
+[Feature/Bug Fix/Test/Maintenance/Performance/Documentation]
+
+## 影響度
+[Breaking Change/Minor Change/Patch]
+
+## 課題の概要
+[対象]を[どのように]変更することで、[どのような効果]を期待する
+
+## 解決手段
+- 選択したアプローチ：
+- 検討した代替案：
+- 選択理由：
+
+## 実装計画
+- [ ] タスク1
+- [ ] タスク2
+...
+
+## 技術的な考慮事項
+- 影響範囲：
+- 制約事項：
+- 注意点："
+
+# 設定内容の確認
+git config branch.<ブランチ名>.description
 ```
 
 ### ブランチ名の構成
@@ -391,48 +431,52 @@ git switch -c タイプ/issue-番号-目的
 
 ### ヒアリング結果からブランチ名への変換例
 
-例1: 関連Issueが存在する場合
+例1：関連Issueが存在する場合
 
-```
+```markdown
 ヒアリング結果：
+
 - 課題：スクロールがスムーズでない
 - 解決策：慣性スクロールの実装
 - 変更種類：Feature
 - 関連Issue：#123が存在
-→ ブランチ名：feature/issue-123-add-inertial-scroll
+  → ブランチ名：feature/issue-123-add-inertial-scroll
 ```
 
-例2: 関連Issueが存在する場合
+例2：関連Issueが存在する場合
 
-```
+```markdown
 ヒアリング結果：
+
 - 課題：長時間使用でメモリ使用量が増加
 - 解決策：Tickerの解放処理の修正
 - 変更種類：Bug Fix
 - 関連Issue：#456が存在
-→ ブランチ名：fix/issue-456-cleanup-ticker-refs
+  → ブランチ名：fix/issue-456-cleanup-ticker-refs
 ```
 
-例3: 関連Issueが存在しない場合
+例3：関連Issueが存在しない場合
 
-```
+```markdown
 ヒアリング結果：
+
 - 課題：ブランチ命名規則の説明を改善
 - 解決策：ドキュメントの更新
 - 変更種類：Documentation
 - 関連Issue：なし
-→ ブランチ名：docs/update-branch-naming-rules
+  → ブランチ名：docs/update-branch-naming-rules
 ```
 
-例4: 関連Issueが存在しない場合
+例4：関連Issueが存在しない場合
 
-```
+```markdown
 ヒアリング結果：
+
 - 課題：テストケースの追加
 - 解決策：新しいテストの実装
 - 変更種類：Test
 - 関連Issue：なし
-→ ブランチ名：test/add-scrollbar-tests
+  → ブランチ名：test/add-scrollbar-tests
 ```
 
 # 次のステップ
@@ -445,6 +489,6 @@ git switch -c タイプ/issue-番号-目的
    - コミットメッセージは具体的な変更内容を示す
 
 2. PR作成フェーズ（実装完了後）
-   - pr_creation_guide.md の手順書に従う
+   - pr_creation_guide.mdの手順書に従う
    - 手順は必ず最初から順番に実行する
    - 手順のスキップや順序の変更は行わない

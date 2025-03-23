@@ -141,6 +141,9 @@ gh issue view $issue_number
 # 現在のブランチ名を確認
 git branch --show-current
 
+# ブランチの説明を取得
+git config branch.$(git branch --show-current).description
+
 # mainブランチとの差分を確認（コミット一覧）
 git log main...HEAD --pretty=format:"Commit: %H%nSubject: %s%nBody: %b" --name-status
 
@@ -150,11 +153,12 @@ git --no-pager diff main...HEAD
 
 これらの情報を使用して：
 
-1. 変更されたファイルの一覧を作成
-2. 各ファイルの変更内容を分析
-3. コミットメッセージから変更の意図を抽出
-4. ブランチ名から作業の目的を推測
-5. 変更の種類と影響度を判断
+1. ブランチdescriptionからタスクの背景と実装計画を取得
+2. 変更されたファイルの一覧を作成
+3. 各ファイルの変更内容を分析
+4. コミットメッセージから変更の意図を抽出
+5. ブランチ名から作業の目的を確認
+6. 変更の種類と影響度を判断
 
 ### 2. PRタイトルの決定
 
