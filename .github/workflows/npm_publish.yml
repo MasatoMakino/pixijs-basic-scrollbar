@@ -1,7 +1,7 @@
 name: Publish to NPM
 on:
   release:
-    types: [created]
+    types: [published]
 jobs:
   npm-publish:
     runs-on: ubuntu-22.04
@@ -16,7 +16,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - name: build binary
-        run: npm run buildTS
+        run: npm run build
       - name: Publish package on NPM 📦
         run: npm publish --access public
         env:
