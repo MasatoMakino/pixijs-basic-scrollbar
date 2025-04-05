@@ -1,4 +1,4 @@
-import { Ticker } from "pixi.js";
+import { Graphics, Rectangle, Ticker } from "pixi.js";
 import {
   afterAll,
   afterEach,
@@ -210,6 +210,83 @@ describe("ScrollBarView", () => {
       updateTicker(16 * 5);
       expect(scrollbar.rate).toBeCloseTo(2.519);
       expect(inertial.speed).toBe(0);
+    });
+  });
+
+  describe("refreshAfterContentsResize", () => {
+    test("コンテンツエリアがマスク以下の場合、先頭位置に配置される", () => {
+      const W = 100;
+      const H = 100;
+      const SCROLL_BAR_W = 16;
+      // コンテンツがマスクより大きい初期状態
+      const CONTENTS_SCALE = 2.0;
+      const { scrollBarContents, scrollbar } =
+        ScrollBarViewGenerator.generateScrollBarSet(
+          W,
+          H,
+          SCROLL_BAR_W,
+          CONTENTS_SCALE,
+          "TestScrollBar_refreshAfterContentsResize_small",
+        );
+
+      scrollbar.changeRate(0.5); // 中間位置に設定
+
+      // コンテンツを縮小
+      const container = scrollBarContents.target;
+      container.hitArea = new Rectangle(0, 0, W, H * 0.5);
+      scrollbar.refreshAfterContentsResize();
+
+      expect(scrollbar.contents.target.y).toBeCloseTo(0.0); // 先頭位置に配置される
+    });
+
+    test("マスク以上かつ中間位置の場合、スクロール位置が維持される", () => {
+      const W = 100;
+      const H = 100;
+      const SCROLL_BAR_W = 16;
+      const CONTENTS_SCALE = 2.0;
+      const { scrollBarContents, scrollbar } =
+        ScrollBarViewGenerator.generateScrollBarSet(
+          W,
+          H,
+          SCROLL_BAR_W,
+          CONTENTS_SCALE,
+          "TestScrollBar_refreshAfterContentsResize_middle",
+        );
+
+      scrollbar.changeRate(0.5); // 中間位置に設定
+      const containerPosition = scrollBarContents.target.y;
+
+      // コンテンツサイズを変更（ただし表示範囲を超えたまま）
+      const container = scrollBarContents.target;
+      container.hitArea = new Rectangle(0, 0, W, H * 1.8);
+
+      scrollbar.refreshAfterContentsResize();
+      expect(scrollBarContents.target.y).toBeCloseTo(containerPosition); // 位置が維持される
+    });
+
+    test("マスク以上で下端を超える場合、後端に配置される", () => {
+      const W = 100;
+      const H = 100;
+      const SCROLL_BAR_W = 16;
+      const CONTENTS_SCALE = 2.0;
+      const { scrollBarContents, scrollbar } =
+        ScrollBarViewGenerator.generateScrollBarSet(
+          W,
+          H,
+          SCROLL_BAR_W,
+          CONTENTS_SCALE,
+          "TestScrollBar_refreshAfterContentsResize_exceed",
+        );
+
+      scrollbar.changeRate(1.0); // 末尾位置に設定
+
+      // コンテンツを縮小（現在位置が末尾を超えるように）
+      const container = scrollBarContents.target;
+      container.hitArea = new Rectangle(0, 0, W, H * 1.2);
+      container.boundsArea = new Rectangle(0, 0, W, H * 1.2);
+
+      scrollbar.refreshAfterContentsResize();
+      expect(scrollbar.rate).toBe(1.0); // 末尾位置に配置される
     });
   });
 
