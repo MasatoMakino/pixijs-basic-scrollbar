@@ -3,7 +3,6 @@ import {
   Container,
   Graphics,
   Rectangle,
-  Ticker,
   sayHello,
   RendererType,
 } from "pixi.js";
@@ -27,10 +26,8 @@ const onDomContentsLoaded = async () => {
   const btnPlus = addButton("Contents Size +");
   const btnMinus = addButton("Contents Size -");
   const changeSize = (dif) => {
-    const scrollPosition = scrollbar.rate;
     overrideContents(base, scrollbar.contents.target, dif);
-    scrollbar.updateSlider();
-    scrollbar.changeRate(scrollPosition);
+    scrollbar.refreshAfterContentsResize();
   };
 
   const onPlus = () => {
@@ -124,9 +121,6 @@ const getScrollBarContents = (w, h, container, fillStyle) => {
  */
 const overrideContents = (g, container, difHeight) => {
   const fill = g.fillStyle;
-  console.log(g);
-  console.log(fill);
-
   const area = container.hitArea.clone();
   area.height += difHeight;
 
