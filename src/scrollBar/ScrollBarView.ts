@@ -210,6 +210,45 @@ export class ScrollBarView extends SliderView {
     this.scrollBarEventEmitter.emit("stop_inertial_tween");
   }
 
+  /**
+   * Refresh the scrollbar and content position after the scroll contents have been resized.
+   *
+   * When the content size is changed, the following update process must be performed in order:
+   * 1. Save the current scroll position
+   * 2. Update the scrollbar size and position
+   * 3. Restore the scroll position
+   *
+   * Note: The scroll position will be automatically adjusted to valid range by changeRate.
+   * - If content size <= mask size: Will be set to start position (rate = 0)
+   * - If content size > mask size:
+   *   - Will maintain position if within valid range
+   *   - Will adjust to end if position exceeds the end
+   *
+   * スクロールコンテンツのサイズが変更された後に、スクロールバーとコンテンツ位置をリフレッシュする
+   *
+   * コンテンツのサイズを変更した場合、以下の順序で更新処理を行う必要があります：
+   * 1. 現在のスクロール位置を一時保存
+   * 2. スクロールバーのサイズと位置を更新
+   * 3. スクロール位置を再設定
+   *
+   * 注意：スクロール位置は changeRate によって自動的に有効範囲に調整されます。
+   * - コンテンツサイズ <= マスクサイズの場合：先頭位置になります（rate = 0）
+   * - コンテンツサイズ > マスクサイズの場合：
+   *   - 有効範囲内なら位置を維持
+   *   - 範囲外なら末尾に自動調整
+   */
+  public refreshAfterContentsResize(): void {
+    const currentY = this.contents.target.y;
+    this.updateSlider();
+    ScrollBarViewUtil.clampTargetPosition(
+      this.contents.target,
+      this.contents.mask,
+      currentY,
+      this.isHorizontal,
+    );
+    this.updateSliderPosition();
+  }
+
   protected override onDisposeFunction(): void {
     this.contents.dispose();
     this.inertialManager.dispose();
