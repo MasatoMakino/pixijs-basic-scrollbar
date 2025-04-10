@@ -199,10 +199,10 @@ export class SliderView extends Container {
    * スライダーのドラッグ終了時の処理
    */
   private moveSliderFinish = (e?: FederatedPointerEvent | PointerEvent) => {
-    // 終了イベントを発行したポインターが、記録中のポインターIDと異なる場合は無視
-    // (pointerupoutsideなど、pointerIdが取得できない場合も考慮してnullチェックはしない)
-    if (e && e.pointerId !== this.activePointerId) return;
+    // イベントeが存在し、かつpointerIdプロパティを持ち、かつそのIDが記録中のIDと異なる場合は無視
+    if (e?.pointerId != null && e.pointerId !== this.activePointerId) return;
 
+    // 上記以外の場合（イベントがない、pointerIdがない、またはIDが一致する）はクリア処理に進む
     this.activePointerId = null; // ポインターIDをクリア
 
     SliderViewUtil.removeEventListenerFromTarget(

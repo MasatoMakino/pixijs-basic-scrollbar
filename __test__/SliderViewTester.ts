@@ -18,8 +18,10 @@ export class SliderViewTester {
     target: Container,
     globalX: number,
     globalY: number,
+    pointerId: number = 1, // Add pointerId option, default to 1
   ) {
     return {
+      pointerId: pointerId, // Always include pointerId
       currentTarget: target,
       globalX: globalX,
       globalY: globalY,
@@ -34,6 +36,7 @@ export class SliderViewTester {
     target: Container | HTMLCanvasElement,
     pos: number,
     type: keyof ContainerEvents<ContainerChild>,
+    pointerId: number = 1, // Add pointerId option
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
@@ -41,6 +44,7 @@ export class SliderViewTester {
       target as Container,
       globalX,
       globalY,
+      pointerId, // Pass pointerId correctly
     );
     DummyPointerEvent.emit(target, type, e);
   }
@@ -90,13 +94,16 @@ export class SliderViewTester {
     sliders: SliderSet,
     pos: number,
     option?: TestRateOption,
+    pointerId: number = 1, // Add pointerId option
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
       sliders.sliderBase,
       pos,
       "pointertap",
+      pointerId, // Pass pointerId
     );
+    // SliderViewTester.testRate(...) call remains unchanged below
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
 
@@ -105,6 +112,7 @@ export class SliderViewTester {
     pos: number,
     type: keyof ContainerEvents<ContainerChild>,
     option?: TestRateOption,
+    pointerId: number = 1, // Add pointerId option
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
@@ -113,6 +121,7 @@ export class SliderViewTester {
         : sliders.sliderButton,
       pos,
       type,
+      pointerId,
     );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
