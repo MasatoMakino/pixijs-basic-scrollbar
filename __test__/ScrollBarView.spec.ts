@@ -433,6 +433,13 @@ describe("ScrollBarView with autoHide", () => {
   });
 });
 
+/**
+ * ダミーのタイマーを更新し、慣性スクロールのアニメーションを進行させる。
+ * @param t アプリケーション実行開始からの総時間（ミリ秒）
+ *
+ * マルチタッチのテストでは慣性スクロールの影響を考慮する必要がないため、
+ * この関数を呼び出す必要はありません。
+ */
 const updateTicker = (t: number) => {
   Ticker.shared.update(t);
 };
