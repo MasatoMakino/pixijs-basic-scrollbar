@@ -81,6 +81,126 @@ describe("SliderView", () => {
     expect(sliders.slider.children.length).toBe(0);
     expect(sliders.sliderButton.listenerCount("pointerdown")).toBe(0);
   });
+
+  describe("multi-touch interactions", () => {
+    const sliderSize = 100;
+    const option = SliderOptionGenerator.generateOption(sliderSize, sliderSize);
+    const sliders = SliderGenerator.initSlider(option);
+
+    beforeEach(() => {
+      DummyPointerEvent.emit(sliders.sliderButton, "pointerup");
+      // Start from rate 0.0 for multi-touch tests
+      sliders.slider.changeRate(0.0);
+      sliders.spyLog.mockReset();
+    });
+
+    test("during drag with pointer 1, tap base with pointer 2 should be ignored", () => {
+      // 1. Start drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        0,
+        "pointerdown",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 2. Move drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.3,
+        "pointermove",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 3. Tap base with pointer 2 (should be ignored)
+      SliderViewTester.controlButton(
+        sliders.slider.isHorizontal,
+        sliders.sliderBase,
+        sliders.size * 0.8,
+        "pointertap",
+        2,
+      );
+      // Rate should NOT change due to pointer 2 tap
+      expect(sliders.slider.rate).toBe(0.3);
+
+      // 4. Continue move drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.6,
+        "pointermove",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 5. End drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.6,
+        "pointerup",
+        { hasChangedEvent: false },
+        1,
+      );
+    });
+
+    test("during drag with pointer 1, attempt to drag with pointer 2 should be ignored", () => {
+      // 1. Start drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        0,
+        "pointerdown",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 2. Move drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.3,
+        "pointermove",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 3. Attempt to start drag with pointer 2 (should be ignored)
+      SliderViewTester.controlButton(
+        sliders.slider.isHorizontal,
+        sliders.sliderButton,
+        sliders.size * 0.7,
+        "pointerdown",
+        2,
+      );
+      expect(sliders.slider.rate).toBe(0.3); // Rate should not change
+
+      // 4. Attempt to move with pointer 2 (should be ignored)
+      SliderViewTester.controlButton(
+        sliders.slider.isHorizontal,
+        sliders.slider.buttonRootContainer,
+        sliders.size * 0.9,
+        "pointermove",
+        2,
+      );
+      expect(sliders.slider.rate).toBe(0.3); // Rate should not change
+
+      // 5. Continue move with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.6,
+        "pointermove",
+        { hasChangedEvent: false },
+        1,
+      );
+
+      // 6. End drag with pointer 1
+      SliderViewTester.dragButton(
+        sliders,
+        sliders.size * 0.6,
+        "pointerup",
+        { hasChangedEvent: false },
+        1,
+      );
+    });
+  });
 });
 
 describe("Minimal SliderView", () => {
