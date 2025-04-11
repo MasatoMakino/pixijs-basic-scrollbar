@@ -3,6 +3,22 @@ import { expect } from "vitest";
 import { DummyPointerEvent } from "./DummpyPointerEvent.js";
 import { SliderSet } from "./SliderGenerator.js";
 
+/**
+ * SliderViewのテストヘルパークラス
+ *
+ * このクラスには2種類のヘルパー関数が含まれる：
+ *
+ * 1. 低レベル操作関数
+ *    - controlButton, generateInteractionEvent
+ *    - 単純なイベント発火のみを行い、テストは含まない
+ *    - マルチタッチテストなどで使用
+ *
+ * 2. 高レベルテスト関数
+ *    - dragButton, tapBase, changeRate, changeRateTest, tabBaseTest
+ *    - 内部でtestRateを呼び出し、rateの変化を自動的に検証
+ *    - 通常の単一操作のテストで使用
+ */
+
 export class TestRateOption {
   hasChangedEvent?: boolean;
 
@@ -18,8 +34,10 @@ export class SliderViewTester {
     target: Container,
     globalX: number,
     globalY: number,
+    pointerId: number = 1, // Add pointerId option, default to 1
   ) {
     return {
+      pointerId: pointerId, // Always include pointerId
       currentTarget: target,
       globalX: globalX,
       globalY: globalY,
@@ -34,6 +52,7 @@ export class SliderViewTester {
     target: Container | HTMLCanvasElement,
     pos: number,
     type: keyof ContainerEvents<ContainerChild>,
+    pointerId: number = 1, // Add pointerId option
   ) {
     const globalX = isHorizontal ? pos : 0;
     const globalY = isHorizontal ? 0 : pos;
@@ -41,6 +60,7 @@ export class SliderViewTester {
       target as Container,
       globalX,
       globalY,
+      pointerId, // Pass pointerId correctly
     );
     DummyPointerEvent.emit(target, type, e);
   }
@@ -77,6 +97,9 @@ export class SliderViewTester {
     }
   }
 
+  /**
+   * rateを変更し、その結果をテストする高レベルヘルパー関数
+   */
   public static changeRate(
     sliders: SliderSet,
     rate: number,
@@ -86,25 +109,35 @@ export class SliderViewTester {
     SliderViewTester.testRate(sliders, rate, option);
   }
 
+  /**
+   * ベースをタップする高レベルヘルパー関数
+   */
   public static tapBase(
     sliders: SliderSet,
     pos: number,
     option?: TestRateOption,
+    pointerId: number = 1, // Add pointerId option
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
       sliders.sliderBase,
       pos,
       "pointertap",
+      pointerId, // Pass pointerId
     );
+    // SliderViewTester.testRate(...) call remains unchanged below
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
 
+  /**
+   * ボタンをドラッグする高レベルヘルパー関数
+   */
   public static dragButton(
     sliders: SliderSet,
     pos: number,
     type: keyof ContainerEvents<ContainerChild>,
     option?: TestRateOption,
+    pointerId: number = 1, // Add pointerId option
   ) {
     SliderViewTester.controlButton(
       sliders.slider.isHorizontal,
@@ -113,16 +146,23 @@ export class SliderViewTester {
         : sliders.sliderButton,
       pos,
       type,
+      pointerId,
     );
     SliderViewTester.testRate(sliders, pos / sliders.size, option);
   }
 
+  /**
+   * 基本的なrate変更テストを実行する高レベルヘルパー関数
+   */
   public static changeRateTest(sliders: SliderSet) {
     SliderViewTester.changeRate(sliders, 0.0);
     SliderViewTester.changeRate(sliders, 0.5);
     SliderViewTester.changeRate(sliders, 1.0);
   }
 
+  /**
+   * ベースタップテストを実行する高レベルヘルパー関数
+   */
   public static tabBaseTest(sliders: SliderSet) {
     SliderViewTester.tapBase(sliders, 0.0);
     SliderViewTester.tapBase(sliders, 0.5 * sliders.size);

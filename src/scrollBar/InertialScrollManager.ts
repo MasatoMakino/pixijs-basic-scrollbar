@@ -28,7 +28,7 @@ export class InertialScrollManager extends EventEmitter {
   public decelerationRate: number = 0.975;
   public overflowScrollRange: number = 180;
   private _speed: number = 0.0;
-  protected isDragging: boolean = false;
+  private activePointerId: number | null = null; // ドラッグ操作中のポインターID
   protected dragPos?: number;
 
   private tween?: Tween;
@@ -82,9 +82,12 @@ export class InertialScrollManager extends EventEmitter {
   }
 
   private onMouseDown = (e: FederatedPointerEvent) => {
+    // すでに別のポインターでドラッグ中の場合は無視
+    if (this.activePointerId !== null) return;
+    this.activePointerId = e.pointerId; // ポインターIDを記録
+
     this.updateDragPos(e);
 
-    this.isDragging = true;
     this._speed = 0.0;
     if (this.tween) this.disposeTween();
 
@@ -133,6 +136,9 @@ export class InertialScrollManager extends EventEmitter {
    * @returns void
    */
   private onMouseMove = (e: FederatedPointerEvent | PointerEvent) => {
+    // 記録したポインターIDと異なる、またはドラッグ中でない場合は無視
+    if (this.activePointerId === null || e.pointerId !== this.activePointerId)
+      return;
     if (this.dragPos == null) return;
 
     this.stopChildrenInteractive();
@@ -153,9 +159,13 @@ export class InertialScrollManager extends EventEmitter {
     this.emit("update_target_position");
   }
 
-  private onMouseUp = () => {
+  private onMouseUp = (e?: FederatedPointerEvent | PointerEvent) => {
+    // 終了イベントを発行したポインターが、記録中のポインターIDと異なる場合は無視
+    // (pointerupoutsideなど、pointerIdが取得できない場合も考慮してnullチェックはしない)
+    if (e && e.pointerId !== this.activePointerId) return;
+
     this.removeDragListener();
-    this.isDragging = false;
+    this.activePointerId = null; // ポインターIDをクリア
     this.onTick();
 
     //　ドラッグ終了かつ速度が0かつtweenが終了している場合、子への操作を再開する。
@@ -167,7 +177,8 @@ export class InertialScrollManager extends EventEmitter {
   private onTick = () => {
     this.tween?.update();
 
-    if (this.isDragging) return;
+    // ドラッグ中は慣性計算を行わない
+    if (this.activePointerId !== null) return;
     if (this._speed === 0.0 && this.getLeaveRangeFromMask() === 0.0) return;
     if (this.tween?.isPlaying()) return;
 

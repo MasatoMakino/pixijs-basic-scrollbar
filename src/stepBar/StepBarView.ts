@@ -15,6 +15,7 @@ export interface StepBarEventTypes {
  */
 export class StepBarView extends Container {
   private option: InitializedStepBarOption;
+  private activePointerId: number | null = null;
   readonly stepBarEventEmitter = new EventEmitter<StepBarEventTypes>();
 
   protected _value: number;
@@ -147,16 +148,26 @@ export class StepBarView extends Container {
     };
 
     // ドラッグ中の処理
-    base.on("pointerdown", () => {
+    base.on("pointerdown", (e: FederatedPointerEvent) => {
+      // すでに別のポインターでドラッグ中の場合は無視
+      if (this.activePointerId !== null) return;
+      this.activePointerId = e.pointerId;
       addEventListenerToTarget();
     });
-    base.on("pointerup", () => {
+    base.on("pointerup", (e: FederatedPointerEvent) => {
+      // イベントがIDを持ち、かつそのIDが記録中のIDと異なる場合は無視
+      if (e.pointerId != null && e.pointerId !== this.activePointerId) return;
+      this.activePointerId = null;
       removeEventListenerFromTarget();
     });
-    base.on("pointerupoutside", () => {
+    base.on("pointerupoutside", (e: FederatedPointerEvent) => {
+      if (e.pointerId != null && e.pointerId !== this.activePointerId) return;
+      this.activePointerId = null;
       removeEventListenerFromTarget();
     });
-    base.on("pointercancel", () => {
+    base.on("pointercancel", (e: FederatedPointerEvent) => {
+      if (e.pointerId != null && e.pointerId !== this.activePointerId) return;
+      this.activePointerId = null;
       removeEventListenerFromTarget();
     });
   };
@@ -168,6 +179,10 @@ export class StepBarView extends Container {
   protected updateValueFromPointerEvent = (
     e: FederatedPointerEvent | PointerEvent,
   ) => {
+    // 記録したIDと異なる場合は無視
+    if (this.activePointerId !== null && e.pointerId !== this.activePointerId) {
+      return;
+    }
     const {
       minValue,
       maxValue,
