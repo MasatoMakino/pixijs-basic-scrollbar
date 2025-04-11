@@ -294,6 +294,45 @@ describe("StepBarView.base", () => {
     expect(stepBar.value).toBe(50);
   });
 
+  describe("multi-touch interactions", () => {
+    it("during drag with pointer 1, pointer 2 operations should be ignored", () => {
+      const stepBar = new StepBarView(getDefaultValue());
+
+      // ポインター1でドラッグ開始
+      SliderViewTester.controlButton(true, base, 0, "pointerdown", 1);
+      SliderViewTester.controlButton(true, base, 40, "pointermove", 1);
+      expect(stepBar.value).toBe(40);
+
+      // ポインター2の操作は無視される
+      SliderViewTester.controlButton(true, base, 80, "pointerdown", 2);
+      expect(stepBar.value).toBe(40);
+      SliderViewTester.controlButton(true, base, 80, "pointermove", 2);
+      expect(stepBar.value).toBe(40); // 値は変化しない
+
+      // ポインター1の操作は継続可能
+      SliderViewTester.controlButton(true, base, 60, "pointermove", 1);
+      expect(stepBar.value).toBe(60);
+    });
+
+    it("pointer 2 up/cancel should not stop pointer 1 drag", () => {
+      const stepBar = new StepBarView(getDefaultValue());
+
+      // ポインター1でドラッグ開始
+      SliderViewTester.controlButton(true, base, 0, "pointerdown", 1);
+      SliderViewTester.controlButton(true, base, 40, "pointermove", 1);
+      expect(stepBar.value).toBe(40);
+
+      // ポインター2のup/cancelイベントはポインター1のドラッグに影響しない
+      SliderViewTester.controlButton(true, base, 40, "pointerup", 2);
+      SliderViewTester.controlButton(true, base, 60, "pointermove", 1);
+      expect(stepBar.value).toBe(60);
+
+      SliderViewTester.controlButton(true, base, 60, "pointercancel", 2);
+      SliderViewTester.controlButton(true, base, 80, "pointermove", 1);
+      expect(stepBar.value).toBe(80);
+    });
+  });
+
   it("should stop dragging when pointercancel", () => {
     const stepBar = new StepBarView(getDefaultValue());
     SliderViewTester.controlButton(true, base, 0, "pointerdown");

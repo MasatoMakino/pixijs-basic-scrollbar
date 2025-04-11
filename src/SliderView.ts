@@ -47,7 +47,7 @@ export class SliderView extends Container {
     return this._rate;
   }
   public static readonly MAX_RATE: number = 1.0;
-  private isDragging: Boolean = false; // 現在スライド中か否か
+  private activePointerId: number | null = null; // ドラッグ操作中のポインターID
   readonly sliderEventEmitter = new EventEmitter<SliderEventTypes>();
 
   /**
@@ -84,7 +84,7 @@ export class SliderView extends Container {
    */
   public changeRate(rate: number): void {
     //ドラッグ中は外部からの操作を無視する。
-    if (this.isDragging) return;
+    if (this.activePointerId !== null) return;
 
     this._rate = rate;
     const pos: number = this.convertRateToPixel(this._rate);
@@ -105,7 +105,10 @@ export class SliderView extends Container {
   };
 
   protected onPressedSliderButton(e: FederatedPointerEvent): void {
-    this.isDragging = true;
+    // すでに別のポインターでドラッグ中の場合は無視
+    if (this.activePointerId !== null) return;
+    this.activePointerId = e.pointerId; // ポインターIDを記録
+
     const target: Container = e.currentTarget as Container;
 
     const localPos = this.toLocal(e.global);
@@ -124,8 +127,18 @@ export class SliderView extends Container {
   /**
    * スライダーのドラッグ中の処理
    * @param e
+   * @param skipPointerCheck ポインターIDのチェックをスキップするかどうか (ベースタップ時に使用)
    */
-  private moveSlider = (e: FederatedPointerEvent | PointerEvent): void => {
+  private moveSlider = (
+    e: FederatedPointerEvent | PointerEvent,
+    skipPointerCheck: boolean = false, // デフォルトはチェックする
+  ): void => {
+    // ポインターチェックをスキップしない場合、記録したIDと異なるかドラッグ中でなければ無視
+    if (
+      !skipPointerCheck &&
+      (this.activePointerId === null || e.pointerId !== this.activePointerId)
+    )
+      return;
     this.onMoveSlider(e);
   };
 
@@ -185,8 +198,12 @@ export class SliderView extends Container {
   /**
    * スライダーのドラッグ終了時の処理
    */
-  private moveSliderFinish = () => {
-    this.isDragging = false;
+  private moveSliderFinish = (e?: FederatedPointerEvent | PointerEvent) => {
+    // イベントeが存在し、かつpointerIdプロパティを持ち、かつそのIDが記録中のIDと異なる場合は無視
+    if (e?.pointerId != null && e.pointerId !== this.activePointerId) return;
+
+    // 上記以外の場合（イベントがない、pointerIdがない、またはIDが一致する）はクリア処理に進む
+    this.activePointerId = null; // ポインターIDをクリア
 
     SliderViewUtil.removeEventListenerFromTarget(
       this.buttonRootContainer,
@@ -208,8 +225,15 @@ export class SliderView extends Container {
    * @param evt
    */
   protected onPressBase(evt: FederatedPointerEvent): void {
-    this.dragStartPos.set(0, 0);
-    this.moveSlider(evt);
+    // すでに別のポインターでドラッグ中の場合は無視
+    if (this.activePointerId !== null) return;
+
+    this.dragStartPos.set(0, 0); // タップジャンプ用にドラッグ開始位置をリセット
+
+    // moveSliderを呼び出す（ポインターチェックをスキップ）
+    this.moveSlider(evt, true);
+
+    // 終了イベントを発行
     this.sliderEventEmitter.emit(
       "slider_change_finished",
       new SliderEventContext(this.rate),

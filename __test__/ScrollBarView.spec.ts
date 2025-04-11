@@ -158,6 +158,89 @@ describe("ScrollBarView", () => {
   });
 
   describe("InertialScrollManager", () => {
+    describe("multi-touch interactions", () => {
+      test("during drag with pointer 1, any pointer 2 operations should be ignored", () => {
+        const target = scrollBarContents.target;
+        const isHorizontal = scrollbar.isHorizontal;
+        const inertial = scrollbar.inertialManager;
+
+        // 初期状態の確認
+        expect(inertial["activePointerId"]).toBe(null);
+
+        // ポインター1でドラッグ開始
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          0,
+          "pointerdown",
+          1,
+        );
+        expect(inertial["activePointerId"]).toBe(1);
+        expect(target.y).toBe(0);
+
+        // ポインター1で移動
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -50,
+          "pointermove",
+          1,
+        );
+        expect(target.y).toBe(-50);
+
+        // ポインター2でドラッグ開始を試みる
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -100,
+          "pointerdown",
+          2,
+        );
+        expect(inertial["activePointerId"]).toBe(1); // ポインター1のまま
+        expect(target.y).toBe(-50); // 位置変化なし
+
+        // ポインター2で移動を試みる
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -150,
+          "pointermove",
+          2,
+        );
+        expect(target.y).toBe(-50); // 位置変化なし
+
+        // ポインター2でドラッグ終了を試みる
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -150,
+          "pointerup",
+          2,
+        );
+        expect(inertial["activePointerId"]).toBe(1); // ポインター1のまま
+
+        // ポインター1で移動を継続
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -75,
+          "pointermove",
+          1,
+        );
+        expect(target.y).toBe(-75);
+
+        // ポインター1でドラッグ終了
+        SliderViewTester.controlButton(
+          isHorizontal,
+          target,
+          -75,
+          "pointerup",
+          1,
+        );
+        expect(inertial["activePointerId"]).toBe(null);
+      });
+    });
+
     test("start and stop", () => {
       scrollbar.inertialManager.start();
       expect(scrollBarContents.target.listenerCount("pointerdown")).toBe(1);
@@ -350,6 +433,13 @@ describe("ScrollBarView with autoHide", () => {
   });
 });
 
+/**
+ * ダミーのタイマーを更新し、慣性スクロールのアニメーションを進行させる。
+ * @param t アプリケーション実行開始からの総時間（ミリ秒）
+ *
+ * マルチタッチのテストでは慣性スクロールの影響を考慮する必要がないため、
+ * この関数を呼び出す必要はありません。
+ */
 const updateTicker = (t: number) => {
   Ticker.shared.update(t);
 };
