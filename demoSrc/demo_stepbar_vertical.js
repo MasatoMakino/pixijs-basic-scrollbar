@@ -75,7 +75,8 @@ const getSpriteBar = (w, h, color, step) => {
 const getSliderBase = (w, h, color) => {
   const g = new Graphics();
   g.rect(0, 0, w, h).fill(color);
-  g.hitArea = new Rectangle(0, 0, w, h);
+  // タッチ操作のためにヒットエリアを拡大（左右に32px）
+  g.hitArea = new Rectangle(-16, 0, w + 32, h);
   return g;
 };
 
