@@ -3,11 +3,9 @@
 Scrollbar modules for pixi.js
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@masatomakino/pixijs-basic-scrollbar.svg?style=flat)](https://www.npmjs.com/package/@masatomakino/pixijs-basic-scrollbar)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github&style=flat)](https://github.com/MasatoMakino/pixijs-basic-scrollbar)
 [![CI](https://github.com/MasatoMakino/pixijs-basic-scrollbar/actions/workflows/ci_main.yml/badge.svg)](https://github.com/MasatoMakino/pixijs-basic-scrollbar/actions/workflows/ci_main.yml)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/test_coverage)](https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/2bcf782a39a1150ad786/maintainability)](https://codeclimate.com/github/MasatoMakino/pixijs-basic-scrollbar/maintainability)
-
-[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=MasatoMakino&repo=pixijs-basic-scrollbar&show_owner=true)](https://github.com/MasatoMakino/pixijs-basic-scrollbar)
 
 ## Demo
 
