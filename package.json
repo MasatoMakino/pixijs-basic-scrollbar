@@ -35,7 +35,7 @@
     "@vitest/browser": "*",
     "@vitest/coverage-istanbul": "^3.0.2",
     "browser-sync": "^3.0.2",
-    "lil-gui": "^0.20.0",
+    "lil-gui": "^0.21.0",
     "pixi.js": "^8.2.5",
     "prettier": "^3.3.3",
     "typedoc": "^0.28.0",
