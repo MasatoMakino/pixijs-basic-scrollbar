@@ -2,7 +2,7 @@ import { describe, beforeEach, expect, it, vi } from "vitest";
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { StepBarView } from "../src/index.js";
 import { SliderViewTester } from "./SliderViewTester.js";
-import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { DummyPointerEvent } from "./DummyPointerEvent.js";
 
 describe("StepBarView", () => {
   let base: Container,
