@@ -103,6 +103,7 @@ dist
 # TernJS port file
 .tern-port
 .idea
+.op/
 docs/
 lib/
 esm/
