@@ -109,3 +109,8 @@ lib/
 esm/
 
 .claude/settings.local.json
+
+# Conductor (parallel agent orchestration)
+.conductor/
+.agent-prompts/
+AGENT_PROGRESS.yaml
