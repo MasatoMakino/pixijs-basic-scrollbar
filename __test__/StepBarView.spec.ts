@@ -15,7 +15,7 @@ describe("StepBarView", () => {
     sliderButton = new Container();
     incrementButton = new Container();
     decrementButton = new Container();
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   const getDefaultValue = () => {
@@ -138,7 +138,7 @@ describe("StepBarView (vertical)", () => {
   beforeEach(() => {
     base = new Container();
     sliderButton = new Container();
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   const getDefaultValue = () => {
@@ -172,7 +172,7 @@ describe("StepBarView increment/decrement button", () => {
     base = new Container();
     incrementButton = new Container();
     decrementButton = new Container();
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   const getDefaultValue = () => {
@@ -212,7 +212,7 @@ describe("StepBarView.base", () => {
     base?.removeFromParent();
     base = new Graphics();
     base.hitArea = new Rectangle(0, 0, 100, 20);
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   const getDefaultValue = () => {
@@ -355,7 +355,7 @@ describe("StepBarView wheel", () => {
 
   beforeEach(() => {
     base = new Container();
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   const getDefaultValue = () => {
