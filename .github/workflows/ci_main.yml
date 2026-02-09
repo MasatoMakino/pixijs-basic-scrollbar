@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [20.x, 22.x, 24.x]
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - name: Use Node.js ${{ matrix.node-version }}
@@ -24,4 +24,4 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npx tsc --noEmit
-      - run: npm test
+      - run: npm run test:ci

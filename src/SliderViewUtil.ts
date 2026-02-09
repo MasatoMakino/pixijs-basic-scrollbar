@@ -136,7 +136,7 @@ export class SliderViewUtil {
       return canvas;
     }
 
-    let parent = button.parent;
+    let parent: Container = button.parent ?? button;
     while (parent.parent) {
       parent = parent.parent;
     }

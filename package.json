@@ -31,14 +31,11 @@
   },
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.10.0",
-    "@masatomakino/release-helper": "^0.2.0",
     "@tweenjs/tween.js": "^25.0.0",
     "@vitest/browser": "*",
     "@vitest/coverage-istanbul": "^3.0.2",
     "browser-sync": "^3.0.2",
-    "husky": "^9.1.3",
     "lil-gui": "^0.20.0",
-    "lint-staged": "^16.1.0",
     "pixi.js": "^8.2.5",
     "prettier": "^3.3.3",
     "typedoc": "^0.28.0",
@@ -47,17 +44,17 @@
   },
   "scripts": {
     "test": "vitest --run",
+    "test:ci": "xvfb-run --auto-servernum vitest --run",
     "coverage": "vitest --coverage --run",
-    "prepare": "husky",
-    "preversion": "npx @masatomakino/release-helper preversion",
-    "postversion": "npx @masatomakino/release-helper postversion",
-    "release": "npx @masatomakino/release-helper release",
+    "coverage:ci": "xvfb-run --auto-servernum vitest --coverage --run",
+    "pre-commit": "prettier --write --ignore-unknown",
+    "pre-push": "xvfb-run --auto-servernum vitest --run",
     "start:dev": "npm run server & npm run watch:tsc & npm run watch:demo",
     "build": "npm run buildTS && npm run demo && npm run typedocs",
     "demo": "npx @masatomakino/gulptask-demo-page --compileModule es2020",
     "buildTS": "tsc",
     "typedocs": "typedoc --out ./docs/api src/index.ts",
-    "server": "browser-sync ./docs/demo -w",
+    "server": "browser-sync ./docs/demo -w --port 3000 --no-open",
     "watch:demo": "npm run demo -- -W",
     "watch:tsc": "tsc -W --incremental"
   },
@@ -68,8 +65,5 @@
   "directories": {
     "doc": "docs",
     "lib": "esm"
-  },
-  "lint-staged": {
-    "*.{js,ts,css,md}": "prettier --write"
   }
 }
