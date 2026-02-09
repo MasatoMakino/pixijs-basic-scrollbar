@@ -36,7 +36,7 @@ This is a PixiJS v8 scrollbar/slider UI component library published as ES Module
 
 ### Class Hierarchy
 
-```
+```text
 Container (pixi.js)
 └── SliderView          - Base slider with drag/tap interaction, rate (0.0-1.0) positioning
     └── ScrollBarView   - Adds content-aware scrollbar with inertial scroll and mouse wheel
@@ -62,7 +62,7 @@ StepBarView             - Discrete step indicator (separate from slider hierarch
 
 ## Testing
 
-Tests run in **real browser** (headless Chrome via WebDriverIO), not jsdom. Test helpers in `__test__/` provide fixture generators (`SliderGenerator`, `ScrollBarViewGenerator`, etc.) and a mock pointer event (`DummpyPointerEvent`).
+Tests run in **real browser** (headless Chrome via WebDriverIO), not jsdom. Test helpers in `__test__/` provide fixture generators (`SliderGenerator`, `ScrollBarViewGenerator`, etc.) and a mock pointer event (`DummyPointerEvent`).
 
 ## Release Process
 
