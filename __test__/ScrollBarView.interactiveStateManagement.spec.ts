@@ -1,6 +1,6 @@
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator.js";
 import { vi, describe, it, expect, beforeEach } from "vitest";
-import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { DummyPointerEvent } from "./DummyPointerEvent.js";
 import { SliderViewTester } from "./SliderViewTester.js";
 
 describe("ScrollBarView interactive state management", () => {

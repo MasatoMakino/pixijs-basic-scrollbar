@@ -1,5 +1,5 @@
 import { describe, beforeEach, test, expect } from "vitest";
-import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { DummyPointerEvent } from "./DummyPointerEvent.js";
 import { SliderGenerator } from "./SliderGenerator.js";
 import { SliderOptionGenerator } from "./SliderOptionGenerator.js";
 import { SliderViewTester } from "./SliderViewTester.js";
