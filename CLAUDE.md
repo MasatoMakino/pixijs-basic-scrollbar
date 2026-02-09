@@ -4,30 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build & Development Commands
 
+All commands run inside the DevContainer.
+
 ```bash
-# Install dependencies
-npm ci
+# Install dependencies (also runs automatically via postCreateCommand)
+devcontainer exec --workspace-folder . npm ci
 
 # Build everything (TypeScript + demo pages + API docs)
-npm run build
+devcontainer exec --workspace-folder . npm run build
 
 # Build TypeScript only (outputs to esm/)
-npm run buildTS
+devcontainer exec --workspace-folder . npm run buildTS
 
 # Type check without emitting
-npx tsc --noEmit
+devcontainer exec --workspace-folder . npx tsc --noEmit
 
 # Start dev server (browser-sync + tsc watch + demo watch)
-npm run start:dev
+devcontainer exec --workspace-folder . npm run start:dev
 
-# Run tests (Vitest in browser mode with headless Chrome)
-npm test
+# Run tests (Vitest in browser mode with headless Chrome, requires xvfb)
+devcontainer exec --workspace-folder . npm run test:ci
 
-# Run a single test file
-npx vitest --run __test__/SliderView.spec.ts
+# Run a single test file (requires xvfb-run for headless display)
+devcontainer exec --workspace-folder . bash -c 'xvfb-run --auto-servernum vitest --run __test__/SliderView.spec.ts'
 
-# Coverage report
-npm run coverage
+# Coverage report (requires xvfb)
+devcontainer exec --workspace-folder . npm run coverage:ci
 ```
 
 ## Architecture
