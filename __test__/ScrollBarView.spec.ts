@@ -7,7 +7,7 @@ import {
   expect,
   test,
 } from "vitest";
-import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { DummyPointerEvent } from "./DummyPointerEvent.js";
 import { ScrollBarViewGenerator } from "./ScrollBarViewGenerator.js";
 import { SliderViewTester } from "./SliderViewTester.js";
 

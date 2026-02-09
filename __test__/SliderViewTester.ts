@@ -1,6 +1,6 @@
 import { Container, ContainerChild, ContainerEvents, Point } from "pixi.js";
 import { expect } from "vitest";
-import { DummyPointerEvent } from "./DummpyPointerEvent.js";
+import { DummyPointerEvent } from "./DummyPointerEvent.js";
 import { SliderSet } from "./SliderGenerator.js";
 
 /**
